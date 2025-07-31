@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eac9000c180bc94f80a1770a02555ff, type: 3}
+  m_Name: Q_Match_the_following_ 6
+  m_EditorClassIdentifier: 
+  question: Match the following languages to their correct basic word order.
+  languages:
+  - English
+  - Japanese
+  - Welsh
+  features:
+  - SVO
+  - SOV
+  - VSO
+  correctFeatureIndices: 000000000100000002000000
+  explanation: English is SVO, Japanese is SOV, and Welsh is VSO.

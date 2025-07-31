@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2309ddfb73f4bee408b66029679192b6, type: 3}
+  m_Name: 1.4.5
+  m_EditorClassIdentifier: 
+  question: What rule describes a verb phrase containing a verb and a noun phrase?
+  choices:
+  - VP > NP V
+  - VP > V NP
+  - VP > DET V
+  - VP > V VP
+  correctAnswerIndex: 1
+  explanation: English verb phrases are typically composed as VP > V NP.
