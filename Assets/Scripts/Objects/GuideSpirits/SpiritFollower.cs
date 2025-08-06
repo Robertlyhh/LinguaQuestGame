@@ -14,7 +14,6 @@ public class SpiritFollower : MonoBehaviour
     private bool isWandering = false;
     private Vector2 velocity;
 
-    private Vector3 wanderOffset;
 
     void Start()
     {
@@ -23,6 +22,7 @@ public class SpiritFollower : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             playerlocation = player.transform;
         }
+        transform.position = playerlocation.position + Vector3.right * 1.5f;
     }
 
     void Update()

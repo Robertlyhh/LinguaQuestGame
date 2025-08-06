@@ -1,25 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class SignalListener : MonoBehaviour
 {
+    // Public so it can be set in the Inspector OR by code.
     public Signal signal;
-    public UnityEngine.Events.UnityEvent response;
 
+    // Initialized to prevent nulls when added via code.
+    public UnityEvent response = new UnityEvent();
+
+    // OnEnable works for the manual setup.
     private void OnEnable()
     {
-        signal.RegisterListener(this);
+        if (signal != null)
+        {
+            signal.RegisterListener(this);
+        }
     }
 
     private void OnDisable()
     {
-        signal.UnregisterListener(this);
+        if (signal != null)
+        {
+            signal.UnregisterListener(this);
+        }
     }
 
     public void OnSignalRaised()
     {
-        response.Invoke();
+        response?.Invoke();
     }
 }

@@ -7,6 +7,7 @@ public class RoomMove : MonoBehaviour
 {
     public bool needText;
     public string placeName;
+    public Signal roomSignal;
     public GameObject text;
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class RoomMove : MonoBehaviour
 
     private IEnumerator placeNameCoroutine()
     {
+        roomSignal.Raise();
         text.SetActive(true);
         yield return new WaitForSeconds(2);
         text.SetActive(false);

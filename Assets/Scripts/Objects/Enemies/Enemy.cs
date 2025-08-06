@@ -30,11 +30,13 @@ public class Enemy : MonoBehaviour
     public BoolValue isDead;
     public string SceneToFight;
     public TextMeshProUGUI enemyNameText;
+    public Signal deathSignal;
 
     public virtual void Start()
     {
         if (isDead.runtimeValue)
         {
+            deathSignal.Raise(); // Raise the death signal if the enemy is already dead
             gameObject.SetActive(false); // Deactivate the enemy if it is dead
             return;
         }

@@ -188,6 +188,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6185436774702379834, guid: 297c92344429afa4583d299f846b19f5, type: 3}
   m_PrefabInstance: {fileID: 14577789}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &49120102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7769912553649625230, guid: 60c8ac60bffe8694a9bca2d76b7d6081, type: 3}
+  m_PrefabInstance: {fileID: 304013240}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &112972288
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +307,7 @@ Transform:
   m_GameObject: {fileID: 161300298}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7351, y: 0.047, z: 0}
+  m_LocalPosition: {x: 28.86, y: 0.44, z: 0}
   m_LocalScale: {x: 15.439929, y: 14.635294, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -408,10 +413,19 @@ MonoBehaviour:
   bubbleText: {fileID: 2083276216}
   offset: {x: 1.5, y: 2, z: 0}
   displayDuration: 4
+  hasShownIntroduction: {fileID: 11400000, guid: a69cb8075abae4642937dfd332c3a835, type: 2}
   startMessages:
-  - Welcome to the Spirit World!
-  - Use WASD to move around.
-  - Press Space to interact.
+  - Hi Explorer welcome to the linguistic world!
+  - I am your guide spirit.
+  - We will have a wonderful experience here!
+  - Check out the signs for tips!
+  - Let get started!
+  MessagesBeatingFirstEnemy:
+  - Well done, explorer!
+  - You have defeated your first enemy!
+  - Keep practicing your skills.
+  - You will become stronger with each challenge.
+  - Remember S > NP VP!
 --- !u!114 &161300305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,8 +648,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   interactSound: {fileID: 8300000, guid: fe0276d93574f7c4997e5146bc70399d, type: 3}
   interactSignal: {fileID: 0}
-  dialogBox: {fileID: 795588352}
-  dialogText: {fileID: 1681068309}
+  dialogBox: {fileID: 49120102}
+  dialogText: {fileID: 2015795234}
   dialogs:
   - Explorer, you have encountered a magic stone
   - solve the answer or fight!
@@ -894,6 +908,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4623239324824041145, guid: 69255fbd69807d54080f65ec2cb9f299, type: 3}
   m_PrefabInstance: {fileID: 1890659058773577496}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &415062350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4909612760120704300, guid: 60c8ac60bffe8694a9bca2d76b7d6081, type: 3}
+  m_PrefabInstance: {fileID: 304013240}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &422772465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1143,11 +1162,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &552871313 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6823733102492312300, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-  m_PrefabInstance: {fileID: 5230581897801042530}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &555164642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1780,11 +1794,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &795588352 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4632579923256712964, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-  m_PrefabInstance: {fileID: 5230581897801042530}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &825839726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,6 +1981,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
+      propertyPath: contents
+      value: 
+      objectReference: {fileID: 11400000, guid: 5f9be90da6b701f43be6428cee611722, type: 2}
+    - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
+      propertyPath: dialogBox
+      value: 
+      objectReference: {fileID: 49120102}
+    - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
+      propertyPath: dialogText
+      value: 
+      objectReference: {fileID: 2015795234}
+    - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
+      propertyPath: interactSignal
+      value: 
+      objectReference: {fileID: 11400000, guid: 38c32f194887a974cb0bd0831517c900, type: 2}
     - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
       propertyPath: storedOpenState
       value: 
@@ -2331,6 +2356,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1207395912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207395914}
+  - component: {fileID: 1207395913}
+  m_Layer: 0
+  m_Name: GuideManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1207395913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207395912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20a3be85a2ea4c14f92a91c6bf3b504b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guideSpirit: {fileID: 161300304}
+  guideTriggers:
+  - triggerSignal: {fileID: 11400000, guid: 40f621affb7bd4e4fa373c6dd3cc8c46, type: 2}
+    messageSequence: {fileID: 11400000, guid: 35a15708ca580154d8f0a77239b3b198, type: 2}
+  - triggerSignal: {fileID: 11400000, guid: 5b973fe54786fb34b89fb6319baa179c, type: 2}
+    messageSequence: {fileID: 11400000, guid: c9f882c7d0dc5c549854e2952932ddb4, type: 2}
+  - triggerSignal: {fileID: 11400000, guid: f918756d0757e454e9578b10796e3f43, type: 2}
+    messageSequence: {fileID: 11400000, guid: dde97b397561f364d82586606a69d3e2, type: 2}
+  - triggerSignal: {fileID: 11400000, guid: 38c32f194887a974cb0bd0831517c900, type: 2}
+    messageSequence: {fileID: 11400000, guid: 381056c43f2bbb54ca3d641dc4088637, type: 2}
+--- !u!4 &1207395914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207395912}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1313033280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,7 +2965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1462127472
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24536,7 +24615,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   needText: 1
   placeName: The home
-  text: {fileID: 552871313}
+  roomSignal: {fileID: 11400000, guid: 5b973fe54786fb34b89fb6319baa179c, type: 2}
+  text: {fileID: 415062350}
 --- !u!1 &1564764021
 GameObject:
   m_ObjectHideFlags: 0
@@ -24732,8 +24812,8 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   interactSound: {fileID: 8300000, guid: 19ee79ae6541aba4ca0f0a45c0f64d89, type: 3}
   interactSignal: {fileID: 0}
-  dialogBox: {fileID: 795588352}
-  dialogText: {fileID: 1681068309}
+  dialogBox: {fileID: 49120102}
+  dialogText: {fileID: 2015795234}
   dialogs:
   - Hi explorer, this is a simple guide for you
   - click e to interact
@@ -38501,6 +38581,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 825839727}
     m_Modifications:
+    - target: {fileID: 4016849120603655115, guid: 14058a80e1f28fd4587b6de99319cf8e, type: 3}
+      propertyPath: deathSignal
+      value: 
+      objectReference: {fileID: 11400000, guid: 40f621affb7bd4e4fa373c6dd3cc8c46, type: 2}
     - target: {fileID: 4594316358981052920, guid: 14058a80e1f28fd4587b6de99319cf8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25.65
@@ -110657,17 +110741,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1681068309 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4615993826718455859, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-  m_PrefabInstance: {fileID: 5230581897801042530}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1717858057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110679,23 +110752,11 @@ PrefabInstance:
     - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 49120102}
     - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.data[0]
-      value: Hey there is a maze ahead
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.data[1]
-      value: Try collect as many supply as you can!
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2015795234}
     - target: {fileID: 6185436774702379834, guid: 297c92344429afa4583d299f846b19f5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.849262
@@ -111278,27 +111339,11 @@ PrefabInstance:
     - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 49120102}
     - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.data[0]
-      value: Watch out! There is enemy ahead!
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.data[1]
-      value: Once you are close enough to them, you will have to fight
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375471501496390493, guid: 297c92344429afa4583d299f846b19f5, type: 3}
-      propertyPath: dialogs.Array.data[2]
-      value: if you can't escape, beat them up!
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2015795234}
     - target: {fileID: 6185436774702379834, guid: 297c92344429afa4583d299f846b19f5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.73
@@ -111403,8 +111448,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe27dc6827b05f48b45785036ef376c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogBox: {fileID: 795588352}
-  dialogText: {fileID: 1681068309}
+  dialogBox: {fileID: 0}
+  dialogText: {fileID: 0}
   MagicWallPrefab: {fileID: 1877962102}
   quizStatements:
   - text: 1+1=2
@@ -111627,6 +111672,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2015795234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9037528735923898618, guid: 60c8ac60bffe8694a9bca2d76b7d6081, type: 3}
+  m_PrefabInstance: {fileID: 304013240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2071715502 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6059062082418079835, guid: 4ab76e109502f5148aaa6c6c847c5bab, type: 3}
@@ -112094,11 +112150,11 @@ PrefabInstance:
     - target: {fileID: 5346883275718295681, guid: 69255fbd69807d54080f65ec2cb9f299, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 0}
     - target: {fileID: 5346883275718295681, guid: 69255fbd69807d54080f65ec2cb9f299, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
+      objectReference: {fileID: 0}
     - target: {fileID: 8190065791235470251, guid: 69255fbd69807d54080f65ec2cb9f299, type: 3}
       propertyPath: m_Name
       value: FeatureToLanguageMapGroup
@@ -112285,11 +112341,11 @@ PrefabInstance:
     - target: {fileID: 4761017230360305616, guid: 4bb1fd936f5d4ec478b4a0d4180babd1, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 0}
     - target: {fileID: 4761017230360305616, guid: 4bb1fd936f5d4ec478b4a0d4180babd1, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
+      objectReference: {fileID: 0}
     - target: {fileID: 4761017230360305616, guid: 4bb1fd936f5d4ec478b4a0d4180babd1, type: 3}
       propertyPath: wordOrderData.Array.data[0]
       value: 
@@ -112450,117 +112506,16 @@ PrefabInstance:
     - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 49120102}
     - target: {fileID: 9063193235404189425, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
+      objectReference: {fileID: 2015795234}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b18fc900b0584c4ba8ec583e5d41b43, type: 3}
---- !u!1001 &5230581897801042530
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1861461631208181937, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_Name
-      value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1861461631208181937, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995248157066521449, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 100fd6762e82a6741bed90ce40c8f89e, type: 3}
 --- !u!4 &5461993839364890342
 Transform:
   m_ObjectHideFlags: 0
@@ -112704,11 +112659,11 @@ PrefabInstance:
     - target: {fileID: 3475076097792477196, guid: 3358db63b7293a449ac86b9692c640d0, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 0}
     - target: {fileID: 3475076097792477196, guid: 3358db63b7293a449ac86b9692c640d0, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
+      objectReference: {fileID: 0}
     - target: {fileID: 7897796447264894164, guid: 3358db63b7293a449ac86b9692c640d0, type: 3}
       propertyPath: m_Name
       value: TrueOrFalseGroup
@@ -112773,11 +112728,11 @@ PrefabInstance:
     - target: {fileID: 2820114942974118619, guid: 01b2b9a936287e346b283cfa1893cf5b, type: 3}
       propertyPath: dialogBox
       value: 
-      objectReference: {fileID: 795588352}
+      objectReference: {fileID: 0}
     - target: {fileID: 2820114942974118619, guid: 01b2b9a936287e346b283cfa1893cf5b, type: 3}
       propertyPath: dialogText
       value: 
-      objectReference: {fileID: 1681068309}
+      objectReference: {fileID: 0}
     - target: {fileID: 4646240516898021981, guid: 01b2b9a936287e346b283cfa1893cf5b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -112832,7 +112787,6 @@ SceneRoots:
   - {fileID: 2073047855}
   - {fileID: 954330126}
   - {fileID: 304013240}
-  - {fileID: 5230581897801042530}
   - {fileID: 582971845}
   - {fileID: 1396890465}
   - {fileID: 555164643}
@@ -112842,3 +112796,4 @@ SceneRoots:
   - {fileID: 721605891}
   - {fileID: 2638585070826898517}
   - {fileID: 161300300}
+  - {fileID: 1207395914}

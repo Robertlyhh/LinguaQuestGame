@@ -5,7 +5,7 @@ public class BGMManager : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip defaultClip;
-    public AudioClip hoverClip;
+    public AudioClip[] hoverClips;
 
     private Coroutine fadeCoroutine;
     private AudioClip currentClip;
@@ -28,13 +28,19 @@ public class BGMManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void PlayHoverMusic()
+    public void PlayHoverMusic(int clipIndex)
     {
-        if (currentClip != hoverClip)
+        if (clipIndex < 0 || clipIndex >= hoverClips.Length)
+        {
+            Debug.LogError("Invalid hover clip index.");
+            return;
+        }
+
+        if (currentClip != hoverClips[clipIndex])
         {
             if (fadeCoroutine != null)
                 StopCoroutine(fadeCoroutine);
-            fadeCoroutine = StartCoroutine(FadeToClip(hoverClip));
+            fadeCoroutine = StartCoroutine(FadeToClip(hoverClips[clipIndex]));
         }
     }
 

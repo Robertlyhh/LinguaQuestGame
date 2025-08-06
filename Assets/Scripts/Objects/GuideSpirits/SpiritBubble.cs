@@ -9,9 +9,25 @@ public class SpiritBubble : MonoBehaviour
     public TextMeshProUGUI bubbleText;
     public Vector3 offset = new Vector3(1.5f, 2f, 0f);
     public float displayDuration = 4f;
-    public List<string> startMessages = new List<string>() { "Welcome to the Spirit World!",
+    public BoolValue hasShownIntroduction;
+    public List<string> startMessages = new List<string>() {
+        "Dear explorer,",
+        "Welcome to the linguistic World!",
+        "Here, you will learn different linguistic skills.",
+        "and have fun!",
+        "I am your guide spirit.",
+        "I will help you on your journey.",
+        "Let's get started!",
         "Use WASD to move around.",
-        "Press Space to interact." };
+        "Press E to interact." };
+
+
+    public List<string> MessagesBeatingFirstEnemy = new List<string>() {
+        "Well done, explorer!",
+        "You have defeated your first enemy!",
+        "Keep practicing your skills.",
+        "You will become stronger with each challenge.",
+        "Remember S > NP VP!" };
 
     private float timer = 0f;
     private bool showing = false;
@@ -23,7 +39,12 @@ public class SpiritBubble : MonoBehaviour
             Debug.LogError("Bubble Canvas or Text is not assigned in the inspector.");
             return;
         }
-        StartCoroutine(ShowMessages(startMessages));
+        if (!hasShownIntroduction.runtimeValue)
+        {
+            StartCoroutine(ShowMessages(startMessages));
+            hasShownIntroduction.runtimeValue = true;
+        }
+
     }
 
     void Update()
@@ -95,6 +116,11 @@ public class SpiritBubble : MonoBehaviour
         bubbleCanvas.gameObject.SetActive(true);
         timer = 0f;
         showing = true;
+    }
+
+    public void ShowMessagesToPlayer(List<string> messages)
+    {
+        StartCoroutine(ShowMessages(messages));
     }
 
     public void HideBubble()
