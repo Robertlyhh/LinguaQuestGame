@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eac9000c180bc94f80a1770a02555ff, type: 3}
+  m_Name: FM1.4.1
+  m_EditorClassIdentifier: 
+  question: "What is the function of each part of the following PSR?  XP \u2192 WP
+    X (YP+) (ZP)"
+  languages:
+  - The XP is ______ of the constituent
+  - The WP is _____ of the constituent
+  - The X is _____ of the constituent
+  - The YP is _______ of the constituent
+  - The ZP is ________ of the constituent
+  features:
+  - an optional element that can be repeated
+  - an optional element that can not be repeated
+  - the head
+  - an obligatory element
+  - the label
+  correctFeatureIndices: 0400000003000000020000000000000001000000
+  explanation: I mean it is like that I dont know as well

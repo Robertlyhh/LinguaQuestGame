@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eac9000c180bc94f80a1770a02555ff, type: 3}
+  m_Name: FM1.4.4
+  m_EditorClassIdentifier: 
+  question: Match the phrase structure rule to its description.
+  languages:
+  - S -> NP VP
+  - PP -> P NP
+  - NP -> Det N
+  features:
+  - A phrase made of a preposition and a Noun Phrase.
+  - A sentence is formed by a Noun Phrase and a Verb Phrase.
+  - A Noun Phrase can be formed by a determiner and a noun.
+  correctFeatureIndices: 010000000000000002000000
+  explanation: Each rule describes how a larger linguistic unit (on the left of the
+    arrow) can be constructed from smaller parts (on the right of the arrow).
