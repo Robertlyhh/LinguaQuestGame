@@ -4,6 +4,7 @@ public class SpiritFollower : MonoBehaviour
 {
     public Transform playerlocation;
     public GameObject player;
+    public VectorValue StartingPosition;
     public float WanderRadius = 0.5f;
     public float WanderSpeed = 1.5f;
     public float maxDistanceToStartChase = 3.5f;
@@ -14,7 +15,6 @@ public class SpiritFollower : MonoBehaviour
     private bool isWandering = false;
     private Vector2 velocity;
 
-    private Vector3 wanderOffset;
 
     void Start()
     {
@@ -22,6 +22,14 @@ public class SpiritFollower : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player");
             playerlocation = player.transform;
+        }
+        else
+        {
+            playerlocation = player.transform;
+        }
+        if (StartingPosition != null)
+        {
+            transform.position = StartingPosition.runtimeValue + new Vector2(0f, 1f); // Offset to follow slightly above the player
         }
     }
 

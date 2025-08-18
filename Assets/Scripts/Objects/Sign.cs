@@ -8,6 +8,22 @@ public class Sign : Interactable
     public string[] dialogs;
     public bool dialogActive;
     public int currentDialogIndex = 0;
+
+    public override void Start()
+    {
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+        if (dialogBox == null)
+        {
+            dialogBox = GameObject.FindGameObjectWithTag("DialogBox");
+        }
+        if (dialogText == null)
+        {
+            dialogText = dialogBox.GetComponentInChildren<TextMeshProUGUI>();
+        }
+    }
     public virtual void Update()
     {
         if (dialogActive && Input.GetKeyDown(KeyCode.E))

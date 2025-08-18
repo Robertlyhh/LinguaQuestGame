@@ -16,6 +16,8 @@ public class BattleManager : MonoBehaviour
     public AudioClip incorrectSound;
     public AudioClip winSound;
     public AudioClip loseSound;
+    public Signal correctSignal;
+    public Signal incorrectSignal;
     public Canvas winScreen;
     public Canvas loseScreen;
     public TextMeshProUGUI UItext;
@@ -139,6 +141,7 @@ public class BattleManager : MonoBehaviour
 
                 isPlayerTurn = true; // Player regains turn after enemy
             }
+            correctSignal.Raise(); // Raise the signal for correct answer
 
         }
         else
@@ -159,6 +162,7 @@ public class BattleManager : MonoBehaviour
             }
 
             isPlayerTurn = !isPlayerTurn;
+            incorrectSignal.Raise(); // Raise the signal for incorrect answer
         }
 
         feedbackText.gameObject.SetActive(true);

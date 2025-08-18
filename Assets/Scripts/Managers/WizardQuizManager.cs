@@ -22,6 +22,7 @@ public class WizardQuizManager : MonoBehaviour
     public AudioSource audioSource; // optional reference to play sounds
     public AudioClip correctSound; // sound for correct answer
     public AudioClip wrongSound; // sound for wrong answer
+    public Signal quizSuccessSignal;
     public Camera mainCamera; // optional reference to the main camera
 
     private int currentQuestionIndex = 0;
@@ -151,6 +152,10 @@ public class WizardQuizManager : MonoBehaviour
     void UnlockDoor()
     {
         sceneLocked = true;
+        if (quizSuccessSignal != null)
+        {
+            quizSuccessSignal.Raise();
+        }
         mainCamera.GetComponent<CameraMovement>().PayAttentionTo(lockedDoor);
         if (lockedDoor != null)
         {

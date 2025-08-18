@@ -193,7 +193,12 @@ MonoBehaviour:
   context: {fileID: 11400000, guid: d34fcd4961c36a34cbd61c6313562265, type: 2}
   audioSource: {fileID: 0}
   interactSound: {fileID: 0}
+  interactSignal: {fileID: 0}
   dialogBox: {fileID: 0}
   dialogText: {fileID: 0}
-  dialog: something here
+  dialogs:
+  - Watch out! There is enemy ahead!
+  - Once you are close enough to them, you will have to fight
+  - if you can't escape, beat them up!
   dialogActive: 0
+  currentDialogIndex: 0
