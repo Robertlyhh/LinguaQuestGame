@@ -8,6 +8,7 @@ public class SyntaxShuffleManager : MonoBehaviour
 {
     public GameObject wordButtonPrefab;
     public Transform wordSlotsContainer;
+    public Signal tipSignal;
 
     private List<string> correctSentence;
     private List<WordButtonController> currentButtons = new();
@@ -55,6 +56,13 @@ public class SyntaxShuffleManager : MonoBehaviour
                 timerText.transform.localScale = Vector3.one;
             }
 
+            // Raise tipSignal when timeRemaining reaches 0.6 * duration
+            if (!tipRaised && timeRemaining <= duration * 0.6f)
+            {
+                tipSignal.Raise();
+                tipRaised = true;
+            }
+
             if (timeRemaining <= 0)
             {
                 Debug.Log("Time's up!");
@@ -64,6 +72,9 @@ public class SyntaxShuffleManager : MonoBehaviour
             }
         }
     }
+
+    // Add this field at the top of the class:
+    private bool tipRaised = false;
 
     public void LoadSentence(WordOrderQuestion wordOrderQuestion)
     {

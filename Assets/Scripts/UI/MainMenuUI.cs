@@ -23,7 +23,7 @@ public class MainMenuUI : MonoBehaviour
     {
         // Load the world 3 scene
         Debug.Log("Loading World 3...");
-        //SceneManager.LoadScene("World3");
+        SceneManager.LoadScene("HouseInterior3");
     }
 
     public void LoadWorld4()

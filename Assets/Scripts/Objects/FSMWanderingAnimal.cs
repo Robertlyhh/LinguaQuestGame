@@ -263,13 +263,30 @@ public class FSMWanderingAnimal : MonoBehaviour
         MoveTowards(transform.position + (Vector3)dir, fleeSpeed);
     }
 
+    private float lastWanderChangeTime = 0f;
+    private float wanderChangeInterval = 3f;
+
     void Wander()
     {
-        if (targetPosition == Vector2.zero || IsAtTarget(targetPosition))
-            targetPosition = (Vector2)transform.position + Random.insideUnitCircle * wanderRadius;
+        // Only pick a new target position if enough time has passed or we've reached the target
+        if (targetPosition == Vector2.zero || IsAtTarget(targetPosition) || Time.time - lastWanderChangeTime > wanderChangeInterval)
+        {
+            // Try up to 10 times to find a valid target position not overlapping with obstacles
+            for (int i = 0; i < 10; i++)
+            {
+                Vector2 candidate = (Vector2)transform.position + Random.insideUnitCircle * wanderRadius;
+                if (!Physics2D.OverlapCircle(candidate, 0.3f, obstacleLayerMask))
+                {
+                    targetPosition = candidate;
+                    break;
+                }
+            }
+            lastWanderChangeTime = Time.time;
+        }
 
-        Vector2 safeDir = FindSafeDirection((targetPosition - (Vector2)transform.position).normalized);
-        MoveTowards(transform.position + (Vector3)safeDir, wanderSpeed);
+        Vector2 desiredDirection = (targetPosition - (Vector2)transform.position).normalized;
+        Vector2 safeDir = FindSafeDirection(desiredDirection);
+        MoveInDirection(safeDir, wanderSpeed);
     }
 
     void MoveTowards(Vector2 destination, float speed)
@@ -280,6 +297,15 @@ public class FSMWanderingAnimal : MonoBehaviour
         animator.SetFloat("moveY", dir.y);
     }
 
+    // Renamed for clarity. This function just handles the "how" of moving.
+    void MoveInDirection(Vector2 direction, float speed)
+    {
+        // The direction is already calculated, so we just use it.
+        rb.MovePosition(rb.position + direction * speed * Time.deltaTime);
+        animator.SetFloat("moveX", direction.x);
+        animator.SetFloat("moveY", direction.y);
+    }
+
     bool IsAtTarget(Vector2 target)
     {
         return Vector2.Distance(transform.position, target) < 0.5f;
@@ -287,13 +313,26 @@ public class FSMWanderingAnimal : MonoBehaviour
 
     Vector2 FindSafeDirection(Vector2 desiredDir)
     {
-        for (int i = 0; i < 8; i++)
+        // Try 16 directions (every 22.5 degrees) for more granularity
+        // Increased detection distance from 1f to 2f for better obstacle avoidance
+        for (int i = 0; i < 16; i++)
         {
-            Vector2 dir = Quaternion.Euler(0, 0, i * 45f) * desiredDir;
-            if (!Physics2D.CircleCast(transform.position, 0.2f, dir, 1f, obstacleLayerMask))
+            float angle = i * 22.5f;
+            Vector2 dir = Quaternion.Euler(0, 0, angle) * desiredDir;
+            if (!Physics2D.CircleCast(transform.position, 0.2f, dir, 2f, obstacleLayerMask))
+            {
                 return dir;
+            }
+            if (!Physics2D.CircleCast(transform.position, 0.2f, -dir, 2f, obstacleLayerMask))
+            {
+                return -dir;
+            }
         }
-        return -desiredDir;
+
+        // If all directions blocked, try to move a little backwards (unstuck)
+
+        // If still stuck, just return a random direction
+        return Random.insideUnitCircle.normalized;
     }
 
 

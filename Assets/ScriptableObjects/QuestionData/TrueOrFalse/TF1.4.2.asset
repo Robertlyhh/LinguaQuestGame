@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2309ddfb73f4bee408b66029679192b6, type: 3}
   m_Name: TF1.4.2
   m_EditorClassIdentifier: 
-  question: The phrase structure rule 'NP > AdjP N' means a noun phrase includes
-    an adjective phrase and a noun.
+  question: In linguistics, the phrase structure rule S -> NP VP means a sentence
+    can be rewritten as a Verb Phrase followed by a Noun Phrase.
   choices:
   - True
   - False
-  correctAnswerIndex: 0
-  explanation: This is true because 'NP > AdjP N' indicates the noun phrase includes
-    an adjective phrase and a noun.
+  correctAnswerIndex: 1
+  explanation: The order matters. S -> NP VP means the Noun Phrase (subject) comes
+    before the Verb Phrase (predicate), which is the standard order for English.

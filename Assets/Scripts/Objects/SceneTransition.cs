@@ -17,6 +17,7 @@ public class SceneTransition : MonoBehaviour
     public Sprite portalInactiveSprite;
     public AudioClip portalSound;
     private AudioSource audioSource;
+    public BoolValue isActivated;
     public List<BoolValue> activateConditions;
     public Animator portalAnimator;
     public Camera targetCamera;
@@ -41,12 +42,30 @@ public class SceneTransition : MonoBehaviour
         {
             targetCamera = FindObjectOfType<Camera>();
         }
+        //CheckConditions();
+        if (isActivated != null && isActivated.runtimeValue)
+        {
+            if (portalAnimator != null)
+            {
+                portalAnimator.SetBool("isActivated", true);
+            }
+
+            // Disable the collider that is NOT a trigger
+            Collider2D[] colliders = GetComponents<Collider2D>();
+            foreach (var col in colliders)
+            {
+                if (!col.isTrigger)
+                {
+                    col.enabled = false;
+                }
+            }
+        }
 
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision detected with: " + collision.name);
+        //Debug.Log("Collision detected with: " + collision.name);
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             playerStorage.runtimeValue = playerPosition;
@@ -104,6 +123,7 @@ public class SceneTransition : MonoBehaviour
                 col.enabled = false;
             }
         }
+        isActivated.runtimeValue = true;
     }
 
     public void CheckConditions()
