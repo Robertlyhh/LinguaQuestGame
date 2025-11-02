@@ -7,6 +7,7 @@ public class WordTargetController : MonoBehaviour
 {
     public TMP_Text label;
     private WordLassoManager manager;
+    private bool collected = false;
 
     public void SetWord(string word, WordLassoManager mgr)
     {
@@ -16,10 +17,20 @@ public class WordTargetController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bullet")) // or whatever your bullet tag is
+        if (collected) return;
+
+        // When word reaches the catch zone
+        if (collision.CompareTag("CatchZone"))
         {
-            manager.OnWordRemoved(this);
+            collected = true;
+            //manager.OnWordCollected(this); // new method you'll add in manager
+            gameObject.SetActive(false);   // hide it after collection
         }
+    }
+
+    public string GetWord()
+    {
+        return label.text;
     }
 }
 
