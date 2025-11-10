@@ -51,6 +51,8 @@ public class PlayerExploring : MonoBehaviour
     public GameObject lightningEffectPrefab;
     public float lightningCastOffset = 4.5f;
 
+    [HideInInspector] public bool isMoving;
+
     // --- Unity Methods ---
     void Start()
     {
@@ -102,6 +104,7 @@ public class PlayerExploring : MonoBehaviour
     {
         if (change != UnityEngine.Vector3.zero)
         {
+            isMoving = true;
             animator.SetFloat("moveX", change.x);
             animator.SetFloat("moveY", change.y);
             animator.SetBool("moving", true);
@@ -114,6 +117,7 @@ public class PlayerExploring : MonoBehaviour
         }
         else
         {
+            isMoving = false;
             animator.SetBool("moving", false);
         }
     }

@@ -656,6 +656,7 @@ GameObject:
   - component: {fileID: 5391225487837099189}
   - component: {fileID: 606680404686773452}
   - component: {fileID: 8132065934847564163}
+  - component: {fileID: 7421987924500848716}
   m_Layer: 0
   m_Name: PlayerInScene
   m_TagString: Player
@@ -787,6 +788,7 @@ MonoBehaviour:
   firePoint: {fileID: 2200159935357943152}
   lightningEffectPrefab: {fileID: 1068689431743136575, guid: 2fe84ba0c21516a44b5c210d2fe229cd, type: 3}
   lightningCastOffset: 4.5
+  isMoving: 0
 --- !u!212 &3540530879073513603
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -947,3 +949,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextClue: {fileID: 790937805291612625}
   contextClueActive: 0
+--- !u!114 &7421987924500848716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528882001420741387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809f99c7b9b8b58439fa5c79842f7cdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character:
+    name: Zaman
+    characterPrefab: {fileID: 6528882001420741387}
+    attack: 1
+    defense: 1
+    speed: 1
+    health: 1
