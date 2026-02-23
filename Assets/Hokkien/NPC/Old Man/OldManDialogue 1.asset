@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13bb8debf40804bc88a5abdbbbb142f7, type: 3}
+  m_Name: OldManDialogue 1
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  npcName: Old Man 2
+  npcPortrait: {fileID: -7527145504033472756, guid: 08505661d4baa4822a15c4112082396b, type: 3}
+  dialogueLines:
+  - This is the second NPC
+  - This is a basic dialogue 2
+  typingSpeed: 0.05
+  voiceSound: {fileID: 8300000, guid: fccb0f35e47454e7ebc826a8afd04168, type: 3}
+  voicePitch: 1
+  autoProgressLines: 0100
+  autoProgressDelay: 1.5
