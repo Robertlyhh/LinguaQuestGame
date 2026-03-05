@@ -1,6 +1,6 @@
 using System;
 
-// ── Dialogue Response ──────────────────────────
+// === Dialogue Response ===
 // GET /api/v1/dialogue/<node_id>
 [Serializable]
 public class DialogueResponse
@@ -55,21 +55,30 @@ public class ResponseMeta
     public int processTimeMS;
 }
 
-// ── Vendor Profile ─────────────────────────────
+// === Vendor Profile ===
 // GET /api/v1/vendors/<vendor_id>
+[Serializable]
+public class VendorProfileResponse
+{
+    public string status;
+    public VendorProfile data;
+    public ResponseMeta meta;
+}
+
 [Serializable]
 public class VendorProfile
 {
     public string vendor_id;
-    public string name;
-    public VendorItem[] inventory;
-    public string starting_node_id;
+    public string dialogue_node_id;
+    public string vendor_name;
+    public VendorItem[] items;
 }
 
 [Serializable]
 public class VendorItem
 {
     public string item_id;
-    public string name;
-    public int base_price;
+    public string item_name;
+    public string description;
+    public int item_value;
 }

@@ -43,8 +43,8 @@ public class APIManager : MonoBehaviour
             $"{baseUrl}/api/v1/vendors/{vendorId}",
             json =>
             {
-                var vendor = JsonUtility.FromJson<VendorProfile>(json);
-                onSuccess?.Invoke(vendor);
+                var response = JsonUtility.FromJson<VendorProfileResponse>(json);
+                onSuccess?.Invoke(response.data);
             },
             onError
         ));

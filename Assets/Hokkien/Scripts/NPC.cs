@@ -82,8 +82,8 @@ public class NPC : MonoBehaviour, IInteractable
             onSuccess: vendor =>
             {
                 vendorProfile = vendor;
-                nameText.SetText(vendor.name);
-                FetchDialogueNode(vendor.starting_node_id);
+                nameText.SetText(vendor.vendor_name);
+                FetchDialogueNode(vendor.dialogue_node_id);
             },
             onError: err =>
             {
