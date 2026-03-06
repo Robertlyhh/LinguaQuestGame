@@ -25,7 +25,7 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
         // Convert the margin offset from local space to screen space
         float scaleFactor = textMesh.canvas.scaleFactor;
-        adjustedPosition.x -= 200f * scaleFactor; // subtract because margin is -200
+        adjustedPosition.x -= 1 * scaleFactor; // subtract because margin is -200
 
         int wordIndex = TMP_TextUtilities.FindIntersectingWord(textMesh, adjustedPosition, eventData.enterEventCamera);
 
