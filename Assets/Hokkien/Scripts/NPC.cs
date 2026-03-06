@@ -32,12 +32,14 @@ public class NPC : MonoBehaviour, IInteractable
     private bool isTransitioning;
     private bool isWaitingForOption;
     private bool isLoading;
- 
+    private DialogueAudioHandler audioHandler;
+
     private void Awake()
     {
         panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
         panelCanvasGroup.alpha = 0;
         dialoguePanel.SetActive(false);
+        audioHandler = FindObjectOfType<DialogueAudioHandler>();
     }
 
     public bool CanInteract() => !isTransitioning && !isLoading;
@@ -115,6 +117,7 @@ public class NPC : MonoBehaviour, IInteractable
         ClearOptions();
 
         typingRoutine = StartCoroutine(TypeLine(currentDialogueNode.dialogue.text));
+        audioHandler?.ClearCache();
     }
 
     private void OnAPIError(string error)

@@ -1,10 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
-using System.Diagnostics;
 using UnityEngine.UI;
 
-public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private TMP_Text textMesh;
     private DialogueAudioHandler audioHandler;
@@ -20,12 +19,12 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Compensate for the -200 left margin offset
+        //Compensate for the -200 left margin offset
         Vector2 adjustedPosition = eventData.position;
 
         // Convert the margin offset from local space to screen space
         float scaleFactor = textMesh.canvas.scaleFactor;
-        adjustedPosition.x -= 1 * scaleFactor; // subtract because margin is -200
+        adjustedPosition.x -= 1 * scaleFactor; // fine-tuned offset for DialogueText margin
 
         int wordIndex = TMP_TextUtilities.FindIntersectingWord(textMesh, adjustedPosition, eventData.enterEventCamera);
 
@@ -38,11 +37,17 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
             string hoveredWord = textMesh.textInfo.wordInfo[wordIndex].GetWord();
             UnityEngine.Debug.Log("Accurate Hover: " + hoveredWord);
+        }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (lastHoveredWordIndex != -1)
+        {
+            string clickedWord = textMesh.textInfo.wordInfo[lastHoveredWordIndex].GetWord();
+            UnityEngine.Debug.Log("Word clicked: " + clickedWord);
 
             if (audioHandler != null)
-            {
-                audioHandler.PlayWord(hoveredWord);
-            }
+                audioHandler.PlayWord(clickedWord);
         }
     }
 
