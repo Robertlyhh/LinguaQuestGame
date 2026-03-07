@@ -36,9 +36,44 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
-        panelCanvasGroup.alpha = 0;
-        dialoguePanel.SetActive(false);
+        GameObject uiRoot = GameObject.Find("UI");
+
+        if (uiRoot != null)
+        {
+            if (dialoguePanel == null)
+            {
+                Transform panelTransform = uiRoot.transform.Find("DialoguePanel");
+                if (panelTransform != null) dialoguePanel = panelTransform.gameObject;
+            }
+        }
+        if (dialoguePanel != null)
+        {
+            Transform infoPanel = dialoguePanel.transform.Find("InfoPanel");
+
+            if (infoPanel != null)
+            {
+                if (nameText == null) 
+                    nameText = infoPanel.Find("NPCNameText").GetComponent<TMP_Text>();
+                
+                if (portraitImage == null) 
+                    portraitImage = infoPanel.Find("DialoguePortrait").GetComponent<Image>();
+                
+                if (dialogueText == null) 
+                    dialogueText = infoPanel.Find("DialogueText").GetComponent<TMP_Text>();
+            }
+
+            if (optionsContainer == null) 
+                optionsContainer = dialoguePanel.transform.Find("OptionsPanel");
+
+            panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
+            panelCanvasGroup.alpha = 0;
+            dialoguePanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError($"[NPC] {gameObject.name} could not find 'DialoguePanel' in the scene!");
+        }
+
         audioHandler = FindObjectOfType<DialogueAudioHandler>();
     }
 
