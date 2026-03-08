@@ -16636,7 +16636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0d0824b0f6b0c4f96ee448be0dbd90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SessionManager
-  fileName: save.json
+  fileName: hokkien_save.json
 --- !u!4 &473986596
 Transform:
   m_ObjectHideFlags: 0
@@ -19002,6 +19002,7 @@ GameObject:
   - component: {fileID: 1206774574}
   - component: {fileID: 1206774575}
   - component: {fileID: 1206774576}
+  - component: {fileID: 1206774577}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -19309,6 +19310,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1206774577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206774569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105a309b60d7c726db43f3b5ac10a5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDataHandler
 --- !u!1 &1225541642
 GameObject:
   m_ObjectHideFlags: 0
