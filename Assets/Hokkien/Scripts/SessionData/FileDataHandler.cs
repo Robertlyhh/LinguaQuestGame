@@ -57,7 +57,8 @@ public class FileDataHandler
             }
         }
         catch (Exception e) 
-        { 
+        {
+            Debug.LogError("Error occured when trying to save data to file: " + path + "\n" + e);
         }
     }
 }

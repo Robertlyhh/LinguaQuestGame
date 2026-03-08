@@ -6,6 +6,8 @@ using NUnit.Framework;
 using DG.Tweening;
 public class SessionManager : MonoBehaviour   
 {
+    // TODO - Implement ISessionData interface into classes 
+    // with the load and save functions
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
 
@@ -19,14 +21,17 @@ public class SessionManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("Found more than one instance of Game Data Manager in the scene.");
+            Debug.LogError("Found more than one instance" +
+                " of Game Data Manager in the scene.");
         }
         Instance = this;
     }
 
     public void Start()
     {
-        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.fileDataHandler = new FileDataHandler(
+                Application.persistentDataPath, fileName
+            );
         this.sessionDataObjects = FindAllSessionDataObjects();
         LoadGame();
     }
@@ -67,9 +72,12 @@ public class SessionManager : MonoBehaviour
 
     private List<ISessionData> FindAllSessionDataObjects()
     {
+        // Enumerates over all objects that implement that 
+        // ISessionData interface and puts them into a list
         IEnumerable<ISessionData> sessionDataObjects = 
-            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-            .OfType<ISessionData>();
+            FindObjectsByType<MonoBehaviour>(
+                    FindObjectsInactive.Include, FindObjectsSortMode.None
+                ).OfType<ISessionData>();
 
         return new List<ISessionData>(sessionDataObjects);
     }

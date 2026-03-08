@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameData
 {
+    // TODO - Add variables for different game elements that should be saved
+    // asides from player data
     public string playerId;
     public string playerName;
     public int playerBalance;
