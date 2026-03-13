@@ -38,6 +38,7 @@ public class KeyWordData
     public string translation;
     public string word;
     public string word_id;
+    //public string romanized; we will add this back in once the romanized api works
 }
 
 [Serializable]
@@ -81,4 +82,10 @@ public class VendorItem
     public string item_name;
     public string description;
     public int item_value;
+}
+
+[System.Serializable]
+public class KeyWordWrapper
+{
+    public KeyWordData[] items;
 }

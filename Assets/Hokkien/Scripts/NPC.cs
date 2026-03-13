@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class NPC : MonoBehaviour, IInteractable
 {
@@ -21,6 +22,7 @@ public class NPC : MonoBehaviour, IInteractable
     public TMP_Text dialogueText;
     public Transform optionsContainer;
     public GameObject optionButtonPrefab;
+    public WordHoverHandler wordHoverHandler;
 
     private CanvasGroup panelCanvasGroup;
     private VendorProfile vendorProfile;
@@ -60,6 +62,12 @@ public class NPC : MonoBehaviour, IInteractable
                 
                 if (dialogueText == null) 
                     dialogueText = infoPanel.Find("DialogueText").GetComponent<TMP_Text>();
+                if (wordHoverHandler == null)
+                {
+                    Transform dialogueTextTransform = infoPanel.Find("DialogueText");
+                    if (dialogueTextTransform != null)
+                        wordHoverHandler = dialogueTextTransform.GetComponent<WordHoverHandler>();
+                }
             }
 
             if (optionsContainer == null) 
@@ -76,6 +84,7 @@ public class NPC : MonoBehaviour, IInteractable
 
         audioHandler = FindObjectOfType<DialogueAudioHandler>();
     }
+ 
 
     public bool CanInteract() => !isTransitioning && !isLoading;
 
@@ -150,6 +159,31 @@ public class NPC : MonoBehaviour, IInteractable
 
         currentDialogueNode = response.data;
         ClearOptions();
+
+        UnityEngine.Debug.Log("[NPC] wordHoverHandler is: " + wordHoverHandler);
+        UnityEngine.Debug.Log("[NPC] key_words is: " + currentDialogueNode.dialogue.key_words);
+
+
+        if (wordHoverHandler != null && currentDialogueNode.dialogue.key_words != null)
+        {
+            UnityEngine.Debug.Log("[NPC] Loading " + currentDialogueNode.dialogue.key_words.Length + " keywords into WordHoverHandler");
+            List<KeyWordEntry> entries = new List<KeyWordEntry>();
+            foreach (var kw in currentDialogueNode.dialogue.key_words)
+            {
+                UnityEngine.Debug.Log("[NPC] Processing keyword: " + kw.word);
+                entries.Add(new KeyWordEntry
+                {
+                    word = kw.word,
+                    romanized = kw.translation,// mapped romanized to translaation because backend doesn;t return romanzier for now
+                    context = kw.context
+                });
+            }
+            wordHoverHandler.LoadKeyWords(entries);
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("[NPC] FAILED to load keywords! wordHoverHandler: " + wordHoverHandler + " | key_words: " + currentDialogueNode.dialogue.key_words);
+        }
 
         typingRoutine = StartCoroutine(TypeLine(currentDialogueNode.dialogue.text));
         audioHandler?.ClearCache();
