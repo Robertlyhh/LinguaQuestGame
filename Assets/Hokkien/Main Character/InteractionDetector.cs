@@ -12,19 +12,29 @@ public class InteractionDetector : MonoBehaviour
     {
         interactionIcon.SetActive(false);
     }
+
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (!context.performed) return;
+
+        if (interactableInRange == null)
         {
-            Debug.Log("Interacting with: " + (interactableInRange as MonoBehaviour).name);
-            interactableInRange?.Interact(); 
-            if (!interactableInRange.CanInteract())
-            {
-                Debug.Log("Failed");
-                interactionIcon.SetActive(false); 
-            }
+            Debug.Log("No interactable in range");
+            return;
         }
+
+        Debug.Log("Interacting with: " + (interactableInRange as MonoBehaviour).name);
+
+        if (!interactableInRange.CanInteract())
+        {
+            Debug.Log("Cannot interact");
+            interactionIcon.SetActive(false);
+            return;
+        }
+
+        interactableInRange.Interact();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IInteractable interactable) && interactable.CanInteract())
