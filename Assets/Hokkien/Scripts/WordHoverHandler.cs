@@ -113,7 +113,7 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
         Vector3 wordPosition = textMesh.transform.TransformPoint(
             textMesh.textInfo.characterInfo[wInfo.firstCharacterIndex].bottomLeft
         );
-        wordPosition.y -= 30f;
+        wordPosition.y -= 13f;
         wordPosition.x += 180f;
         UnityEngine.Debug.Log("[WordHoverHandler] Tooltip position: " + wordPosition);
 
