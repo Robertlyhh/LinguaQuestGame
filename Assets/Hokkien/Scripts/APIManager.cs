@@ -36,6 +36,29 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    private IEnumerator PostRequest<T>(string url, object body,
+        Action<T> onSuccess, Action<string> onError)
+    {
+        string jsonBody = JsonUtility.ToJson(body);
+        using var req = new UnityWebRequest(url, "POST");
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonBody));
+        req.downloadHandler = new DownloadHandlerBuffer();
+        yield return req.SendWebRequest();
+
+        if (req.result == UnityWebRequest.Result.Success)
+        {
+            UnityEngine.Debug.Log($"[API] POST {url}\n{req.downloadHandler.text}");
+            var response = JsonUtility.FromJson<T>(req.downloadHandler.text);
+            onSuccess?.Invoke(response);
+        }
+        else
+        {
+            UnityEngine.Debug.LogError($"[API] POST {url} → {req.error}\nResponse: {req.downloadHandler.text}");
+            onError?.Invoke(req.error);
+        }
+    }
+
     public void GetVendorProfile(string vendorId,
         Action<VendorProfile> onSuccess,
         Action<string> onError = null)
@@ -52,36 +75,48 @@ public class APIManager : MonoBehaviour
     }
 
     public void GetDialogueNode(string nodeId,
-    Action<DialogueResponse> onSuccess,
+    Action<DialogueResponseData> onSuccess,
     Action<string> onError = null)
     {
         StartCoroutine(GetRequest(
             $"{baseUrl}/api/v1/dialogue/{nodeId}",
             json =>
             {
-                // JsonUtility handles the outer response fine
-                var response = JsonUtility.FromJson<DialogueResponse>(json);
-
-                // Manually fix key_words to fix the nested array issue
-                // Extract the key_words array from the raw JSON string
-                int kwStart = json.IndexOf("\"key_words\":");
-                if (kwStart != -1)
+                var wrapper = JsonUtility.FromJson<DialogueNodeWrapper>(json);
+                if (wrapper != null)
                 {
-                    int arrayStart = json.IndexOf("[", kwStart);
-                    int arrayEnd = json.IndexOf("]", arrayStart);
-                    if (arrayStart != -1 && arrayEnd != -1)
-                    {
-                        string kwJson = "{\"items\":" + json.Substring(arrayStart, arrayEnd - arrayStart + 1) + "}";
-                        var wrapper = JsonUtility.FromJson<KeyWordWrapper>(kwJson);
-                        if (wrapper != null && response.data?.dialogue != null)
-                        {
-                            response.data.dialogue.key_words = wrapper.items;
-                            UnityEngine.Debug.Log($"[API] Manually parsed {wrapper.items.Length} keywords.");
-                        }
-                    }
+                    onSuccess?.Invoke(wrapper.data);
                 }
+                else
+                {
+                    onError?.Invoke("Failed to parse response");
+                }
+            },
+            onError
+        ));
+    }
 
-                onSuccess?.Invoke(response);
+    public void AddToInventory(string userId, string itemId, string challengeId,
+        Action<InventoryAddResponse> onSuccess, Action<string> onError = null)
+    {
+        var request = new InventoryAddRequest
+        {
+            user_id = userId,
+            item_id = itemId,
+            challenge_id = string.IsNullOrEmpty(challengeId) ? null : challengeId
+        };
+        StartCoroutine(PostRequest($"{baseUrl}/api/v1/challenges/inventory", request, onSuccess, onError));
+    }
+
+    public void GetUserInventory(string userId,
+        Action<InventoryResponse> onSuccess, Action<string> onError = null)
+    {
+        StartCoroutine(GetRequest(
+            $"{baseUrl}/api/v1/user/{userId}/inventory",
+            json =>
+            {
+                var wrapper = JsonUtility.FromJson<InventoryWrapper>(json);
+                onSuccess?.Invoke(wrapper.data);
             },
             onError
         ));

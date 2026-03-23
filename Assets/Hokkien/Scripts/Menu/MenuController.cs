@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class MenuController : MonoBehaviour
 {
-    public GameObject menuCanvas; 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject menuCanvas;
+    public InventoryDisplay inventoryDisplay;
+
     void Start()
     {
-        menuCanvas.SetActive(false); 
-        
+        menuCanvas.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) 
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            menuCanvas.SetActive(!menuCanvas.activeSelf); 
+            bool isOpening = !menuCanvas.activeSelf;
+            menuCanvas.SetActive(isOpening);
+
+            if (isOpening && inventoryDisplay != null)
+            {
+                inventoryDisplay.LoadInventory();
+            }
         }
     }
 }

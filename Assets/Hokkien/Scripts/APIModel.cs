@@ -1,9 +1,15 @@
 using System;
 
-// === Dialogue Response ===
-// GET /api/v1/dialogue/<node_id>
 [Serializable]
 public class DialogueResponse
+{
+    public string status;
+    public DialogueResponseData data;
+    public ResponseMeta meta;
+}
+
+[Serializable]
+public class DialogueNodeWrapper
 {
     public string status;
     public DialogueResponseData data;
@@ -38,7 +44,6 @@ public class KeyWordData
     public string translation;
     public string word;
     public string word_id;
-    //public string romanized; we will add this back in once the romanized api works
 }
 
 [Serializable]
@@ -48,6 +53,22 @@ public class DialogueOption
     public string next_node;
     public string option_id;
     public string text;
+    public DialogueEvent[] events;
+}
+
+[Serializable]
+public class DialogueEvent
+{
+    public string event_id;
+    public string event_type;
+    public string metadata;
+}
+
+[Serializable]
+public class PurchaseEventMetadata
+{
+    public string item_id;
+    public string challenge_id;
 }
 
 [Serializable]
@@ -56,8 +77,6 @@ public class ResponseMeta
     public int processTimeMS;
 }
 
-// === Vendor Profile ===
-// GET /api/v1/vendors/<vendor_id>
 [Serializable]
 public class VendorProfileResponse
 {
@@ -84,8 +103,50 @@ public class VendorItem
     public int item_value;
 }
 
-[System.Serializable]
-public class KeyWordWrapper
+[Serializable]
+public class InventoryAddRequest
 {
-    public KeyWordData[] items;
+    public string user_id;
+    public string item_id;
+    public string challenge_id;
+}
+
+[Serializable]
+public class InventoryAddResponse
+{
+    public string status;
+    public InventoryAddData data;
+}
+
+[Serializable]
+public class InventoryAddData
+{
+    public string user_id;
+    public string item_id;
+    public string challenge_id;
+    public string acquired_at;
+}
+
+[Serializable]
+public class InventoryWrapper
+{
+    public string status;
+    public InventoryResponse data;
+    public ResponseMeta meta;
+}
+
+[Serializable]
+public class InventoryResponse
+{
+    public string user_id;
+    public string active_challenge_id;
+    public InventoryItemResponse[] inventory;
+}
+
+[Serializable]
+public class InventoryItemResponse
+{
+    public string item_id;
+    public string challenge_id;
+    public string acquired_at;
 }

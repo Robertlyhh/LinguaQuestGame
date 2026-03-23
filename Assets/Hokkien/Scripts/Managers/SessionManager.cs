@@ -12,6 +12,7 @@ public class SessionManager : MonoBehaviour
     [SerializeField] private string fileName;
 
     private GameData gameData;
+    public GameData GameData => gameData;
     private List<ISessionData> sessionDataObjects;
     private FileDataHandler fileDataHandler;
 

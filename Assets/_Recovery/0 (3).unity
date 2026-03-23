@@ -157,10 +157,10 @@ RectTransform:
   - {fileID: 341602320}
   m_Father: {fileID: 2121873196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 600, y: -212.5}
-  m_SizeDelta: {x: 1200, y: 425}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &90747002
 MonoBehaviour:
@@ -588,10 +588,6 @@ PrefabInstance:
       value: NPC 14
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_014
       objectReference: {fileID: 0}
@@ -599,38 +595,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -720078665190531142, guid: f532c56efce87445f9d36c9e36a3f52d, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 6549340790314382793, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.0666667
@@ -817,9 +781,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 90747001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -22.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &208209779
@@ -15199,6 +15163,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -14, y: -1, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 290
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -13, y: -1, z: 0}
     second:
       serializedVersion: 2
@@ -15244,6 +15218,16 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 289
       m_TileSpriteIndex: 15
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -8, y: -1, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 290
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -29271,14 +29255,14 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 41c91eff56e207efe8797111e464008f, type: 2}
   - m_RefCount: 484
     m_Data: {fileID: 11400000, guid: 1c98fe8d536c365f68e53c1e7c656d8f, type: 2}
-  - m_RefCount: 484
+  - m_RefCount: 486
     m_Data: {fileID: 11400000, guid: b1a585effd43f4267a61445c583a5c33, type: 2}
   - m_RefCount: 57
     m_Data: {fileID: 11400000, guid: e7d517b53282e8c87ba8f74290c39ba9, type: 2}
   - m_RefCount: 110
     m_Data: {fileID: 11400000, guid: 710aaca131220dd2ea0e516bbdf2e975, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 484
+  - m_RefCount: 486
     m_Data: {fileID: 1672603418, guid: f4ff258d2369bd29cbe46501844f0571, type: 3}
   - m_RefCount: 485
     m_Data: {fileID: -1572391234087474867, guid: f4ff258d2369bd29cbe46501844f0571, type: 3}
@@ -29865,7 +29849,7 @@ Tilemap:
   - m_RefCount: 110
     m_Data: {fileID: 1703095180, guid: 9c7ce0f77227ac34d896083b321b238c, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 2513
+  - m_RefCount: 2515
     m_Data:
       e00: 1
       e01: 0
@@ -29920,7 +29904,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 2623
+  - m_RefCount: 2625
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -30210,9 +30194,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 90747001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 547.5, y: -235}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1095, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &341602321
@@ -30277,10 +30261,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -191.12}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &349659842
 MonoBehaviour:
@@ -30482,7 +30466,7 @@ MonoBehaviour:
   - {fileID: 1329860745}
   - {fileID: 202039774}
   pages:
-  - {fileID: 2135736387}
+  - {fileID: 1249337741}
   - {fileID: 1394394399}
   - {fileID: 1830495452}
 --- !u!1 &371087995
@@ -30683,10 +30667,6 @@ PrefabInstance:
       value: NPC 7
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_007
       objectReference: {fileID: 0}
@@ -30694,38 +30674,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -720078665190531142, guid: f532c56efce87445f9d36c9e36a3f52d, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 6549340790314382793, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 0.17
@@ -30820,10 +30768,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &438122171
 MonoBehaviour:
@@ -31018,7 +30966,6 @@ Transform:
   - {fileID: 225466603}
   - {fileID: 1587247156}
   - {fileID: 330506924}
-  - {fileID: 1272129296}
   m_Father: {fileID: 957220785}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449532918
@@ -31465,10 +31412,6 @@ PrefabInstance:
       value: NPC 4
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_004
       objectReference: {fileID: 0}
@@ -31476,38 +31419,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -3459020559606611098, guid: 3678786490a9a4034b6d172737fce416, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.21
@@ -31757,10 +31668,6 @@ PrefabInstance:
       value: NPC 18
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_018
       objectReference: {fileID: 0}
@@ -31768,38 +31675,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 8254437812725858486, guid: 443597dbf8dde4c14b63abaa4f953aff, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.01
@@ -31878,10 +31753,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -66.53}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &658652278
 MonoBehaviour:
@@ -32102,10 +31977,6 @@ PrefabInstance:
       value: NPC 3
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_003
       objectReference: {fileID: 0}
@@ -32113,38 +31984,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -8460268626561922479, guid: 54d863926e22e4f20893b590f3a8cac1, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.13
@@ -32296,10 +32135,6 @@ PrefabInstance:
       value: NPC 20
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_020
       objectReference: {fileID: 0}
@@ -32307,38 +32142,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 8254437812725858486, guid: 443597dbf8dde4c14b63abaa4f953aff, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.39
@@ -32501,10 +32304,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -108.06}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738026982
 MonoBehaviour:
@@ -32642,10 +32445,6 @@ PrefabInstance:
       value: NPC 6
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_006
       objectReference: {fileID: 0}
@@ -32653,38 +32452,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 6418855481175407459, guid: 78f5758feb4264be5853d8dfa73464f0, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 6549340790314382793, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_Size.x
       value: 1
@@ -32787,10 +32554,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -232.65}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &773348977
 MonoBehaviour:
@@ -33096,81 +32863,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1 &832665940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 832665941}
-  - component: {fileID: 832665942}
-  - component: {fileID: 832665943}
-  m_Layer: 5
-  m_Name: Notification Icon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &832665941
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832665940}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1480591434}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.779968, y: -20.363998}
-  m_SizeDelta: {x: 124.7842, y: 120.15}
-  m_Pivot: {x: 0, y: 1}
---- !u!222 &832665942
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832665940}
-  m_CullTransparentMesh: 1
---- !u!114 &832665943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832665940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &851955334
 GameObject:
   m_ObjectHideFlags: 0
@@ -33204,10 +32896,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -274.18}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &851955336
 MonoBehaviour:
@@ -33518,10 +33210,6 @@ PrefabInstance:
       value: NPC 10
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_010
       objectReference: {fileID: 0}
@@ -33529,38 +33217,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -6158701302202823355, guid: 9418433276fa44925882ba4da18a98e0, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.14
@@ -33638,7 +33294,6 @@ Transform:
   - {fileID: 2120971664}
   - {fileID: 473986596}
   - {fileID: 796967405}
-  - {fileID: 1298142975}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947155941
@@ -34039,10 +33694,6 @@ PrefabInstance:
       value: NPC 15
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_015
       objectReference: {fileID: 0}
@@ -34050,38 +33701,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 8796674933106829965, guid: c13924c0ddbaf46589c5eb4f538b12df, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.61
@@ -34251,7 +33870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -215, y: -214}
+  m_AnchoredPosition: {x: -247, y: -53}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1031753527
@@ -34329,10 +33948,6 @@ PrefabInstance:
       value: NPC 19
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_019
       objectReference: {fileID: 0}
@@ -34340,38 +33955,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -887854863690648860, guid: 123946a1fea6d4bd9ac35a65f8cffc50, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.44
@@ -34533,10 +34116,6 @@ PrefabInstance:
       value: NPC 2
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_002
       objectReference: {fileID: 0}
@@ -34544,38 +34123,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -6158701302202823355, guid: 9418433276fa44925882ba4da18a98e0, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.37
@@ -34621,202 +34168,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
---- !u!1 &1129198403
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1129198408}
-  - component: {fileID: 1129198407}
-  - component: {fileID: 1129198404}
-  - component: {fileID: 1129198406}
-  - component: {fileID: 1129198405}
-  m_Layer: 5
-  m_Name: Notification Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1129198404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129198403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Notification Text
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 20.712921, y: 0, z: -0.55073535, w: 0.98725885}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1129198405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129198403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11500000, guid: ddaedb5f39d9efd4b921b186b838074c, type: 3}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11500000, guid: ddaedb5f39d9efd4b921b186b838074c, type: 3}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1129198406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129198403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddaedb5f39d9efd4b921b186b838074c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WordHoverHandler
-  wordTooltip: {fileID: 0}
---- !u!222 &1129198407
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129198403}
-  m_CullTransparentMesh: 1
---- !u!224 &1129198408
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129198403}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1480591434}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 83.770905, y: -0.00021362305}
-  m_SizeDelta: {x: -209.8583, y: -40.728}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1141310062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
@@ -35349,6 +34700,81 @@ Transform:
   - {fileID: 879660182}
   m_Father: {fileID: 957220785}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1249337741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1249337742}
+  - component: {fileID: 1249337744}
+  - component: {fileID: 1249337743}
+  m_Layer: 5
+  m_Name: InventoryPage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1249337742
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249337741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1437043938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.0001, y: -47.5641}
+  m_SizeDelta: {x: 1707.3416, y: 772.4591}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1249337743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249337741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -5256508804588260846, guid: 0bb9844cca20742e29bfaff1a52fe954, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1249337744
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249337741}
+  m_CullTransparentMesh: 1
 --- !u!1 &1262876757
 GameObject:
   m_ObjectHideFlags: 0
@@ -35382,10 +34808,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663262477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -149.59}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1262876759
 MonoBehaviour:
@@ -35583,12 +35009,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272129294}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.159791, y: -0.7730534, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.8695588, y: -3.9771135, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 440733110}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1276198850
 GameObject:
@@ -35674,54 +35100,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 440733110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.427}
---- !u!1 &1298142974
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1298142975}
-  - component: {fileID: 1298142976}
-  m_Layer: 0
-  m_Name: HokkienItemRegistry
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1298142975
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298142974}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 942892302}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1298142976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298142974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc4b1f3d51ba48bcbf59fc4ad067cf4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HokkienItemRegistry
-  items:
-  - {fileID: 11400000, guid: a1ae326c7c954aa599714462d2c4c720, type: 2}
-  - {fileID: 11400000, guid: 0136372d7d6b462c967ef2b3fc9e0d42, type: 2}
-  - {fileID: 11400000, guid: e67d7e5ea1764845bb878655a9943577, type: 2}
 --- !u!1 &1301219820
 GameObject:
   m_ObjectHideFlags: 0
@@ -36078,10 +35456,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_005
       objectReference: {fileID: 0}
@@ -36089,38 +35463,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -9188257839231112453, guid: ac8f2c71b619f4942aa4b5a239fd9cb6, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.12
@@ -36189,7 +35531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1394394400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36298,7 +35640,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2135736388}
+  - {fileID: 1249337742}
   - {fileID: 1394394400}
   - {fileID: 1830495453}
   m_Father: {fileID: 553187368}
@@ -36313,83 +35655,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
   m_PrefabInstance: {fileID: 2004440877}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1480591433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1480591434}
-  - component: {fileID: 1480591436}
-  - component: {fileID: 1480591435}
-  m_Layer: 5
-  m_Name: Notification Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1480591434
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480591433}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 832665941}
-  - {fileID: 1129198408}
-  m_Father: {fileID: 5007390453554279425}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -329, y: -124}
-  m_SizeDelta: {x: 628.2394, y: 160.87848}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1480591435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480591433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.41960785}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1480591436
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480591433}
-  m_CullTransparentMesh: 1
 --- !u!1001 &1505231326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36407,10 +35672,6 @@ PrefabInstance:
       value: NPC 11
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_011
       objectReference: {fileID: 0}
@@ -36418,38 +35679,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -8460268626561922479, guid: 54d863926e22e4f20893b590f3a8cac1, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.87
@@ -36685,10 +35914,6 @@ PrefabInstance:
       value: NPC 12
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_012
       objectReference: {fileID: 0}
@@ -36696,38 +35921,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 8254437812725858486, guid: 443597dbf8dde4c14b63abaa4f953aff, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.39
@@ -37215,7 +36408,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 320}
-  m_SizeDelta: {x: 1823.2012, y: 0}
+  m_SizeDelta: {x: 1823.2012, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1687355369
 MonoBehaviour:
@@ -37282,45 +36475,9 @@ PrefabInstance:
       value: NPC 8
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_008
       objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.82
@@ -37467,10 +36624,6 @@ PrefabInstance:
       value: NPC 16
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_016
       objectReference: {fileID: 0}
@@ -37478,38 +36631,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -8460268626561922479, guid: 54d863926e22e4f20893b590f3a8cac1, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.43
@@ -38211,10 +37332,6 @@ PrefabInstance:
       value: NPC 9
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_009
       objectReference: {fileID: 0}
@@ -38222,38 +37339,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 8796674933106829965, guid: c13924c0ddbaf46589c5eb4f538b12df, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 6549340790314382793, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 0.38
@@ -38660,10 +37745,6 @@ PrefabInstance:
       value: NPC 17
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_017
       objectReference: {fileID: 0}
@@ -38671,38 +37752,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: 6418855481175407459, guid: 78f5758feb4264be5853d8dfa73464f0, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.556
@@ -53613,10 +52662,6 @@ PrefabInstance:
       value: NPC 13
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: nameText
-      value: 
-      objectReference: {fileID: 602330515778267458}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: vendorId
       value: v_013
       objectReference: {fileID: 0}
@@ -53624,38 +52669,6 @@ PrefabInstance:
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -3459020559606611098, guid: 3678786490a9a4034b6d172737fce416, type: 3}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialogueText
-      value: 
-      objectReference: {fileID: 426933913774607139}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: dialoguePanel
-      value: 
-      objectReference: {fileID: 7618006561583709738}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: portraitImage
-      value: 
-      objectReference: {fileID: 5785187114382037622}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: optionsContainer
-      value: 
-      objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 7786210970342687838, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.87
@@ -54062,122 +53075,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 440733110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 178.963}
---- !u!1 &2135736387
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2135736388}
-  - component: {fileID: 2135736390}
-  - component: {fileID: 2135736389}
-  - component: {fileID: 2135736391}
-  - component: {fileID: 2135736392}
-  m_Layer: 5
-  m_Name: InventoryPage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2135736388
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135736387}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1437043938}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0001, y: -47.5641}
-  m_SizeDelta: {x: 1707.3416, y: 772.4591}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2135736389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135736387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -5256508804588260846, guid: 0bb9844cca20742e29bfaff1a52fe954, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2135736390
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135736387}
-  m_CullTransparentMesh: 1
---- !u!114 &2135736391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135736387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 277f3fb2aea3ebf59a1055af972ef785, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryDisplay
-  gridContainer: {fileID: 2135736388}
-  itemSlotPrefab: {fileID: 248984427620316994, guid: c69da6d3f4616607baa740ae019e5bc2, type: 3}
-  loadOnStart: 1
---- !u!114 &2135736392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135736387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
-  m_Padding:
-    m_Left: 50
-    m_Right: 50
-    m_Top: 109
-    m_Bottom: 50
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 20, y: 20}
-  m_Constraint: 0
-  m_ConstraintCount: 2
 --- !u!1 &9611939480048066
 GameObject:
   m_ObjectHideFlags: 0
@@ -54190,6 +53087,7 @@ GameObject:
   - component: {fileID: 5512255500240179068}
   - component: {fileID: 4501461116174108071}
   - component: {fileID: 3895604905652603275}
+  - component: {fileID: 5512255500240179069}
   - component: {fileID: 5512255500240179071}
   - component: {fileID: 5512255500240179070}
   - component: {fileID: 5512255500240179072}
@@ -54741,8 +53639,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 138.41068, y: -14.999878}
-  m_SizeDelta: {x: -231.87866, y: -130}
+  m_AnchoredPosition: {x: 77.17501, y: -15}
+  m_SizeDelta: {x: -354.35, y: -130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4900664618495817127
 MonoBehaviour:
@@ -54816,7 +53714,6 @@ RectTransform:
   m_Children:
   - {fileID: 5798400355336948079}
   - {fileID: 553187368}
-  - {fileID: 1480591434}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -54864,22 +53761,6 @@ PrefabInstance:
       propertyPath: optionsContainer
       value: 
       objectReference: {fileID: 1687355368}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationDuration
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemIcon
-      value: 
-      objectReference: {fileID: 832665943}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: notificationItemName
-      value: 
-      objectReference: {fileID: 1129198404}
-    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
-      propertyPath: itemNotificationPanel
-      value: 
-      objectReference: {fileID: 1480591433}
     - target: {fileID: 6549340790314382793, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: m_Size.x
       value: 0.5
@@ -54980,6 +53861,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &5512255500240179069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9611939480048066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 361ddfa1f85d1dd4b813adcd7fc9d88c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTestLoader
 --- !u!114 &5512255500240179070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55103,7 +53996,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   menuCanvas: {fileID: 553187367}
-  inventoryDisplay: {fileID: 2135736391}
 --- !u!114 &5785187114382037622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55248,7 +54140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!225 &7618006561583709740
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -55287,7 +54179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_AnchorMin.x
@@ -55295,15 +54187,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1823.201
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55335,11 +54227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 911.6005
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -55362,6 +54254,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1272129296}
   - {fileID: 1206774570}
   - {fileID: 5007390453554279425}
   - {fileID: 942892302}

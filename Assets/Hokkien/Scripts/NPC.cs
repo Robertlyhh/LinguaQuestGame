@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
-using System.Collections.Generic;
 
 public class NPC : MonoBehaviour, IInteractable
 {
@@ -12,8 +11,8 @@ public class NPC : MonoBehaviour, IInteractable
     public Sprite npcPortrait;
 
     [Header("Settings")]
-    public float typingSpeed = 0.03f;
-    public float fadeDuration = 0.5f;
+    public float typingSpeed = 0.05f;
+    public float notificationDuration = 2f;
 
     [Header("UI References")]
     public GameObject dialoguePanel;
@@ -24,182 +23,85 @@ public class NPC : MonoBehaviour, IInteractable
     public GameObject optionButtonPrefab;
     public WordHoverHandler wordHoverHandler;
 
-    private CanvasGroup panelCanvasGroup;
-    private VendorProfile vendorProfile;
-    private DialogueResponseData currentDialogueNode;
-    private Coroutine typingRoutine;
+    [Header("Item Notification UI")]
+    public GameObject itemNotificationPanel;
+    public Image notificationItemIcon;
+    public TMP_Text notificationItemName;
 
+    private CanvasGroup panelCanvasGroup;
+    private DialogueResponseData currentNode;
+    private Coroutine typingRoutine;
     private bool isTyping;
-    private bool isDialogueActive;
-    private bool isTransitioning;
-    private bool isWaitingForOption;
-    private bool isLoading;
-    private DialogueAudioHandler audioHandler;
 
     private void Awake()
     {
-        GameObject uiRoot = GameObject.Find("UI");
-
-        if (uiRoot != null)
-        {
-            if (dialoguePanel == null)
-            {
-                Transform panelTransform = uiRoot.transform.Find("DialoguePanel");
-                if (panelTransform != null) dialoguePanel = panelTransform.gameObject;
-            }
-        }
-        if (dialoguePanel != null)
-        {
-            Transform infoPanel = dialoguePanel.transform.Find("InfoPanel");
-
-            if (infoPanel != null)
-            {
-                if (nameText == null) 
-                    nameText = infoPanel.Find("NPCNameText").GetComponent<TMP_Text>();
-                
-                if (portraitImage == null) 
-                    portraitImage = infoPanel.Find("DialoguePortrait").GetComponent<Image>();
-                
-                if (dialogueText == null) 
-                    dialogueText = infoPanel.Find("DialogueText").GetComponent<TMP_Text>();
-                if (wordHoverHandler == null)
-                {
-                    Transform dialogueTextTransform = infoPanel.Find("DialogueText");
-                    if (dialogueTextTransform != null)
-                        wordHoverHandler = dialogueTextTransform.GetComponent<WordHoverHandler>();
-                }
-            }
-
-            if (optionsContainer == null) 
-                optionsContainer = dialoguePanel.transform.Find("OptionsPanel");
-
-            panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
-            panelCanvasGroup.alpha = 0;
-            dialoguePanel.SetActive(false);
-        }
-        else
-        {
-            Debug.LogError($"[NPC] {gameObject.name} could not find 'DialoguePanel' in the scene!");
-        }
-
-        audioHandler = FindObjectOfType<DialogueAudioHandler>();
+        panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
+        panelCanvasGroup.alpha = 0;
+        dialoguePanel.SetActive(false);
+        
+        if (itemNotificationPanel != null)
+            itemNotificationPanel.SetActive(false);
     }
- 
 
-    public bool CanInteract() => !isTransitioning && !isLoading;
+    public bool CanInteract() => !dialoguePanel.activeSelf;
 
     public void Interact()
     {
-        if (isTransitioning || isLoading) return;
-
-        if (!isDialogueActive)
-        {
-            BeginConversation();
-        }
-        else if (isTyping)
+        if (isTyping)
         {
             SkipTyping();
+            return;
         }
-        else if (!isWaitingForOption)
-        {
+
+        if (!dialoguePanel.activeSelf)
+            BeginConversation();
+        else
             EndDialogue();
-        }
     }
 
     private void BeginConversation()
     {
-        isDialogueActive = true;
-        isTransitioning  = true;
-        isLoading        = true;
-
-        portraitImage.sprite = npcPortrait;
-        dialogueText.SetText("");
-
-        // Fade in panel dialogue panel
         dialoguePanel.SetActive(true);
-        panelCanvasGroup.DOKill();
-        panelCanvasGroup.DOFade(1, fadeDuration).OnComplete(() =>
-        {
-            isTransitioning = false;
-        });
+        portraitImage.sprite = npcPortrait;
+        panelCanvasGroup.DOFade(1, 0.3f);
 
-        // Fetch vendor profile
-        APIManager.Instance.GetVendorProfile(vendorId,
-            onSuccess: vendor =>
-            {
-                vendorProfile = vendor;
-                nameText.SetText(vendor.vendor_name);
-                FetchDialogueNode(vendor.dialogue_node_id);
-            },
-            onError: err =>
-            {
-                Debug.LogWarning($"[NPC] Failed to fetch vendor info: {err}");
-                nameText.SetText("Failed to fetch NPC Name");
-            }
-        );
+        APIManager.Instance.GetVendorProfile(vendorId, vendor =>
+        {
+            nameText.SetText(vendor.vendor_name);
+            FetchNode(vendor.dialogue_node_id);
+        }, err => EndDialogue());
     }
 
-    private void FetchDialogueNode(string nodeId)
+    private void FetchNode(string nodeId)
     {
-        isLoading = true;
         dialogueText.SetText("...");
-        APIManager.Instance.GetDialogueNode(nodeId, OnNodeReceived, OnAPIError);
+        APIManager.Instance.GetDialogueNode(nodeId, OnNodeReceived, err => EndDialogue());
     }
 
-    private void OnNodeReceived(DialogueResponse response)
+    private void OnNodeReceived(DialogueResponseData response)
     {
-        isLoading = false;
+        if (response.dialogue == null) { EndDialogue(); return; }
 
-        if (response.status != "success" || response.data?.dialogue == null)
-        {
-            OnAPIError("");
-            EndDialogue();
-            return;
-        }
-
-        currentDialogueNode = response.data;
+        currentNode = response;
         ClearOptions();
 
-        UnityEngine.Debug.Log("[NPC] wordHoverHandler is: " + wordHoverHandler);
-        UnityEngine.Debug.Log("[NPC] key_words is: " + currentDialogueNode.dialogue.key_words);
-
-
-        if (wordHoverHandler != null && currentDialogueNode.dialogue.key_words != null)
+        if (wordHoverHandler != null && currentNode.dialogue.key_words != null)
         {
-            UnityEngine.Debug.Log("[NPC] Loading " + currentDialogueNode.dialogue.key_words.Length + " keywords into WordHoverHandler");
-            List<KeyWordEntry> entries = new List<KeyWordEntry>();
-            foreach (var kw in currentDialogueNode.dialogue.key_words)
+            var entries = new System.Collections.Generic.List<KeyWordEntry>();
+            foreach (var kw in currentNode.dialogue.key_words)
             {
-                UnityEngine.Debug.Log("[NPC] Processing keyword: " + kw.word);
-                entries.Add(new KeyWordEntry
-                {
-                    word = kw.word,
-                    romanized = kw.translation,// mapped romanized to translaation because backend doesn;t return romanzier for now
-                    context = kw.context
-                });
+                entries.Add(new KeyWordEntry { word = kw.word, romanized = kw.translation, context = kw.context });
             }
             wordHoverHandler.LoadKeyWords(entries);
         }
-        else
-        {
-            UnityEngine.Debug.LogError("[NPC] FAILED to load keywords! wordHoverHandler: " + wordHoverHandler + " | key_words: " + currentDialogueNode.dialogue.key_words);
-        }
 
-        typingRoutine = StartCoroutine(TypeLine(currentDialogueNode.dialogue.text));
-        audioHandler?.ClearCache();
-    }
-
-    private void OnAPIError(string error)
-    {
-        isLoading = false;
-        Debug.LogError($"[NPC] API error: {error}");
-        EndDialogue();
+        typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
     }
 
     private IEnumerator TypeLine(string line)
     {
         isTyping = true;
-        dialogueText.SetText("");
+        dialogueText.text = "";
 
         foreach (char c in line)
         {
@@ -208,76 +110,101 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         isTyping = false;
-        OnLineFinished();
+        if (currentNode.options?.Length > 0) ShowOptions();
     }
 
     private void SkipTyping()
     {
         if (typingRoutine != null) StopCoroutine(typingRoutine);
-        dialogueText.SetText(currentDialogueNode.dialogue.text);
+        dialogueText.SetText(currentNode.dialogue.text);
         isTyping = false;
-        OnLineFinished();
-    }
-
-    private void OnLineFinished()
-    {
-        if (currentDialogueNode.options is { Length: > 0 }) {
-            ShowOptions();
-        }
+        if (currentNode.options?.Length > 0) ShowOptions();
     }
 
     private void ShowOptions()
     {
-        isWaitingForOption = true;
-
-        foreach (var opt in currentDialogueNode.options)
+        foreach (var opt in currentNode.options)
         {
-            GameObject OptionButton = Instantiate(optionButtonPrefab, optionsContainer);
-            OptionButton.GetComponentInChildren<TMP_Text>().SetText(opt.text);
-
-            string nextNode = opt.next_node;
-            OptionButton.GetComponent<Button>().onClick.AddListener(() =>
-                OnOptionPicked(nextNode));
+            var btnObj = Instantiate(optionButtonPrefab, optionsContainer);
+            btnObj.GetComponentInChildren<TMP_Text>().SetText(opt.text);
+            btnObj.GetComponent<Button>().onClick.AddListener(() => OnOptionPicked(opt));
         }
     }
 
     private void ClearOptions()
     {
-        for (int i = optionsContainer.childCount - 1; i >= 0; i--)
-            Destroy(optionsContainer.GetChild(i).gameObject);
+        foreach (Transform child in optionsContainer)
+            Destroy(child.gameObject);
     }
 
-    private void OnOptionPicked(string nextNode)
+    private void OnOptionPicked(DialogueOption option)
     {
-        isWaitingForOption = false;
         ClearOptions();
+        ProcessEvents(option);
+    }
 
-        if (string.IsNullOrEmpty(nextNode))
+    private void ProcessEvents(DialogueOption option)
+    {
+        if (option.events == null || option.events.Length == 0)
         {
-            EndDialogue();
+            AdvanceDialogue(option.next_node);
             return;
         }
 
-        FetchDialogueNode(nextNode);
+        foreach (var evt in option.events)
+        {
+            if (evt.event_type == "ADD_TO_INVENTORY")
+            {
+                var metadata = JsonUtility.FromJson<PurchaseEventMetadata>(evt.metadata);
+                var userId = SessionManager.Instance?.GameData?.playerId ?? GameData.DefaultPlayerId();
+                var item = HokkienItemRegistry.GetItem(metadata.item_id);
+
+                if (item != null)
+                    ShowItemNotification(item);
+
+                APIManager.Instance.AddToInventory(userId, metadata.item_id, metadata.challenge_id,
+                    resp => Debug.Log($"[NPC] Added {metadata.item_id} to inventory"),
+                    err => Debug.LogWarning($"[NPC] Inventory error: {err}"));
+            }
+        }
+
+        AdvanceDialogue(option.next_node);
+    }
+
+    private void ShowItemNotification(HokkienItem item)
+    {
+        if (itemNotificationPanel == null) return;
+
+        if (notificationItemIcon != null)
+            notificationItemIcon.sprite = item.icon;
+        if (notificationItemName != null)
+            notificationItemName.SetText(item.displayName);
+
+        itemNotificationPanel.SetActive(true);
+        panelCanvasGroup.DOFade(0.5f, 0.2f).SetUpdate(true);
+
+        CancelInvoke(nameof(HideItemNotification));
+        Invoke(nameof(HideItemNotification), notificationDuration);
+    }
+
+    private void HideItemNotification()
+    {
+        if (itemNotificationPanel == null) return;
+
+        itemNotificationPanel.SetActive(false);
+        panelCanvasGroup.DOFade(1f, 0.2f).SetUpdate(true);
+    }
+
+    private void AdvanceDialogue(string nextNode)
+    {
+        if (string.IsNullOrEmpty(nextNode)) { EndDialogue(); return; }
+        FetchNode(nextNode);
     }
 
     public void EndDialogue()
     {
         if (typingRoutine != null) StopCoroutine(typingRoutine);
-
-        isTyping           = false;
-        isWaitingForOption = false;
-        isLoading          = false;
-        isTransitioning    = true;
         ClearOptions();
-
-        panelCanvasGroup.DOKill();
-        panelCanvasGroup.DOFade(0, fadeDuration).OnComplete(() =>
-        {
-            dialoguePanel.SetActive(false);
-            dialogueText.SetText("");
-            isDialogueActive = false;
-            isTransitioning  = false;
-        });
+        panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
     }
 }
