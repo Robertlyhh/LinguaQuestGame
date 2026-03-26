@@ -13,6 +13,7 @@ public class NPC : MonoBehaviour, IInteractable
     [Header("Settings")]
     public float typingSpeed = 0.05f;
     public float notificationDuration = 2f;
+    public float autoAdvanceDelay = 0.5f;
 
     [Header("UI References")]
     public GameObject dialoguePanel;
@@ -110,7 +111,37 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         isTyping = false;
-        if (currentNode.options?.Length > 0) ShowOptions();
+        ProcessAfterTyping();
+    }
+
+    private void ProcessAfterTyping()
+    {
+        if (currentNode.options != null && currentNode.options.Length > 0)
+        {
+            ShowOptions();
+        }
+        else if (currentNode.next_nodes != null && currentNode.next_nodes.Length == 1)
+        {
+            StartCoroutine(AutoAdvanceAfterDelay());
+        }
+        else
+        {
+            StartCoroutine(ShowEndDialogueOption());
+        }
+    }
+
+    private IEnumerator AutoAdvanceAfterDelay()
+    {
+        yield return new WaitForSeconds(autoAdvanceDelay);
+        AdvanceDialogue(currentNode.next_nodes[0]);
+    }
+
+    private IEnumerator ShowEndDialogueOption()
+    {
+        yield return new WaitForSeconds(autoAdvanceDelay);
+        var btnObj = Instantiate(optionButtonPrefab, optionsContainer);
+        btnObj.GetComponentInChildren<TMP_Text>().SetText("Continue");
+        btnObj.GetComponent<Button>().onClick.AddListener(() => EndDialogue());
     }
 
     private void SkipTyping()
@@ -118,7 +149,7 @@ public class NPC : MonoBehaviour, IInteractable
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         dialogueText.SetText(currentNode.dialogue.text);
         isTyping = false;
-        if (currentNode.options?.Length > 0) ShowOptions();
+        ProcessAfterTyping();
     }
 
     private void ShowOptions()
@@ -151,6 +182,7 @@ public class NPC : MonoBehaviour, IInteractable
             return;
         }
 
+        bool hasLessonComplete = false;
         foreach (var evt in option.events)
         {
             if (evt.event_type == "ADD_TO_INVENTORY")
@@ -166,9 +198,28 @@ public class NPC : MonoBehaviour, IInteractable
                     resp => Debug.Log($"[NPC] Added {metadata.item_id} to inventory"),
                     err => Debug.LogWarning($"[NPC] Inventory error: {err}"));
             }
+            else if (evt.event_type == "LESSON_COMPLETE")
+            {
+                hasLessonComplete = true;
+            }
         }
 
-        AdvanceDialogue(option.next_node);
+        if (hasLessonComplete)
+        {
+            StartCoroutine(ShowLessonCompleteAndEnd());
+        }
+        else
+        {
+            AdvanceDialogue(option.next_node);
+        }
+    }
+
+    private IEnumerator ShowLessonCompleteAndEnd()
+    {
+        yield return new WaitForSeconds(autoAdvanceDelay);
+        var btnObj = Instantiate(optionButtonPrefab, optionsContainer);
+        btnObj.GetComponentInChildren<TMP_Text>().SetText("Continue");
+        btnObj.GetComponent<Button>().onClick.AddListener(() => EndDialogue());
     }
 
     private void ShowItemNotification(HokkienItem item)
