@@ -215772,7 +215772,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 188753438}
   m_HandleRect: {fileID: 188753437}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -235856,8 +235856,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NPC Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4e0e85301231f44408a09cb05f2c6d81, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 4e0e85301231f44408a09cb05f2c6d81, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -236827,6 +236827,18 @@ PrefabInstance:
     - target: {fileID: 131311999632596786, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_Name
       value: OptionA
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380181124168769804, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e0e85301231f44408a09cb05f2c6d81, type: 2}
+    - target: {fileID: 7380181124168769804, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 4e0e85301231f44408a09cb05f2c6d81, type: 2}
+    - target: {fileID: 7380181124168769804, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8736513749226558116, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
       propertyPath: m_Pivot.x
