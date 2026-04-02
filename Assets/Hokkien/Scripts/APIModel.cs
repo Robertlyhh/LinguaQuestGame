@@ -44,6 +44,8 @@ public class KeyWordData
     public string translation;
     public string word;
     public string word_id;
+    public string english_word;
+    public string romanized;
 }
 
 [Serializable]

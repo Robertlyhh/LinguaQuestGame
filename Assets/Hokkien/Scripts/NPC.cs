@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using KeyWordEntry = WordHoverHandler.KeyWordEntry;
 
 public class NPC : MonoBehaviour, IInteractable
 {
@@ -82,21 +83,63 @@ public class NPC : MonoBehaviour, IInteractable
     private void OnNodeReceived(DialogueResponseData response)
     {
         if (response.dialogue == null) { EndDialogue(); return; }
-
         currentNode = response;
         ClearOptions();
 
+        // Build keyword entries first
+        var entries = new System.Collections.Generic.List<KeyWordEntry>();
         if (wordHoverHandler != null && currentNode.dialogue.key_words != null)
         {
-            var entries = new System.Collections.Generic.List<KeyWordEntry>();
             foreach (var kw in currentNode.dialogue.key_words)
             {
-                entries.Add(new KeyWordEntry { word = kw.word, romanized = kw.translation, context = kw.context });
+                entries.Add(new KeyWordEntry
+                {
+                    word = kw.word,           // Chinese word like "试吃"
+                    romanized = kw.translation,
+                    context = kw.context,
+                    english_word = kw.english_word
+                });
             }
             wordHoverHandler.LoadKeyWords(entries);
         }
 
-        typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
+        // Replace English keywords in dialogue text with Chinese equivalents
+        string displayText = BuildDisplayText(
+            currentNode.dialogue.text,
+            currentNode.dialogue.key_words
+        );
+
+        typingRoutine = StartCoroutine(TypeLine(displayText));
+    }
+    private string BuildDisplayText(string englishText, KeyWordData[] keywords)
+    {
+        if (keywords == null || keywords.Length == 0)
+            return englishText;
+
+        // ← ADD THESE DEBUG LOGS
+        UnityEngine.Debug.Log("[NPC] BuildDisplayText input: " + englishText);
+        foreach (var kw in keywords)
+        {
+            UnityEngine.Debug.Log("[NPC] Keyword: " + kw.word
+                + " | english_word: '" + kw.english_word + "'");
+        }
+
+        string result = englishText;
+        foreach (var kw in keywords)
+        {
+            if (!string.IsNullOrEmpty(kw.english_word) && !string.IsNullOrEmpty(kw.word))
+            {
+                result = System.Text.RegularExpressions.Regex.Replace(
+                    result,
+                    System.Text.RegularExpressions.Regex.Escape(kw.english_word),
+                    kw.word,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase
+                );
+            }
+        }
+
+        UnityEngine.Debug.Log("[NPC] BuildDisplayText output: " + result);
+        return result;
     }
 
     private IEnumerator TypeLine(string line)
@@ -111,6 +154,9 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         isTyping = false;
+        //refresh keyword highlights after typewriter finishes
+        if (wordHoverHandler != null)
+            wordHoverHandler.RefreshKeywordHighlights();
         ProcessAfterTyping();
     }
 
