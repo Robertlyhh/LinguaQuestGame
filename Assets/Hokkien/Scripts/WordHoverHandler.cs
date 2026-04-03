@@ -1,186 +1,95 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
-using System.Diagnostics;
+using System.Text.RegularExpressions; // Required for the search-and-replace logic
 
-public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+[RequireComponent(typeof(TMP_Text))]
+public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
 {
     private TMP_Text textMesh;
     private DialogueAudioHandler audioHandler;
     public WordTooltip wordTooltip;
-    private int lastHoveredWordIndex = -1;
 
-    // Stores key word data loaded from dialogue response
-    // Key = hokkien word, Value = [romanized, context]
-    private Dictionary<string, string[]> keyWordData = new Dictionary<string, string[]>();
+    // Stores keyword data using the Hokkien word as the dictionary key
+    private Dictionary<string, KeyWordData> keywordDatabase = new Dictionary<string, KeyWordData>();
 
     void Awake()
     {
-      
         textMesh = GetComponent<TMP_Text>();
         audioHandler = FindObjectOfType<DialogueAudioHandler>();
-        // Only use FindObjectOfType as fallback
         if (wordTooltip == null)
             wordTooltip = FindObjectOfType<WordTooltip>();
     }
-    void Start()
-    {
-        UnityEngine.Debug.LogWarning("WordHoverHandler initialized. TextMesh: " + textMesh.text + " | Tooltip: " + wordTooltip);
-        //UnityEngine.Debug.LogWarning("THIS IS A WARNING!!!!");
-    }
 
-
-    // Called by NPC when a new dialogue node loads
-    public void LoadKeyWords(List<KeyWordEntry> keyWords)
+    public void SetupDialogue(DialogueContent dialogueData)
     {
-        keyWordData.Clear();
-        UnityEngine.Debug.Log("[WordHoverHandler] LoadKeyWords called with " + keyWords.Count + " keywords.");
-        foreach (var kw in keyWords)
+        keywordDatabase.Clear();
+        string formattedText = dialogueData.text;
+
+        Debug.Log($"[WordHoverHandler] Processing text: {formattedText}");
+
+        foreach (var kw in dialogueData.key_words)
         {
-            keyWordData[kw.word] = new string[] { kw.romanized, kw.context };
-            UnityEngine.Debug.Log("[WordHoverHandler] Loaded keyword: '" + kw.word + "' | romanized: '" + kw.romanized + "' | context: '" + kw.context + "'");
+            keywordDatabase[kw.word] = kw;
+
+            // Extract "Minced Pork Rice" from "Minced Pork Rice (ló-bah-pn̄g)"
+            string englishTarget = kw.translation.Split('(')[0].Trim();
+            
+            // This creates the link, underline, and yellow color
+            string replacement = $"<link=\"{kw.word}\"><u><color=#FFD700>{englishTarget}</color></u></link>";
+
+            // Case-insensitive search for the phrase in the English dialogue
+            formattedText = Regex.Replace(formattedText, englishTarget, replacement, RegexOptions.IgnoreCase);
+            
+            Debug.Log($"[WordHoverHandler] Injected link for: {englishTarget}");
         }
-        UnityEngine.Debug.Log("[WordHoverHandler] keyWordData now has " + keyWordData.Count + " entries.");
-    }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Vector2 adjustedPosition = eventData.position;
-        float scaleFactor = textMesh.canvas.scaleFactor;
-        adjustedPosition.x -= 1 * scaleFactor;
-
-        int wordIndex = TMP_TextUtilities.FindIntersectingWord(textMesh, adjustedPosition, eventData.enterEventCamera);
-
-        if (wordIndex != -1 && wordIndex != lastHoveredWordIndex)
-        {
-            ResetHighlight();
-            lastHoveredWordIndex = wordIndex;
-
-            string hoveredWord = textMesh.textInfo.wordInfo[wordIndex].GetWord();
-            UnityEngine.Debug.Log("Hovered word: " + hoveredWord);//debugging
-            // Only highlight if it's a key word
-            if (keyWordData.ContainsKey(hoveredWord))
-            {
-                HighlightWord(wordIndex, Color.yellow);
-                UnityEngine.Debug.Log("Key word hovered: " + hoveredWord);
-            }
-        }
+        textMesh.text = formattedText;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        UnityEngine.Debug.Log("[WordHoverHandler] OnPointerClick FIRED at position: " + eventData.position);
+        // Detects which <link> tag was clicked
+        int linkIndex = TMP_TextUtilities.FindIntersectingLink(textMesh, eventData.position, eventData.pressEventCamera);
 
-        // Recalculate word index directly from click position
-        // instead of relying on lastHoveredWordIndex which may have been reset
-        Vector2 adjustedPosition = eventData.position;
-        float scaleFactor = textMesh.canvas.scaleFactor;
-        adjustedPosition.x -= 1 * scaleFactor;
-
-        int clickedWordIndex = TMP_TextUtilities.FindIntersectingWord(
-            textMesh,
-            adjustedPosition,
-            eventData.pressEventCamera
-        );
-
-        UnityEngine.Debug.Log("[WordHoverHandler] Clicked word index: " + clickedWordIndex);
-
-        if (clickedWordIndex == -1)
+        if (linkIndex != -1)
         {
-            UnityEngine.Debug.Log("[WordHoverHandler] No word found at click position.");
-            return;
-        }
+            TMP_LinkInfo linkInfo = textMesh.textInfo.linkInfo[linkIndex];
+            string clickedWordId = linkInfo.GetLinkID();
 
-        string clickedWord = textMesh.textInfo.wordInfo[clickedWordIndex].GetWord();
-        UnityEngine.Debug.Log("[WordHoverHandler] Clicked word string: " + clickedWord);
+            if (keywordDatabase.TryGetValue(clickedWordId, out KeyWordData kwData))
+            {
+                // Extract romanized text from parenthesis for the tooltip
+                string romanized = "";
+                int parenStart = kwData.translation.IndexOf('(');
+                int parenEnd = kwData.translation.LastIndexOf(')');
+                if (parenStart != -1 && parenEnd != -1)
+                {
+                    romanized = kwData.translation.Substring(parenStart + 1, parenEnd - parenStart - 1);
+                }
 
-        if (!keyWordData.ContainsKey(clickedWord))
-        {
-            UnityEngine.Debug.Log("[WordHoverHandler] Word is not a keyword, ignoring: " + clickedWord);
-            return;
-        }
+                // Calculate where to put the tooltip
+                int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
+                Vector3 bottomLeft = textMesh.textInfo.characterInfo[firstCharIndex].bottomLeft;
+                Vector3 wordPosition = textMesh.transform.TransformPoint(bottomLeft);
+                
+                wordPosition.y -= 20f; 
 
-        string[] data = keyWordData[clickedWord];
-        string romanized = data[0];
-        string context = data[1];
-        UnityEngine.Debug.Log("[WordHoverHandler] Keyword found! Romanized: " + romanized + " | Context: " + context);
+                if (wordTooltip != null)
+                    wordTooltip.ShowTooltip(kwData.word, romanized, kwData.context, wordPosition);
 
-        // Recalculate word position from the clicked word index
-        TMP_WordInfo wInfo = textMesh.textInfo.wordInfo[clickedWordIndex];
-        Vector3 wordPosition = textMesh.transform.TransformPoint(
-            textMesh.textInfo.characterInfo[wInfo.firstCharacterIndex].bottomLeft
-        );
-        wordPosition.y -= 13f;
-        wordPosition.x += 180f;
-        UnityEngine.Debug.Log("[WordHoverHandler] Tooltip position: " + wordPosition);
-
-        // Show tooltip
-        if (wordTooltip != null)
-        {
-            UnityEngine.Debug.Log("[WordHoverHandler] Calling ShowTooltip...");
-            wordTooltip.ShowTooltip(clickedWord, romanized, context, wordPosition);
+                /* if (audioHandler != null)
+                {
+                    UnityEngine.Debug.Log("[WordHoverHandler] Skipping audio for now...");
+                    // audioHandler.PlayWord(kwData.word); // COMMENT THIS OUT
+                }
+                */
+            }
         }
         else
         {
-            UnityEngine.Debug.LogError("[WordHoverHandler] wordTooltip reference is NULL! Make sure WordTooltip is in the scene.");
+            if (wordTooltip != null) wordTooltip.HideTooltip();
         }
-
-        // Play audio
-        if (audioHandler != null)
-        {
-            UnityEngine.Debug.Log("[WordHoverHandler] Calling PlayWord...");
-            audioHandler.PlayWord(clickedWord);
-        }
-        else
-        {
-            UnityEngine.Debug.LogWarning("[WordHoverHandler] audioHandler is NULL, skipping audio.");
-        }
-
-        UnityEngine.Debug.Log("[WordHoverHandler] OnPointerClick completed successfully for word: " + clickedWord);
     }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        ResetHighlight();
-        lastHoveredWordIndex = -1;
-    }
-
-    private void HighlightWord(int wordIndex, Color color)
-    {
-        textMesh.ForceMeshUpdate();
-        TMP_WordInfo wInfo = textMesh.textInfo.wordInfo[wordIndex];
-
-        for (int i = 0; i < wInfo.characterCount; i++)
-        {
-            int charIndex = wInfo.firstCharacterIndex + i;
-            int meshIndex = textMesh.textInfo.characterInfo[charIndex].materialReferenceIndex;
-            int vertexIndex = textMesh.textInfo.characterInfo[charIndex].vertexIndex;
-            Color32[] vertexColors = textMesh.textInfo.meshInfo[meshIndex].colors32;
-            vertexColors[vertexIndex + 0] = color;
-            vertexColors[vertexIndex + 1] = color;
-            vertexColors[vertexIndex + 2] = color;
-            vertexColors[vertexIndex + 3] = color;
-        }
-
-        textMesh.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-        textMesh.ForceMeshUpdate();
-    }
-
-    private void ResetHighlight()
-    {
-        if (lastHoveredWordIndex != -1)
-            HighlightWord(lastHoveredWordIndex, Color.white);
-    }
-}
-
-// Simple data class to hold key word info passed in from NPC
-[System.Serializable]
-public class KeyWordEntry
-{
-    public string word;
-    public string romanized;
-    public string context;
 }

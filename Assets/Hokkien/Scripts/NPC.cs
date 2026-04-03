@@ -22,6 +22,7 @@ public class NPC : MonoBehaviour, IInteractable
     public TMP_Text dialogueText;
     public Transform optionsContainer;
     public GameObject optionButtonPrefab;
+    public Button continueButton;
     public WordHoverHandler wordHoverHandler;
 
     [Header("Item Notification UI")]
@@ -39,6 +40,12 @@ public class NPC : MonoBehaviour, IInteractable
         panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
         panelCanvasGroup.alpha = 0;
         dialoguePanel.SetActive(false);
+
+        if (wordHoverHandler == null && dialogueText != null)
+            wordHoverHandler = dialogueText.GetComponent<WordHoverHandler>();
+
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(false);
         
         if (itemNotificationPanel != null)
             itemNotificationPanel.SetActive(false);
@@ -86,14 +93,20 @@ public class NPC : MonoBehaviour, IInteractable
         currentNode = response;
         ClearOptions();
 
-        if (wordHoverHandler != null && currentNode.dialogue.key_words != null)
+        WordHoverHandler handler = wordHoverHandler;
+        if (handler == null && dialogueText != null)
         {
-            var entries = new System.Collections.Generic.List<KeyWordEntry>();
-            foreach (var kw in currentNode.dialogue.key_words)
-            {
-                entries.Add(new KeyWordEntry { word = kw.word, romanized = kw.translation, context = kw.context });
-            }
-            wordHoverHandler.LoadKeyWords(entries);
+            handler = dialogueText.GetComponent<WordHoverHandler>();
+            wordHoverHandler = handler;
+        }
+
+        // Let WordHoverHandler render linked keywords when available.
+        if (handler != null)
+        {
+            handler.SetupDialogue(currentNode.dialogue);
+            isTyping = false;
+            ProcessAfterTyping();
+            return;
         }
 
         typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
@@ -116,38 +129,49 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void ProcessAfterTyping()
     {
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(false);
+
         if (currentNode.options != null && currentNode.options.Length > 0)
         {
             ShowOptions();
         }
         else if (currentNode.next_nodes != null && currentNode.next_nodes.Length == 1)
         {
-            StartCoroutine(AutoAdvanceAfterDelay());
+            if (continueButton != null)
+            {
+                continueButton.gameObject.SetActive(true);
+                continueButton.onClick.RemoveAllListeners();
+                continueButton.onClick.AddListener(() => AdvanceDialogue(currentNode.next_nodes[0]));
+            }
         }
         else
         {
-            StartCoroutine(ShowEndDialogueOption());
+            if (continueButton != null)
+            {
+                continueButton.gameObject.SetActive(true);
+                continueButton.onClick.RemoveAllListeners();
+                continueButton.onClick.AddListener(() => EndDialogue());
+            }
         }
-    }
-
-    private IEnumerator AutoAdvanceAfterDelay()
-    {
-        yield return new WaitForSeconds(autoAdvanceDelay);
-        AdvanceDialogue(currentNode.next_nodes[0]);
-    }
-
-    private IEnumerator ShowEndDialogueOption()
-    {
-        yield return new WaitForSeconds(autoAdvanceDelay);
-        var btnObj = Instantiate(optionButtonPrefab, optionsContainer);
-        btnObj.GetComponentInChildren<TMP_Text>().SetText("Continue");
-        btnObj.GetComponent<Button>().onClick.AddListener(() => EndDialogue());
     }
 
     private void SkipTyping()
     {
         if (typingRoutine != null) StopCoroutine(typingRoutine);
-        dialogueText.SetText(currentNode.dialogue.text);
+
+        WordHoverHandler handler = wordHoverHandler;
+        if (handler == null && dialogueText != null)
+        {
+            handler = dialogueText.GetComponent<WordHoverHandler>();
+            wordHoverHandler = handler;
+        }
+
+        if (handler != null)
+            handler.SetupDialogue(currentNode.dialogue);
+        else
+            dialogueText.SetText(currentNode.dialogue.text);
+
         isTyping = false;
         ProcessAfterTyping();
     }
@@ -166,6 +190,9 @@ public class NPC : MonoBehaviour, IInteractable
     {
         foreach (Transform child in optionsContainer)
             Destroy(child.gameObject);
+
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(false);
     }
 
     private void OnOptionPicked(DialogueOption option)
@@ -217,9 +244,13 @@ public class NPC : MonoBehaviour, IInteractable
     private IEnumerator ShowLessonCompleteAndEnd()
     {
         yield return new WaitForSeconds(autoAdvanceDelay);
-        var btnObj = Instantiate(optionButtonPrefab, optionsContainer);
-        btnObj.GetComponentInChildren<TMP_Text>().SetText("Continue");
-        btnObj.GetComponent<Button>().onClick.AddListener(() => EndDialogue());
+
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(true);
+            continueButton.onClick.RemoveAllListeners();
+            continueButton.onClick.AddListener(() => EndDialogue());
+        }
     }
 
     private void ShowItemNotification(HokkienItem item)
@@ -256,6 +287,10 @@ public class NPC : MonoBehaviour, IInteractable
     {
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         ClearOptions();
+
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(false);
+
         panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
     }
 }
