@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -21,16 +21,20 @@ public class WordTooltip : MonoBehaviour, IPointerClickHandler
 
     public void ShowTooltip(string hokkienWord, string romanized, string context, Vector3 worldPosition)
     {
-        hokkienWordText.text = hokkienWord;
-        romanizedText.text = romanized;
-        contextText.text = context;
+        if (hokkienWordText != null) hokkienWordText.text = hokkienWord;
+        if (romanizedText != null) romanizedText.text = romanized;
+        if (contextText != null) contextText.text = context;
 
-        // Position tooltip below the word
-        tooltipPanel.transform.position = worldPosition;
+        // ← Replace the position line with a fixed screen position
+        // Position it on the right side of the screen
+        RectTransform rt = tooltipPanel.GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(1, 0.5f);
+        rt.anchorMax = new Vector2(1, 0.5f);
+        rt.pivot = new Vector2(1, 0.5f);
+        rt.anchoredPosition = new Vector2(-10f, 0f); // 10px from right edge, vertically centered
+
         tooltipPanel.SetActive(true);
         isVisible = true;
-
-        UnityEngine.Debug.Log("Tooltip shown for: " + hokkienWord);
     }
 
     public void HideTooltip()

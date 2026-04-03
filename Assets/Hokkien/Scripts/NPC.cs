@@ -94,22 +94,24 @@ public class NPC : MonoBehaviour, IInteractable
             {
                 entries.Add(new KeyWordEntry
                 {
-                    word = kw.word,           // Chinese word like "试吃"
+                    word = kw.english_word,           // Chinese word like "试吃"
                     romanized = kw.translation,
                     context = kw.context,
-                    english_word = kw.english_word
+                    chinese_word = kw.word
                 });
             }
             wordHoverHandler.LoadKeyWords(entries);
         }
 
         // Replace English keywords in dialogue text with Chinese equivalents
-        string displayText = BuildDisplayText(
+        /* string displayText = BuildDisplayText(
             currentNode.dialogue.text,
             currentNode.dialogue.key_words
+        
+        typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
         );
-
-        typingRoutine = StartCoroutine(TypeLine(displayText));
+        */
+        typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
     }
     private string BuildDisplayText(string englishText, KeyWordData[] keywords)
     {

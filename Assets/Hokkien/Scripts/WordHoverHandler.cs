@@ -64,7 +64,7 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
         UnityEngine.Debug.Log("[WordHoverHandler] LoadKeyWords called with " + keyWords.Count + " keywords.");
         foreach (var kw in keyWords)
         {
-            keyWordData[kw.word] = new string[] { kw.romanized, kw.context };
+            keyWordData[kw.word] = new string[] { kw.romanized, kw.context, kw.chinese_word };
             UnityEngine.Debug.Log("[WordHoverHandler] Loaded keyword: '" + kw.word + "' | romanized: '" + kw.romanized + "' | context: '" + kw.context + "'");
         }
         UnityEngine.Debug.Log("[WordHoverHandler] keyWordData now has " + keyWordData.Count + " entries.");
@@ -150,6 +150,9 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
         string[] data = keyWordData[clickedWord];
         string romanized = data[0];
         string context = data[1];
+        string chineseWord = data[2];
+        // Update keyWordData to store 3 values instead of 2:
+        // Key = english word, Value = [romanized, context, chinese_word]
         UnityEngine.Debug.Log("[WordHoverHandler] Keyword found! Romanized: " + romanized + " | Context: " + context);
 
         // Recalculate word position from the clicked word index
@@ -165,7 +168,7 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (wordTooltip != null)
         {
             UnityEngine.Debug.Log("[WordHoverHandler] Calling ShowTooltip...");
-            wordTooltip.ShowTooltip(clickedWord, romanized, context, wordPosition);
+            wordTooltip.ShowTooltip(chineseWord, romanized, context, wordPosition);
         }
         else
         {
@@ -373,5 +376,6 @@ public class WordHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
         public string romanized;
         public string context;
         public string english_word;
+        public string chinese_word; //this si what is shown in the wordtooltip
     }
 }
