@@ -1105,9 +1105,9 @@ MonoBehaviour:
   slipInputInfluence: 0.8
   slipSteeringPower: 2
   wallBounceExtension: 0.5
-  slipSpeedMultiplier: 3
-  maxSlipSpeedMultiplier: 3
-  maxSlipDuration: 4
+  slipSpeedMultiplier: 1
+  maxSlipSpeedMultiplier: 1
+  maxSlipDuration: 1
   fallingDuration: 1
   fallingSpeedPenalty: 0.1
   fallingCooldown: 2

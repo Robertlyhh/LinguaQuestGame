@@ -89,7 +89,7 @@ public class FishingMiniGame : MonoBehaviour
             }
         }
 
-        if (hookProgress >= 1f)
+        if (hookProgress >= 0.5f)
         {
             Win();
         }

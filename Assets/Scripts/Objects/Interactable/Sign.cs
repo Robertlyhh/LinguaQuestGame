@@ -11,10 +11,6 @@ public class Sign : Interactable
 
     public override void Start()
     {
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
         if (dialogBox == null)
         {
             dialogBox = GameObject.FindGameObjectWithTag("DialogBox");
@@ -23,13 +19,8 @@ public class Sign : Interactable
         {
             dialogText = dialogBox.GetComponentInChildren<TextMeshProUGUI>();
         }
-        if (firstInteractionDone.runtimeValue == true)
-        {
-            if (flashingAnimator != null)
-            {
-                flashingAnimator.SetBool("isFlashing", false);
-            }
-        }
+
+        base.Start();
     }
     public virtual void Update()
     {

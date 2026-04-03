@@ -9,7 +9,8 @@ public class PrairieGameManager : MonoBehaviour
 
     public GameObject sackPrefab;
     public Transform spawnPoint;
-
+    public Inventory playerInventory;
+    public Item winningItem;
     public TextMeshProUGUI progressText;
 
     public float difficultyMultiplier = 1f;
@@ -26,6 +27,7 @@ public class PrairieGameManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip winSound;
     public float winDelay = 1f;
+    public GameObject winScreen;
 
     void Awake()
     {
@@ -75,13 +77,13 @@ public class PrairieGameManager : MonoBehaviour
         gameStarted = false;
 
         PrairieProgress.Completed = true;
-
+        playerInventory.AddItem(winningItem);
         // play win sound
         if (audioSource != null && winSound != null)
         {
             audioSource.PlayOneShot(winSound);
         }
-
+        winScreen.SetActive(true);
         // delay before returning
         Invoke(nameof(ReturnToPrairie), winDelay);
     }

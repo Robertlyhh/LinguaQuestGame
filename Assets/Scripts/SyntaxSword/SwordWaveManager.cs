@@ -87,6 +87,8 @@ public class SwordWaveManager : MonoBehaviour
     public AudioClip bgmClip;
     public bool IsPaused;
     private static readonly Color GoldColor = new Color(1f, 0.84f, 0f);
+    public Inventory playerInventory;
+    public Item completedItem;
 
     void Awake()
     {
@@ -347,6 +349,7 @@ public class SwordWaveManager : MonoBehaviour
 
     private void ResolveOutcomeFromScore()
     {
+        playerInventory.AddItem(completedItem);
         if (_score >= perfectWinScore)
         {
             Debug.Log("[SwordWaveManager] Perfect win threshold reached at time up.");

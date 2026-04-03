@@ -19,10 +19,11 @@ public class Door : Interactable
     public Inventory playerInventory;
     public SpriteRenderer doorSpriteRenderer;
     public BoxCollider2D doorCollider;
-    public Item requiredKey;
+    public Item[] requiredKeys; // Array of keys required to open the door (for locked doors)
     public BoolValue Opened;
     public Sprite OpenedSprite;
     public Sprite ClosedSprite;
+    public int requiredKeyCount = 0; // Number of keys required to open the door (for locked doors)
 
     public override void Start()
     {
@@ -76,7 +77,7 @@ public class Door : Interactable
         {
             if (doorType == DoorType.Locked)
             {
-                if (HasRequiredKey())
+                if (HasEnoughKeys(requiredKeyCount))
                 {
                     OpenDoor();
                 }
@@ -114,7 +115,28 @@ public class Door : Interactable
 
     private bool HasRequiredKey()
     {
-        // Check if the player has the required key in their inventory
-        return playerInventory.HasItem(requiredKey);
+        // Check if the player has any of the required keys in their inventory
+        foreach (var key in requiredKeys)
+        {
+            if (playerInventory.HasItem(key))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool HasEnoughKeys(int requiredCount)
+    {
+        // Check if the player has all required keys in their inventory
+        int keysFound = 0;
+        foreach (var key in requiredKeys)
+        {
+            if (playerInventory.HasItem(key))
+            {
+                keysFound++;
+            }
+        }
+        return keysFound >= requiredCount;
     }
 }

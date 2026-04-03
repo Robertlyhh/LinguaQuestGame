@@ -118,7 +118,7 @@ public class PlayerExploring : MonoBehaviour
 
         animator.SetFloat("moveX", 0);
         animator.SetFloat("moveY", -1);
-        myRigidbody.position = StartingPosition.initialValue;
+        myRigidbody.position = StartingPosition.runtimeValue;
         magicLevel.runtimeValue = magicLevel.initialValue;
     }
 

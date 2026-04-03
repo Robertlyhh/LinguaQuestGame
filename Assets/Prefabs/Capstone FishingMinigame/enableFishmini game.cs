@@ -34,6 +34,7 @@ public class EnableFishMiniGame : MonoBehaviour
 
         if (fishingSpot.playerInZone && Input.GetKeyDown(KeyCode.Q))
         {
+            Debug.Log("Player entered fishing zone and pressed Q. Enabling fishing mini-game.");
             fishingMiniGame.SetCurrentSpot(fishingSpot);
             miniGame.SetActive(true);
         }
@@ -41,10 +42,12 @@ public class EnableFishMiniGame : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //Debug.Log("OnTriggerEnter2D called on " + gameObject.name + " with collider: " + other.name);
         if (fishingSpot == null) return;
 
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered fishing zone.");
             fishingSpot.playerInZone = true;
         }
     }

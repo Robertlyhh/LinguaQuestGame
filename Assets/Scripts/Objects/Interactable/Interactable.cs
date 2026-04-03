@@ -12,22 +12,57 @@ public class Interactable : MonoBehaviour
     public BoolValue firstInteractionDone;
     public Animator flashingAnimator;
 
+    protected void ResolveFlashingAnimator()
+    {
+        Animator localAnimator = GetComponent<Animator>();
+
+        if (localAnimator != null && localAnimator.runtimeAnimatorController != null)
+        {
+            flashingAnimator = localAnimator;
+            return;
+        }
+
+        if (flashingAnimator != null && flashingAnimator.runtimeAnimatorController != null)
+        {
+            return;
+        }
+
+        if (localAnimator != null)
+        {
+            flashingAnimator = localAnimator;
+        }
+    }
+
+    protected void SetFlashingState(bool isFlashing)
+    {
+        ResolveFlashingAnimator();
+
+        if (flashingAnimator == null)
+        {
+            return;
+        }
+
+        if (flashingAnimator.runtimeAnimatorController == null)
+        {
+            Debug.LogWarning($"Animator on {flashingAnimator.gameObject.name} has no AnimatorController assigned.", flashingAnimator);
+            return;
+        }
+
+        flashingAnimator.SetBool("isFlashing", isFlashing);
+    }
+
     public virtual void Start()
     {
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
         }
-        if (flashingAnimator == null)
+
+        ResolveFlashingAnimator();
+
+        if (firstInteractionDone != null && firstInteractionDone.runtimeValue == true)
         {
-            flashingAnimator = GetComponent<Animator>();
-        }
-        if (firstInteractionDone.runtimeValue == true)
-        {
-            if (flashingAnimator != null)
-            {
-                flashingAnimator.SetBool("isFlashing", false);
-            }
+            SetFlashingState(false);
         }
     }
 
@@ -56,21 +91,18 @@ public class Interactable : MonoBehaviour
         {
             audioSource.PlayOneShot(interactSound);
         }
+        Debug.Log("Base Interact: Checking firstInteractionDone. Current value: " + (firstInteractionDone != null ? firstInteractionDone.runtimeValue.ToString() : "null"));
+        if (firstInteractionDone != null && firstInteractionDone.runtimeValue == false)
+        {
+            Debug.Log("First interaction done.");
+            firstInteractionDone.runtimeValue = true;
+            Debug.Log("Stopping flashing animation.");
+            SetFlashingState(false);
+        }
 
         if (interactSignal != null)
         {
             interactSignal.Raise();
-        }
-
-        if (firstInteractionDone.runtimeValue == false)
-        {
-            Debug.Log("First interaction done.");
-            firstInteractionDone.runtimeValue = true;
-            if (flashingAnimator != null)
-            {
-                Debug.Log("Stopping flashing animation.");
-                flashingAnimator.SetBool("isFlashing", false);
-            }
         }
     }
 }
