@@ -23,7 +23,7 @@ public class Breakable : MonoBehaviour
 
     }
 
-    public void Break()
+    public virtual void Break()
     {
         animator.SetBool("smash", true);
         StartCoroutine(BreakCo());

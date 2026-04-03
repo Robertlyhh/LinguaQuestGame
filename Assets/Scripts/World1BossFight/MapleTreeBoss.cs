@@ -258,14 +258,19 @@ namespace World1BossFight
 
             questions[0].text = questions[1].text = questions[2].text = questions[3].text = string.Empty;
 
+            var currentHealth = _health;
             StartCoroutine(SpawnHeartRoutine(correctIndex, duration));
             SpawnWrongAnswerSlams(correctIndex);
 
             yield return new WaitForSeconds(duration + attackCooldown);
 
-            _health--;
-            if (_health <= 0) StartCoroutine(DieRoutine());
-            else StartCoroutine(ChangeStateRoutine());
+            if (currentHealth == _health)
+            {
+                PerformAttack();
+                yield break;
+            }
+            
+            StartCoroutine(_health <= 0 ? DieRoutine() : ChangeStateRoutine());
         }
 
         private IEnumerator SpawnHeartRoutine(int correctIndex, float duration)
@@ -275,11 +280,21 @@ namespace World1BossFight
                 answerPositions[correctIndex].position,
                 Quaternion.identity
             );
+            
+            var bossHeart = heart.GetComponent<BossHeart>();
+            bossHeart.Damaged += BossHeartOnDamaged;
 
             yield return new WaitForSeconds(duration);
+            bossHeart.Damaged -= BossHeartOnDamaged;
             Destroy(heart);
         }
-        
+
+        private void BossHeartOnDamaged(BossHeart bossHeart)
+        {
+            bossHeart.Damaged -= BossHeartOnDamaged;
+            _health--;
+        }
+
         private void SpawnWrongAnswerSlams(int correctIndex)
         {
             StartCoroutine(SlamWrongAnswersRoutine(correctIndex));
