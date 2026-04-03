@@ -2982,23 +2982,23 @@ MonoBehaviour:
   attackCooldown: 3
   rollingLogPrefab: {fileID: 4855631832967528648, guid: e2f260deec726904596e994958078693, type: 3}
   rollingLogStageCount: {x: 10, y: 15, z: 20}
-  rollingLogStageSpeed: {x: 8, y: 10, z: 12}
-  rollingLogStageAttackSpeed: {x: 1, y: 1.5, z: 0.8}
+  rollingLogStageSpeed: {x: 8, y: 9, z: 10}
+  rollingLogStageAttackSpeed: {x: 1, y: 0.9, z: 0.8}
   leftRollingLogSpawnPoint: {fileID: 844324376}
   rightRollingLogSpawnPoint: {fileID: 2097893971}
   rollingLogSpawnPointHeight: 4
   branchStrikePrefab: {fileID: 838859240221941699, guid: d3e37e70ad59922428a4a88844a81f7a, type: 3}
   branchStrikeStageCount: {x: 15, y: 20, z: 25}
-  branchStrikeStageDelay: {x: 2, y: 1, z: 0.5}
-  branchStrikeStageSpeed: {x: 15, y: 20, z: 25}
-  branchStrikeStageDuration: {x: 1, y: 0.5, z: 0.25}
-  branchStrikeStageAttackSpeed: {x: 0.3, y: 0.2, z: 0.1}
+  branchStrikeStageDelay: {x: 1.5, y: 1, z: 0.75}
+  branchStrikeStageSpeed: {x: 15, y: 17, z: 20}
+  branchStrikeStageDuration: {x: 1, y: 0.75, z: 0.5}
+  branchStrikeStageAttackSpeed: {x: 0.3, y: 0.25, z: 0.2}
   mapleLeafSlamPrefab: {fileID: 8661223920910772114, guid: 48f7f37e655f7864eb86d0862ab90812, type: 3}
   mapleLeafSlamStageCount: {x: 10, y: 15, z: 25}
   mapleLeafSlamStageDelay: {x: 1, y: 0.75, z: 0.4}
-  mapleLeafSlamStageAttackSpeed: {x: 0.5, y: 0.35, z: 0.15}
+  mapleLeafSlamStageAttackSpeed: {x: 0.5, y: 0.4, z: 0.3}
   hedgeSplitPrefab: {fileID: 1147217379353904390, guid: bdb0be6dfd0754e45a4a916c8510ca9b, type: 3}
-  hedgeSplitStageDelay: {x: 5, y: 4, z: 3}
+  hedgeSplitStageDelay: {x: 5, y: 4.5, z: 4}
   hedgeSplitStageQuestionDuration: {x: 5, y: 5, z: 5}
 --- !u!114 &1385060566
 MonoBehaviour:
@@ -3095,7 +3095,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: dfa41c266c1799448834e4399ca916de, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
