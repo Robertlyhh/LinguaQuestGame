@@ -21,16 +21,55 @@ public class WordTooltip : MonoBehaviour, IPointerClickHandler
 
     public void ShowTooltip(string hokkienWord, string romanized, string context, Vector3 worldPosition)
     {
+        // 1. Set the text content
         hokkienWordText.text = hokkienWord;
         romanizedText.text = romanized;
         contextText.text = context;
 
-        // Position tooltip below the word
+        // 2. Set initial position and enable the panel
         tooltipPanel.transform.position = worldPosition;
         tooltipPanel.SetActive(true);
         isVisible = true;
 
-        UnityEngine.Debug.Log("Tooltip shown for: " + hokkienWord);
+        // 3. FORCE Unity to calculate the new size from Content Size Fitter/Layout Groups
+        Canvas.ForceUpdateCanvases();
+
+        // 4. Get the RectTransform and its dimensions
+        RectTransform rect = tooltipPanel.GetComponent<RectTransform>();
+        float width = rect.rect.width;
+        float height = rect.rect.height;
+        
+        // We assume your Pivot is X:0.5 (Center) and Y:1 (Top)
+        Vector3 pos = rect.position;
+
+        // --- LEFT OVERFLOW ---
+        // If the left edge (center - half width) is less than 0, shift right
+        float leftEdge = pos.x - (width * 0.5f);
+        if (leftEdge < 20f) // 20px padding from edge
+        {
+            pos.x += Mathf.Abs(leftEdge) + 20f;
+        }
+
+        // --- RIGHT OVERFLOW ---
+        // If the right edge (center + half width) is past screen width, shift left
+        float rightEdge = pos.x + (width * 0.5f);
+        if (rightEdge > Screen.width - 20f)
+        {
+            pos.x -= (rightEdge - Screen.width) + 20f;
+        }
+
+        // --- BOTTOM OVERFLOW ---
+        // Since pivot Y is 1 (top), the box grows down. 
+        // If (Position Y - Height) is less than 0, shift the box UP.
+        float bottomEdge = pos.y - height;
+        if (bottomEdge < 20f)
+        {
+            // Shifting it up so the bottom edge is at 20px
+            pos.y += Mathf.Abs(bottomEdge) + 20f;
+        }
+
+        // 5. Apply the corrected position
+        rect.position = pos;
     }
 
     public void HideTooltip()

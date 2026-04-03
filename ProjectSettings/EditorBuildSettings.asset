@@ -5,28 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Bootstrap.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StartingPage.unity
     guid: bc64fdfa11c27914480ed57de00de5a6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: fea42ffd5139002498128d9877b8927a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Help.unity
     guid: 54404fb505a9e424e972c9dbd01cde6b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Settings.unity
     guid: 4135f9298f9facb4f9339a1b49b0d792
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World1.unity
     guid: 515eb19eb21d3a144b46d9ae26c6c80d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HouseInterior.unity
     guid: 830270b3eae5c5145b50dd982693cd2b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FightingLog.unity
     guid: 89c0aa242eb4d2241bb07d53ca56304f
   - enabled: 0
@@ -41,7 +41,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BossFightingScene.unity
     guid: 4dc5eb7cd86f48f4db07e741e7c14cd4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FightingCord.unity
     guid: ee5d4af74150ddd40bc55e0352fdd677
   - enabled: 0
@@ -50,7 +50,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/HouseInterior3.unity
     guid: d709a4a1a771ada4b9f65f2498c9d7b1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/NewSyntaxSword.unity
     guid: 09b4dd4ec58f553498e52e55cd7ea7b1
   - enabled: 0
@@ -62,6 +62,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/World1_Revamped.unity
     guid: 3e62cfb273b9f5d40b614ecb6c7cd2cd
+  - enabled: 1
+    path: Assets/Scenes/Hokkien.unity
+    guid: 26f5d730c07e41d40b09ecd12cb43ecd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d77e64879b9461240881ec6039fb4332, type: 2}
   m_UseUCBPForAssetBundles: 0

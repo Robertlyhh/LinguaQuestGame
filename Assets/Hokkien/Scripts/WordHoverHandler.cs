@@ -39,8 +39,8 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
             // This creates the link, underline, and yellow color
             string replacement = $"<link=\"{kw.word}\"><u><color=#FFD700>{englishTarget}</color></u></link>";
 
-            // Case-insensitive search for the phrase in the English dialogue
-            formattedText = Regex.Replace(formattedText, englishTarget, replacement, RegexOptions.IgnoreCase);
+            // USE Regex.Escape() HERE:
+            formattedText = Regex.Replace(formattedText, Regex.Escape(englishTarget), replacement, RegexOptions.IgnoreCase);
             
             Debug.Log($"[WordHoverHandler] Injected link for: {englishTarget}");
         }
