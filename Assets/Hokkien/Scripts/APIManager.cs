@@ -9,7 +9,7 @@ public class APIManager : MonoBehaviour
     public string BaseUrl => baseUrl;
 
     [Header("Backend")]
-    [SerializeField] private string baseUrl = "http://localhost:8000";
+    [SerializeField] private string baseUrl = "https://nightmarket-9bb1.onrender.com";
 
     private void Awake()
     {
@@ -35,16 +35,22 @@ public class APIManager : MonoBehaviour
             Debug.LogError($"[API] GET {url} → {req.error}");
             onError?.Invoke(req.error);
         }
+        req.timeout = 60; // Give Render 60 seconds to "wake up"
+        yield return req.SendWebRequest();
     }
 
     private IEnumerator PostRequest<TResponse>(string url, object body,
         Action<TResponse> onSuccess, Action<string> onError = null)
     {
         string jsonBody = JsonUtility.ToJson(body);
-        using var req = new UnityWebRequest(url, "POST");
-        req.SetRequestHeader("Content-Type", "application/json");
-        req.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonBody));
+        // Use the constructor that sets up the upload handler automatically
+        using var req = UnityWebRequest.PostWwwForm(url, jsonBody);
+
+        // Manually override to raw JSON
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
+        req.uploadHandler = new UploadHandlerRaw(bodyRaw);
         req.downloadHandler = new DownloadHandlerBuffer();
+        req.SetRequestHeader("Content-Type", "application/json");
         yield return req.SendWebRequest();
 
         if (req.result == UnityWebRequest.Result.Success)
@@ -57,6 +63,9 @@ public class APIManager : MonoBehaviour
             Debug.LogError($"[API] POST {url} → {req.error}\nBody: {req.downloadHandler.text}");
             onError?.Invoke(req.error);
         }
+        
+        req.timeout = 60; // Give Render 60 seconds to "wake up"
+        yield return req.SendWebRequest();
     }
 
     // ─── Vendors ──────────────────────────────────────────────────────────────

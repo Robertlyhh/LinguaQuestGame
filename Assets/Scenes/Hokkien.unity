@@ -213505,9 +213505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a170448979063a84880f3c1a6a1e44b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeakerButton
-  dialogueText: {fileID: 426933913774607139}
-  audioSource: {fileID: 5512255500240179071}
-  ttsApiUrl: https://YOUR_BACKEND_URL/api/tts
 --- !u!1 &1228232343
 GameObject:
   m_ObjectHideFlags: 0
@@ -236041,9 +236038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a170448979063a84880f3c1a6a1e44b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeakerButton
-  dialogueText: {fileID: 426933913774607139}
-  audioSource: {fileID: 5512255500240179071}
-  ttsApiUrl: http://localhost:8000
 --- !u!114 &2073625388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236788,7 +236782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca3818e299fd4d4d89f8339c46a1669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAPI
-  baseUrl: http://localhost:8000
+  baseUrl: https://nightmarket-9bb1.onrender.com
 --- !u!4 &2120971664
 Transform:
   m_ObjectHideFlags: 0
