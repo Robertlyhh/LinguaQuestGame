@@ -23,6 +23,7 @@ public class APIManager : MonoBehaviour
         Action<string> onSuccess, Action<string> onError = null)
     {
         using var req = UnityWebRequest.Get(url);
+        req.timeout = 60; // Give Render 60 seconds to "wake up"
         yield return req.SendWebRequest();
 
         if (req.result == UnityWebRequest.Result.Success)
@@ -35,8 +36,6 @@ public class APIManager : MonoBehaviour
             Debug.LogError($"[API] GET {url} → {req.error}");
             onError?.Invoke(req.error);
         }
-        req.timeout = 60; // Give Render 60 seconds to "wake up"
-        yield return req.SendWebRequest();
     }
 
     private IEnumerator PostRequest<TResponse>(string url, object body,
@@ -51,6 +50,7 @@ public class APIManager : MonoBehaviour
         req.uploadHandler = new UploadHandlerRaw(bodyRaw);
         req.downloadHandler = new DownloadHandlerBuffer();
         req.SetRequestHeader("Content-Type", "application/json");
+        req.timeout = 60; // Give Render 60 seconds to "wake up"
         yield return req.SendWebRequest();
 
         if (req.result == UnityWebRequest.Result.Success)
@@ -63,9 +63,6 @@ public class APIManager : MonoBehaviour
             Debug.LogError($"[API] POST {url} → {req.error}\nBody: {req.downloadHandler.text}");
             onError?.Invoke(req.error);
         }
-        
-        req.timeout = 60; // Give Render 60 seconds to "wake up"
-        yield return req.SendWebRequest();
     }
 
     // ─── Vendors ──────────────────────────────────────────────────────────────
