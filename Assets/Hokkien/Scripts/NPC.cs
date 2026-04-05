@@ -25,15 +25,28 @@ public class NPC : MonoBehaviour, IInteractable
     public Button continueButton;
     public WordHoverHandler wordHoverHandler;
 
+    [Header("Audio")]
+    public Button audioButton;
+    public AudioSource audioSource;
+
+    [Header("Translation Toggle")]
+    public Button translationToggleButton;
+    public TMP_Text translationToggleLabel;
+
     [Header("Item Notification UI")]
     public GameObject itemNotificationPanel;
     public Image notificationItemIcon;
     public TMP_Text notificationItemName;
 
+    private enum TranslationMode { Original, Hokkien, POJ }
+
     private CanvasGroup panelCanvasGroup;
     private DialogueResponseData currentNode;
     private Coroutine typingRoutine;
     private bool isTyping;
+
+    private TranslationMode translationMode = TranslationMode.Original;
+    private AudioClip currentClip;
 
     private void Awake()
     {
@@ -46,9 +59,21 @@ public class NPC : MonoBehaviour, IInteractable
 
         if (continueButton != null)
             continueButton.gameObject.SetActive(false);
-        
+
         if (itemNotificationPanel != null)
             itemNotificationPanel.SetActive(false);
+
+        if (audioButton != null)
+        {
+            audioButton.gameObject.SetActive(false);
+            audioButton.onClick.AddListener(OnAudioButtonPressed);
+        }
+
+        if (translationToggleButton != null)
+        {
+            translationToggleButton.gameObject.SetActive(false);
+            translationToggleButton.onClick.AddListener(OnTranslationTogglePressed);
+        }
     }
 
     public bool CanInteract() => !dialoguePanel.activeSelf;
@@ -83,6 +108,14 @@ public class NPC : MonoBehaviour, IInteractable
     private void FetchNode(string nodeId)
     {
         dialogueText.SetText("...");
+        translationMode = TranslationMode.Original;
+
+        if (audioButton != null) audioButton.gameObject.SetActive(false);
+        if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
+
+        StopAudio();
+        currentClip = null;
+
         APIManager.Instance.GetDialogueNode(nodeId, OnNodeReceived, err => EndDialogue());
     }
 
@@ -93,6 +126,20 @@ public class NPC : MonoBehaviour, IInteractable
         currentNode = response;
         ClearOptions();
 
+        // Load audio clip from URL if available
+        if (!string.IsNullOrEmpty(response.dialogue.audio))
+    StartCoroutine(LoadAudioClip($"{APIManager.Instance.BaseUrl}/{response.dialogue.audio}"));
+
+
+        // Show translation toggle when any translation exists
+        bool hasTranslation = !string.IsNullOrEmpty(response.dialogue.translation_HAN)
+                   || !string.IsNullOrEmpty(response.dialogue.translation_POJ);
+        if (translationToggleButton != null)
+        {
+            translationToggleButton.gameObject.SetActive(hasTranslation);
+            UpdateTranslationToggleLabel();
+        }
+
         WordHoverHandler handler = wordHoverHandler;
         if (handler == null && dialogueText != null)
         {
@@ -100,7 +147,6 @@ public class NPC : MonoBehaviour, IInteractable
             wordHoverHandler = handler;
         }
 
-        // Let WordHoverHandler render linked keywords when available.
         if (handler != null)
         {
             handler.SetupDialogue(currentNode.dialogue);
@@ -110,6 +156,94 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
+    }
+
+    private IEnumerator LoadAudioClip(string url)
+    {
+        using var req = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
+        yield return req.SendWebRequest();
+
+        if (req.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+        {
+            currentClip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(req);
+            if (audioButton != null)
+                audioButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning($"[NPC] Failed to load audio: {req.error}");
+        }
+    }
+
+    private void OnAudioButtonPressed()
+    {
+        if (audioSource == null || currentClip == null) return;
+
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            return;
+        }
+
+        audioSource.clip = currentClip;
+        audioSource.Play();
+    }
+
+    private void StopAudio()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();
+    }
+
+    private void OnTranslationTogglePressed()
+    {
+        if (currentNode?.dialogue == null) return;
+
+        // Cycle: Original → Hokkien → POJ → Original
+        translationMode = translationMode switch
+        {
+            TranslationMode.Original => TranslationMode.Hokkien,
+            TranslationMode.Hokkien => TranslationMode.POJ,
+            TranslationMode.POJ => TranslationMode.Original,
+            _ => TranslationMode.Original
+        };
+
+        UpdateTranslationToggleLabel();
+        ApplyTranslationMode();
+    }
+
+    private void UpdateTranslationToggleLabel()
+    {
+        if (translationToggleLabel == null) return;
+
+        translationToggleLabel.SetText(translationMode switch
+        {
+            TranslationMode.Original => "EN",
+            TranslationMode.Hokkien => "漢",
+            TranslationMode.POJ => "POJ",
+            _ => "EN"
+        });
+    }
+
+    private void ApplyTranslationMode()
+    {
+        if (currentNode?.dialogue == null) return;
+
+        string displayText = translationMode switch
+        {
+            TranslationMode.Hokkien => !string.IsNullOrEmpty(currentNode.dialogue.translation_HAN)
+                ? currentNode.dialogue.translation_HAN
+                : currentNode.dialogue.text,
+            TranslationMode.POJ => !string.IsNullOrEmpty(currentNode.dialogue.translation_POJ)
+                ? currentNode.dialogue.translation_POJ
+                : currentNode.dialogue.text,
+            _ => currentNode.dialogue.text
+        };
+
+        if (translationMode == TranslationMode.Original && wordHoverHandler != null)
+            wordHoverHandler.SetupDialogue(currentNode.dialogue);
+        else
+            dialogueText.SetText(displayText);
     }
 
     private IEnumerator TypeLine(string line)
@@ -232,13 +366,9 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         if (hasLessonComplete)
-        {
             StartCoroutine(ShowLessonCompleteAndEnd());
-        }
         else
-        {
             AdvanceDialogue(option.next_node);
-        }
     }
 
     private IEnumerator ShowLessonCompleteAndEnd()
@@ -257,10 +387,8 @@ public class NPC : MonoBehaviour, IInteractable
     {
         if (itemNotificationPanel == null) return;
 
-        if (notificationItemIcon != null)
-            notificationItemIcon.sprite = item.icon;
-        if (notificationItemName != null)
-            notificationItemName.SetText(item.displayName);
+        if (notificationItemIcon != null) notificationItemIcon.sprite = item.icon;
+        if (notificationItemName != null) notificationItemName.SetText(item.displayName);
 
         itemNotificationPanel.SetActive(true);
         panelCanvasGroup.DOFade(0.5f, 0.2f).SetUpdate(true);
@@ -287,9 +415,11 @@ public class NPC : MonoBehaviour, IInteractable
     {
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         ClearOptions();
+        StopAudio();
 
-        if (continueButton != null)
-            continueButton.gameObject.SetActive(false);
+        if (continueButton != null) continueButton.gameObject.SetActive(false);
+        if (audioButton != null) audioButton.gameObject.SetActive(false);
+        if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
 
         panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
     }

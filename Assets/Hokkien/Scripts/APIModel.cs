@@ -1,12 +1,14 @@
 using System;
 
+// ─── Shared ───────────────────────────────────────────────────────────────────
+
 [Serializable]
-public class DialogueResponse
+public class ResponseMeta
 {
-    public string status;
-    public DialogueResponseData data;
-    public ResponseMeta meta;
+    public int processTimeMS;
 }
+
+// ─── Dialogue ─────────────────────────────────────────────────────────────────
 
 [Serializable]
 public class DialogueNodeWrapper
@@ -33,7 +35,8 @@ public class DialogueContent
     public KeyWordData[] key_words;
     public string npc_id;
     public string text;
-    public string translation;
+    public string translation_HAN;
+    public string translation_POJ;
 }
 
 [Serializable]
@@ -71,11 +74,24 @@ public class PurchaseEventMetadata
     public string challenge_id;
 }
 
+// ─── Root Nodes ───────────────────────────────────────────────────────────────
+
 [Serializable]
-public class ResponseMeta
+public class RootNodesWrapper
 {
-    public int processTimeMS;
+    public string status;
+    public RootNodesResponse data;
+    public ResponseMeta meta;
 }
+
+[Serializable]
+public class RootNodesResponse
+{
+    public string npc_id;
+    public string[] root_nodes;
+}
+
+// ─── Vendors ──────────────────────────────────────────────────────────────────
 
 [Serializable]
 public class VendorProfileResponse
@@ -102,6 +118,87 @@ public class VendorItem
     public string description;
     public int item_value;
 }
+
+// ─── Challenges ───────────────────────────────────────────────────────────────
+
+[Serializable]
+public class ChallengesWrapper
+{
+    public string status;
+    public ChallengesResponse data;
+    public ResponseMeta meta;
+}
+
+[Serializable]
+public class ChallengesResponse
+{
+    public ChallengeData[] challenges;
+}
+
+[Serializable]
+public class ChallengeWrapper
+{
+    public string status;
+    public ChallengeData data;
+    public ResponseMeta meta;
+}
+
+[Serializable]
+public class ChallengeData
+{
+    public string challenge_id;
+    public string challenge_name;
+    public string description;
+    public string npc_id;
+    public string item_id;
+}
+
+[Serializable]
+public class ChallengeAcceptRequest
+{
+    public string user_id;
+    public string challenge_id;
+}
+
+[Serializable]
+public class ChallengeAcceptResponse
+{
+    public string status;
+    public ChallengeAcceptData data;
+}
+
+[Serializable]
+public class ChallengeAcceptData
+{
+    public string user_id;
+    public string challenge_id;
+    public string accepted_at;
+}
+
+[Serializable]
+public class ChallengeVerifyRequest
+{
+    public string user_id;
+    public string challenge_id;
+    public string answer;
+}
+
+[Serializable]
+public class ChallengeVerifyResponse
+{
+    public string status;
+    public ChallengeVerifyData data;
+}
+
+[Serializable]
+public class ChallengeVerifyData
+{
+    public bool correct;
+    public string feedback;
+    public string next_node;
+}
+
+// ─── Inventory ────────────────────────────────────────────────────────────────
 
 [Serializable]
 public class InventoryAddRequest
