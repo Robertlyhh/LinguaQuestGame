@@ -10889,8 +10889,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 650892b4cb8d44438a98da5f99cc57a0, type: 2}
+  m_sharedMaterial: {fileID: -2203426892057840237, guid: 650892b4cb8d44438a98da5f99cc57a0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -212962,6 +212962,7 @@ GameObject:
   - component: {fileID: 1206774575}
   - component: {fileID: 1206774576}
   - component: {fileID: 1206774577}
+  - component: {fileID: 1206774578}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -213281,6 +213282,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105a309b60d7c726db43f3b5ac10a5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDataHandler
+--- !u!114 &1206774578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206774569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9bb724863810438cb2d8c83c8f2a897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerIdentity
+  playerName: You
+  playerPortrait: {fileID: -7527145504033472756, guid: e5691698e32df4116ac5cc2a11b2b111, type: 3}
 --- !u!1 &1219559327
 GameObject:
   m_ObjectHideFlags: 0
@@ -221683,8 +221698,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4e0e85301231f44408a09cb05f2c6d81, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 4e0e85301231f44408a09cb05f2c6d81, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
