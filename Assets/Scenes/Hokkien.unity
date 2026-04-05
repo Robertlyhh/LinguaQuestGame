@@ -10889,8 +10889,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 650892b4cb8d44438a98da5f99cc57a0, type: 2}
+  m_sharedMaterial: {fileID: -2203426892057840237, guid: 650892b4cb8d44438a98da5f99cc57a0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -213505,9 +213505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a170448979063a84880f3c1a6a1e44b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeakerButton
-  dialogueText: {fileID: 426933913774607139}
-  audioSource: {fileID: 5512255500240179071}
-  ttsApiUrl: https://YOUR_BACKEND_URL/api/tts
 --- !u!1 &1228232343
 GameObject:
   m_ObjectHideFlags: 0
@@ -236041,9 +236038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a170448979063a84880f3c1a6a1e44b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeakerButton
-  dialogueText: {fileID: 426933913774607139}
-  audioSource: {fileID: 5512255500240179071}
-  ttsApiUrl: http://localhost:8000
 --- !u!114 &2073625388
 MonoBehaviour:
   m_ObjectHideFlags: 0
