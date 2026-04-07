@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class APIManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class APIManager : MonoBehaviour
 
     [Header("Backend")]
     [SerializeField] private string baseUrl = "https://nightmarket-9bb1.onrender.com";
+    [SerializeField] private bool verboseNetworkLogs = false;
+
+    private readonly Dictionary<string, VendorProfile> vendorCache = new Dictionary<string, VendorProfile>();
+    private readonly Dictionary<string, DialogueResponseData> dialogueNodeCache = new Dictionary<string, DialogueResponseData>();
 
     private void Awake()
     {
@@ -28,7 +33,8 @@ public class APIManager : MonoBehaviour
 
         if (req.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log($"[API] GET {url}\n{req.downloadHandler.text}");
+            if (verboseNetworkLogs)
+                Debug.Log($"[API] GET {url} ({req.downloadHandler.text.Length} chars)");
             onSuccess?.Invoke(req.downloadHandler.text);
         }
         else
@@ -55,7 +61,8 @@ public class APIManager : MonoBehaviour
 
         if (req.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log($"[API] POST {url}\n{req.downloadHandler.text}");
+            if (verboseNetworkLogs)
+                Debug.Log($"[API] POST {url} ({req.downloadHandler.text.Length} chars)");
             onSuccess?.Invoke(JsonUtility.FromJson<TResponse>(req.downloadHandler.text));
         }
         else
@@ -71,9 +78,32 @@ public class APIManager : MonoBehaviour
     public void GetVendorProfile(string vendorId,
         Action<VendorProfile> onSuccess, Action<string> onError = null)
     {
+        if (string.IsNullOrEmpty(vendorId))
+        {
+            onError?.Invoke("Vendor id is empty");
+            return;
+        }
+
+        if (vendorCache.TryGetValue(vendorId, out var cachedVendor))
+        {
+            onSuccess?.Invoke(cachedVendor);
+            return;
+        }
+
         StartCoroutine(GetRequest(
             $"{baseUrl}/api/v1/vendors/{vendorId}",
-            json => onSuccess?.Invoke(JsonUtility.FromJson<VendorProfileResponse>(json).data),
+            json =>
+            {
+                var wrapper = JsonUtility.FromJson<VendorProfileResponse>(json);
+                if (wrapper?.data == null)
+                {
+                    onError?.Invoke("Failed to parse vendor response");
+                    return;
+                }
+
+                vendorCache[vendorId] = wrapper.data;
+                onSuccess?.Invoke(wrapper.data);
+            },
             onError
         ));
     }
@@ -84,16 +114,48 @@ public class APIManager : MonoBehaviour
     public void GetDialogueNode(string nodeId,
         Action<DialogueResponseData> onSuccess, Action<string> onError = null)
     {
+        if (string.IsNullOrEmpty(nodeId))
+        {
+            onError?.Invoke("Dialogue node id is empty");
+            return;
+        }
+
+        if (dialogueNodeCache.TryGetValue(nodeId, out var cachedNode))
+        {
+            onSuccess?.Invoke(cachedNode);
+            return;
+        }
+
         StartCoroutine(GetRequest(
             $"{baseUrl}/api/v1/dialogue/{nodeId}",
             json =>
             {
                 var wrapper = JsonUtility.FromJson<DialogueNodeWrapper>(json);
-                if (wrapper != null) onSuccess?.Invoke(wrapper.data);
-                else onError?.Invoke("Failed to parse dialogue node response");
+                if (wrapper?.data != null)
+                {
+                    dialogueNodeCache[nodeId] = wrapper.data;
+                    onSuccess?.Invoke(wrapper.data);
+                }
+                else
+                {
+                    onError?.Invoke("Failed to parse dialogue node response");
+                }
             },
             onError
         ));
+    }
+
+    public bool HasDialogueNodeCached(string nodeId)
+    {
+        return !string.IsNullOrEmpty(nodeId) && dialogueNodeCache.ContainsKey(nodeId);
+    }
+
+    public void PrefetchDialogueNode(string nodeId)
+    {
+        if (string.IsNullOrEmpty(nodeId) || HasDialogueNodeCached(nodeId))
+            return;
+
+        GetDialogueNode(nodeId, _ => { }, _ => { });
     }
 
     /// <summary>GET /api/v1/dialogue/root-nodes/{npcId}</summary>

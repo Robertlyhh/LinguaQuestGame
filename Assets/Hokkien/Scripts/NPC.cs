@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 
@@ -38,12 +39,17 @@ public class NPC : MonoBehaviour, IInteractable
     public Image notificationItemIcon;
     public TMP_Text notificationItemName;
 
+    [Header("Player Control")]
+    public frogMove playerMovement;
+
     private enum TranslationMode { Original, Hokkien, POJ }
 
     private CanvasGroup panelCanvasGroup;
     private DialogueResponseData currentNode;
     private Coroutine typingRoutine;
     private bool isTyping;
+    private bool isCurrentlyPlayerTurn = false;
+    private string currentNpcName;
 
     private TranslationMode translationMode = TranslationMode.Original;
     private AudioClip currentClip;
@@ -53,6 +59,9 @@ public class NPC : MonoBehaviour, IInteractable
         panelCanvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
         panelCanvasGroup.alpha = 0;
         dialoguePanel.SetActive(false);
+
+        if (playerMovement == null)
+            playerMovement = FindObjectOfType<frogMove>();
 
         if (wordHoverHandler == null && dialogueText != null)
             wordHoverHandler = dialogueText.GetComponent<WordHoverHandler>();
@@ -94,20 +103,31 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void BeginConversation()
     {
+        isCurrentlyPlayerTurn = false;
+        SetPlayerMovementPaused(true);
         dialoguePanel.SetActive(true);
         portraitImage.sprite = npcPortrait;
         panelCanvasGroup.DOFade(1, 0.3f);
 
         APIManager.Instance.GetVendorProfile(vendorId, vendor =>
         {
-            nameText.SetText(vendor.vendor_name);
+            currentNpcName = vendor.vendor_name;
+            nameText.SetText(currentNpcName);
             FetchNode(vendor.dialogue_node_id);
         }, err => EndDialogue());
     }
 
     private void FetchNode(string nodeId)
     {
-        dialogueText.SetText("...");
+        if (APIManager.Instance == null)
+        {
+            EndDialogue();
+            return;
+        }
+
+        if (!APIManager.Instance.HasDialogueNodeCached(nodeId))
+            dialogueText.SetText("...");
+
         translationMode = TranslationMode.Original;
 
         if (audioButton != null) audioButton.gameObject.SetActive(false);
@@ -125,6 +145,27 @@ public class NPC : MonoBehaviour, IInteractable
 
         currentNode = response;
         ClearOptions();
+
+        bool forceVendorSpeaker = response.dialogue.text == "Welcome! Our shaved ice is very refreshing! What toppings would you like?"
+            || response.dialogue.text == "Here you go! Enjoy!";
+
+        if (!forceVendorSpeaker && isCurrentlyPlayerTurn && PlayerIdentity.Instance != null)
+        {
+            nameText.SetText(PlayerIdentity.Instance.playerName);
+            portraitImage.sprite = PlayerIdentity.Instance.playerPortrait;
+        }
+        else
+        {
+            nameText.SetText(currentNpcName);
+            portraitImage.sprite = npcPortrait;
+        }
+
+        // Option/branch prompts should always be presented by the vendor.
+        if (response.options != null && response.options.Length > 0)
+        {
+            nameText.SetText(currentNpcName);
+            portraitImage.sprite = npcPortrait;
+        }
 
         // Load audio clip from URL if available
         if (!string.IsNullOrEmpty(response.dialogue.audio))
@@ -152,10 +193,41 @@ public class NPC : MonoBehaviour, IInteractable
             handler.SetupDialogue(currentNode.dialogue);
             isTyping = false;
             ProcessAfterTyping();
+            PrefetchLikelyNextNodes(currentNode);
             return;
         }
 
         typingRoutine = StartCoroutine(TypeLine(currentNode.dialogue.text));
+        PrefetchLikelyNextNodes(currentNode);
+    }
+
+    private void PrefetchLikelyNextNodes(DialogueResponseData node)
+    {
+        if (node == null || APIManager.Instance == null)
+            return;
+
+        var nextIds = new HashSet<string>();
+
+        if (node.next_nodes != null)
+        {
+            foreach (var nextId in node.next_nodes)
+            {
+                if (!string.IsNullOrEmpty(nextId))
+                    nextIds.Add(nextId);
+            }
+        }
+
+        if (node.options != null)
+        {
+            foreach (var option in node.options)
+            {
+                if (!string.IsNullOrEmpty(option.next_node))
+                    nextIds.Add(option.next_node);
+            }
+        }
+
+        foreach (var nextId in nextIds)
+            APIManager.Instance.PrefetchDialogueNode(nextId);
     }
 
     private IEnumerator LoadAudioClip(string url)
@@ -270,6 +342,10 @@ public class NPC : MonoBehaviour, IInteractable
         {
             ShowOptions();
         }
+        else if (currentNode.next_nodes == null || currentNode.next_nodes.Length == 0)
+        {
+            EndDialogue();
+        }
         else if (currentNode.next_nodes != null && currentNode.next_nodes.Length == 1)
         {
             if (continueButton != null)
@@ -332,6 +408,7 @@ public class NPC : MonoBehaviour, IInteractable
     private void OnOptionPicked(DialogueOption option)
     {
         ClearOptions();
+        isCurrentlyPlayerTurn = false;
         ProcessEvents(option);
     }
 
@@ -391,7 +468,8 @@ public class NPC : MonoBehaviour, IInteractable
         if (notificationItemName != null) notificationItemName.SetText(item.displayName);
 
         itemNotificationPanel.SetActive(true);
-        panelCanvasGroup.DOFade(0.5f, 0.2f).SetUpdate(true);
+        if (panelCanvasGroup != null)
+            panelCanvasGroup.alpha = 1f;
 
         CancelInvoke(nameof(HideItemNotification));
         Invoke(nameof(HideItemNotification), notificationDuration);
@@ -402,12 +480,14 @@ public class NPC : MonoBehaviour, IInteractable
         if (itemNotificationPanel == null) return;
 
         itemNotificationPanel.SetActive(false);
-        panelCanvasGroup.DOFade(1f, 0.2f).SetUpdate(true);
+        if (panelCanvasGroup != null)
+            panelCanvasGroup.alpha = 1f;
     }
 
     private void AdvanceDialogue(string nextNode)
     {
         if (string.IsNullOrEmpty(nextNode)) { EndDialogue(); return; }
+        isCurrentlyPlayerTurn = !isCurrentlyPlayerTurn;
         FetchNode(nextNode);
     }
 
@@ -416,11 +496,18 @@ public class NPC : MonoBehaviour, IInteractable
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         ClearOptions();
         StopAudio();
+        SetPlayerMovementPaused(false);
 
         if (continueButton != null) continueButton.gameObject.SetActive(false);
         if (audioButton != null) audioButton.gameObject.SetActive(false);
         if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
 
         panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
+    }
+
+    private void SetPlayerMovementPaused(bool paused)
+    {
+        if (playerMovement != null)
+            playerMovement.SetMovementPaused(paused);
     }
 }
