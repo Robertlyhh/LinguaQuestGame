@@ -80,7 +80,7 @@ public class DialogueAudioHandler : MonoBehaviour
 
                 // Decode base64 and write to temp file
                 byte[] audioBytes = Convert.FromBase64String(base64Audio);
-                string tempPath = System.IO.Path.Combine(UnityEngine.Application.temporaryCachePath, "word_temp.mp3");
+                string tempPath = System.IO.Path.Combine(UnityEngine.Application.temporaryCachePath, $"word_temp_{Guid.NewGuid().ToString().Substring(0, 8)}.mp3");
                 File.WriteAllBytes(tempPath, audioBytes);
 
                 yield return StartCoroutine(LoadAndCacheWord(word, tempPath));
