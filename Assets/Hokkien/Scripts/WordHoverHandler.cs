@@ -10,6 +10,7 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
     private TMP_Text textMesh;
     private DialogueAudioHandler audioHandler;
     public WordTooltip wordTooltip;
+    [SerializeField] private bool verboseWordLogs = false;
 
     // Stores keyword data using the Hokkien word as the dictionary key
     private Dictionary<string, KeyWordData> keywordDatabase = new Dictionary<string, KeyWordData>();
@@ -25,16 +26,37 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
     public void SetupDialogue(DialogueContent dialogueData)
     {
         keywordDatabase.Clear();
-        string formattedText = dialogueData.text;
+        if (dialogueData == null)
+        {
+            textMesh.text = string.Empty;
+            return;
+        }
 
-        Debug.Log($"[WordHoverHandler] Processing text: {formattedText}");
+        string formattedText = dialogueData.text ?? string.Empty;
+
+        if (dialogueData.key_words == null || dialogueData.key_words.Length == 0)
+        {
+            textMesh.text = formattedText;
+            return;
+        }
+
+        if (verboseWordLogs)
+            Debug.Log($"[WordHoverHandler] Processing text: {formattedText}");
 
         foreach (var kw in dialogueData.key_words)
         {
+            if (kw == null || string.IsNullOrEmpty(kw.word) || string.IsNullOrEmpty(kw.translation))
+                continue;
+
             keywordDatabase[kw.word] = kw;
 
             // Extract "Minced Pork Rice" from "Minced Pork Rice (ló-bah-pn̄g)"
             string englishTarget = kw.translation.Split('(')[0].Trim();
+            if (string.IsNullOrEmpty(englishTarget))
+                continue;
+
+            if (formattedText.IndexOf(englishTarget, System.StringComparison.OrdinalIgnoreCase) < 0)
+                continue;
             
             // This creates the link, underline, and yellow color
             string replacement = $"<link=\"{kw.word}\"><u><color=#FFD700>{englishTarget}</color></u></link>";
@@ -42,7 +64,8 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
             // USE Regex.Escape() HERE:
             formattedText = Regex.Replace(formattedText, Regex.Escape(englishTarget), replacement, RegexOptions.IgnoreCase);
             
-            Debug.Log($"[WordHoverHandler] Injected link for: {englishTarget}");
+            if (verboseWordLogs)
+                Debug.Log($"[WordHoverHandler] Injected link for: {englishTarget}");
         }
 
         textMesh.text = formattedText;

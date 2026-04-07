@@ -50,9 +50,16 @@ public class NPC : MonoBehaviour, IInteractable
     private bool isTyping;
     private bool isCurrentlyPlayerTurn = false;
     private string currentNpcName;
+    private int conversationToken;
+    private bool conversationActive;
 
     private TranslationMode translationMode = TranslationMode.Original;
     private AudioClip currentClip;
+
+    private void Start()
+    {
+        StartCoroutine(PrewarmDialogue());
+    }
 
     private void Awake()
     {
@@ -87,6 +94,23 @@ public class NPC : MonoBehaviour, IInteractable
 
     public bool CanInteract() => !dialoguePanel.activeSelf;
 
+    private IEnumerator PrewarmDialogue()
+    {
+        if (string.IsNullOrEmpty(vendorId))
+            yield break;
+
+        while (APIManager.Instance == null)
+            yield return null;
+
+        APIManager.Instance.GetVendorProfile(vendorId,
+            vendor =>
+            {
+                if (!string.IsNullOrEmpty(vendor.dialogue_node_id))
+                    APIManager.Instance.PrefetchDialogueNode(vendor.dialogue_node_id);
+            },
+            _ => { });
+    }
+
     public void Interact()
     {
         if (isTyping)
@@ -103,22 +127,45 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void BeginConversation()
     {
+        conversationToken++;
+        conversationActive = true;
         isCurrentlyPlayerTurn = false;
         SetPlayerMovementPaused(true);
         dialoguePanel.SetActive(true);
         portraitImage.sprite = npcPortrait;
+        dialogueText.SetText("...");
+        nameText.SetText("...");
+        ClearOptions();
+
+        if (audioButton != null) audioButton.gameObject.SetActive(false);
+        if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
+
+        StopAudio();
+        currentClip = null;
         panelCanvasGroup.DOFade(1, 0.3f);
+
+        int token = conversationToken;
 
         APIManager.Instance.GetVendorProfile(vendorId, vendor =>
         {
+            if (!IsConversationValid(token))
+                return;
+
             currentNpcName = vendor.vendor_name;
             nameText.SetText(currentNpcName);
-            FetchNode(vendor.dialogue_node_id);
-        }, err => EndDialogue());
+            FetchNode(vendor.dialogue_node_id, token);
+        }, err =>
+        {
+            if (IsConversationValid(token))
+                EndDialogue();
+        });
     }
 
-    private void FetchNode(string nodeId)
+    private void FetchNode(string nodeId, int token)
     {
+        if (!IsConversationValid(token))
+            return;
+
         if (APIManager.Instance == null)
         {
             EndDialogue();
@@ -136,11 +183,24 @@ public class NPC : MonoBehaviour, IInteractable
         StopAudio();
         currentClip = null;
 
-        APIManager.Instance.GetDialogueNode(nodeId, OnNodeReceived, err => EndDialogue());
+        APIManager.Instance.GetDialogueNode(nodeId,
+            response =>
+            {
+                if (IsConversationValid(token))
+                    OnNodeReceived(response, token);
+            },
+            err =>
+            {
+                if (IsConversationValid(token))
+                    EndDialogue();
+            });
     }
 
-    private void OnNodeReceived(DialogueResponseData response)
+    private void OnNodeReceived(DialogueResponseData response, int token)
     {
+        if (!IsConversationValid(token))
+            return;
+
         if (response.dialogue == null) { EndDialogue(); return; }
 
         currentNode = response;
@@ -169,7 +229,7 @@ public class NPC : MonoBehaviour, IInteractable
 
         // Load audio clip from URL if available
         if (!string.IsNullOrEmpty(response.dialogue.audio))
-    StartCoroutine(LoadAudioClip($"{APIManager.Instance.BaseUrl}/{response.dialogue.audio}"));
+            StartCoroutine(LoadAudioClip($"{APIManager.Instance.BaseUrl}/{response.dialogue.audio}", token));
 
 
         // Show translation toggle when any translation exists
@@ -230,10 +290,13 @@ public class NPC : MonoBehaviour, IInteractable
             APIManager.Instance.PrefetchDialogueNode(nextId);
     }
 
-    private IEnumerator LoadAudioClip(string url)
+    private IEnumerator LoadAudioClip(string url, int token)
     {
         using var req = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
         yield return req.SendWebRequest();
+
+        if (!IsConversationValid(token))
+            yield break;
 
         if (req.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
         {
@@ -344,7 +407,12 @@ public class NPC : MonoBehaviour, IInteractable
         }
         else if (currentNode.next_nodes == null || currentNode.next_nodes.Length == 0)
         {
-            EndDialogue();
+            if (continueButton != null)
+            {
+                continueButton.gameObject.SetActive(true);
+                continueButton.onClick.RemoveAllListeners();
+                continueButton.onClick.AddListener(EndDialogue);
+            }
         }
         else if (currentNode.next_nodes != null && currentNode.next_nodes.Length == 1)
         {
@@ -488,11 +556,14 @@ public class NPC : MonoBehaviour, IInteractable
     {
         if (string.IsNullOrEmpty(nextNode)) { EndDialogue(); return; }
         isCurrentlyPlayerTurn = !isCurrentlyPlayerTurn;
-        FetchNode(nextNode);
+        FetchNode(nextNode, conversationToken);
     }
 
     public void EndDialogue()
     {
+        conversationActive = false;
+        conversationToken++;
+
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         ClearOptions();
         StopAudio();
@@ -503,6 +574,11 @@ public class NPC : MonoBehaviour, IInteractable
         if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
 
         panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
+    }
+
+    private bool IsConversationValid(int token)
+    {
+        return conversationActive && token == conversationToken;
     }
 
     private void SetPlayerMovementPaused(bool paused)

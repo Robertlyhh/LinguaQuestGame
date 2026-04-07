@@ -12,9 +12,27 @@ public class APIManager : MonoBehaviour
     [Header("Backend")]
     [SerializeField] private string baseUrl = "https://nightmarket-9bb1.onrender.com";
     [SerializeField] private bool verboseNetworkLogs = false;
+    [SerializeField] private int maxPrefetchConcurrency = 2;
 
     private readonly Dictionary<string, VendorProfile> vendorCache = new Dictionary<string, VendorProfile>();
     private readonly Dictionary<string, DialogueResponseData> dialogueNodeCache = new Dictionary<string, DialogueResponseData>();
+    private readonly Dictionary<string, PendingVendorRequest> pendingVendorRequests = new Dictionary<string, PendingVendorRequest>();
+    private readonly Dictionary<string, PendingDialogueRequest> pendingDialogueRequests = new Dictionary<string, PendingDialogueRequest>();
+    private readonly Queue<string> dialoguePrefetchQueue = new Queue<string>();
+    private readonly HashSet<string> queuedDialoguePrefetches = new HashSet<string>();
+    private int activeDialoguePrefetchRequests;
+
+    private sealed class PendingVendorRequest
+    {
+        public readonly List<Action<VendorProfile>> successCallbacks = new List<Action<VendorProfile>>();
+        public readonly List<Action<string>> errorCallbacks = new List<Action<string>>();
+    }
+
+    private sealed class PendingDialogueRequest
+    {
+        public readonly List<Action<DialogueResponseData>> successCallbacks = new List<Action<DialogueResponseData>>();
+        public readonly List<Action<string>> errorCallbacks = new List<Action<string>>();
+    }
 
     private void Awake()
     {
@@ -90,6 +108,18 @@ public class APIManager : MonoBehaviour
             return;
         }
 
+        if (pendingVendorRequests.TryGetValue(vendorId, out var pendingVendor))
+        {
+            if (onSuccess != null) pendingVendor.successCallbacks.Add(onSuccess);
+            if (onError != null) pendingVendor.errorCallbacks.Add(onError);
+            return;
+        }
+
+        pendingVendor = new PendingVendorRequest();
+        if (onSuccess != null) pendingVendor.successCallbacks.Add(onSuccess);
+        if (onError != null) pendingVendor.errorCallbacks.Add(onError);
+        pendingVendorRequests[vendorId] = pendingVendor;
+
         StartCoroutine(GetRequest(
             $"{baseUrl}/api/v1/vendors/{vendorId}",
             json =>
@@ -97,14 +127,14 @@ public class APIManager : MonoBehaviour
                 var wrapper = JsonUtility.FromJson<VendorProfileResponse>(json);
                 if (wrapper?.data == null)
                 {
-                    onError?.Invoke("Failed to parse vendor response");
+                    CompleteVendorRequestError(vendorId, "Failed to parse vendor response");
                     return;
                 }
 
                 vendorCache[vendorId] = wrapper.data;
-                onSuccess?.Invoke(wrapper.data);
+                CompleteVendorRequestSuccess(vendorId, wrapper.data);
             },
-            onError
+            error => CompleteVendorRequestError(vendorId, error)
         ));
     }
 
@@ -126,6 +156,18 @@ public class APIManager : MonoBehaviour
             return;
         }
 
+        if (pendingDialogueRequests.TryGetValue(nodeId, out var pendingDialogue))
+        {
+            if (onSuccess != null) pendingDialogue.successCallbacks.Add(onSuccess);
+            if (onError != null) pendingDialogue.errorCallbacks.Add(onError);
+            return;
+        }
+
+        pendingDialogue = new PendingDialogueRequest();
+        if (onSuccess != null) pendingDialogue.successCallbacks.Add(onSuccess);
+        if (onError != null) pendingDialogue.errorCallbacks.Add(onError);
+        pendingDialogueRequests[nodeId] = pendingDialogue;
+
         StartCoroutine(GetRequest(
             $"{baseUrl}/api/v1/dialogue/{nodeId}",
             json =>
@@ -134,14 +176,14 @@ public class APIManager : MonoBehaviour
                 if (wrapper?.data != null)
                 {
                     dialogueNodeCache[nodeId] = wrapper.data;
-                    onSuccess?.Invoke(wrapper.data);
+                    CompleteDialogueRequestSuccess(nodeId, wrapper.data);
                 }
                 else
                 {
-                    onError?.Invoke("Failed to parse dialogue node response");
+                    CompleteDialogueRequestError(nodeId, "Failed to parse dialogue node response");
                 }
             },
-            onError
+            error => CompleteDialogueRequestError(nodeId, error)
         ));
     }
 
@@ -152,10 +194,83 @@ public class APIManager : MonoBehaviour
 
     public void PrefetchDialogueNode(string nodeId)
     {
-        if (string.IsNullOrEmpty(nodeId) || HasDialogueNodeCached(nodeId))
+        if (string.IsNullOrEmpty(nodeId)
+            || HasDialogueNodeCached(nodeId)
+            || pendingDialogueRequests.ContainsKey(nodeId)
+            || queuedDialoguePrefetches.Contains(nodeId))
             return;
 
-        GetDialogueNode(nodeId, _ => { }, _ => { });
+        queuedDialoguePrefetches.Add(nodeId);
+        dialoguePrefetchQueue.Enqueue(nodeId);
+        PumpDialoguePrefetchQueue();
+    }
+
+    private void PumpDialoguePrefetchQueue()
+    {
+        int concurrencyLimit = Mathf.Max(1, maxPrefetchConcurrency);
+
+        while (activeDialoguePrefetchRequests < concurrencyLimit && dialoguePrefetchQueue.Count > 0)
+        {
+            string nodeId = dialoguePrefetchQueue.Dequeue();
+
+            if (string.IsNullOrEmpty(nodeId) || HasDialogueNodeCached(nodeId) || pendingDialogueRequests.ContainsKey(nodeId))
+            {
+                queuedDialoguePrefetches.Remove(nodeId);
+                continue;
+            }
+
+            activeDialoguePrefetchRequests++;
+            GetDialogueNode(nodeId,
+                _ => CompleteDialoguePrefetch(nodeId),
+                _ => CompleteDialoguePrefetch(nodeId));
+        }
+    }
+
+    private void CompleteDialoguePrefetch(string nodeId)
+    {
+        queuedDialoguePrefetches.Remove(nodeId);
+        activeDialoguePrefetchRequests = Mathf.Max(0, activeDialoguePrefetchRequests - 1);
+        PumpDialoguePrefetchQueue();
+    }
+
+    private void CompleteVendorRequestSuccess(string vendorId, VendorProfile profile)
+    {
+        if (!pendingVendorRequests.TryGetValue(vendorId, out var pending))
+            return;
+
+        pendingVendorRequests.Remove(vendorId);
+        foreach (var callback in pending.successCallbacks)
+            callback?.Invoke(profile);
+    }
+
+    private void CompleteVendorRequestError(string vendorId, string error)
+    {
+        if (!pendingVendorRequests.TryGetValue(vendorId, out var pending))
+            return;
+
+        pendingVendorRequests.Remove(vendorId);
+        foreach (var callback in pending.errorCallbacks)
+            callback?.Invoke(error);
+    }
+
+    private void CompleteDialogueRequestSuccess(string nodeId, DialogueResponseData data)
+    {
+        if (!pendingDialogueRequests.TryGetValue(nodeId, out var pending))
+            return;
+
+        pendingDialogueRequests.Remove(nodeId);
+        foreach (var callback in pending.successCallbacks)
+            callback?.Invoke(data);
+    }
+
+    private void CompleteDialogueRequestError(string nodeId, string error)
+    {
+        if (!pendingDialogueRequests.TryGetValue(nodeId, out var pending))
+            return;
+
+        pendingDialogueRequests.Remove(nodeId);
+        foreach (var callback in pending.errorCallbacks)
+            callback?.Invoke(error);
     }
 
     /// <summary>GET /api/v1/dialogue/root-nodes/{npcId}</summary>
