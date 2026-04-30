@@ -15,6 +15,8 @@ public class StartingPageUI : MonoBehaviour
         // Handle confirm button press
         Debug.Log("Confirm button pressed!");
         string playerName = nameInputField.text ?? "";
+        Debug.Log("nameInputField: " + nameInputField);
+        Debug.Log("GameManager: " + GameManager.Instance);
         if (playerName.Length > 20) playerName = playerName.Substring(0, 20);
         GameManager.Instance.SetPlayerName(playerName);
         namePanel.SetActive(false);

@@ -2217,7 +2217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1568981057
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2680,9 +2680,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1604555869}
+    - target: {fileID: 1811217730614321470, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 1868017930585650612, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}
       propertyPath: m_Name
       value: StartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868017930585650612, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746680534326201529, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8824677698186456792, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}
       propertyPath: m_Pivot.x
@@ -2765,7 +2777,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5746680534326201529, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df0e8b792c24e6d4e86a9a11a6d602be, type: 3}

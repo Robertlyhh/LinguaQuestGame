@@ -342,18 +342,29 @@ PrefabInstance:
       objectReference: {fileID: 1739819346}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Try our Nanaimo Bars!
+      value: "We have Nanaimo bars \u2014 a beloved Canadian dessert named after
+        Nanaimo, British Columbia."
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: '*The gift shop is currently closed for renovations.'
+      value: 'It has three delicious layers: a crumbly chocolate base, a creamy custard
+        filling, and a smooth chocolate top.'
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
+      value: "No baking required \u2014 it is one of Canada's sweetest and most iconic
+        treats."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[3]'
+      value: '* The gift shop is currently closed for renovations.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[4]'
       value: '* We apologize for any inconvenience. - Management'
       objectReference: {fileID: 0}
     - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
@@ -174118,8 +174129,12 @@ MonoBehaviour:
   dialogBox: {fileID: 1707178025}
   dialogText: {fileID: 1739819346}
   dialogs:
-  - Welcome to the Rocky Mountains!
-  - This is just one of the 31 mountain ranges in BC!
+  - "Welcome to the Rocky Mountains \u2014 one of the most breathtaking landscapes
+    in all of Canada!"
+  - British Columbia alone is home to 31 distinct mountain ranges, each with its
+    own unique beauty.
+  - From the Rockies to the Coast Mountains, these peaks have shaped the land, the
+    wildlife, and the cultures of this region for thousands of years.
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!114 &3375471500983788300
@@ -174144,8 +174159,12 @@ MonoBehaviour:
   dialogBox: {fileID: 1707178025}
   dialogText: {fileID: 1739819346}
   dialogs:
-  - We've been standing here for hours hoping to see some orcas.
-  - But all we've seen are killer whales!
+  - "Look there, in the water \u2014 that magnificent creature is an orca!"
+  - Orcas, also known as killer whales, are found all across the world, but they
+    thrive along Canada's west coast
+  - Indigenous peoples of the Pacific Northwest have honored them for centuries.
+  - You will often find their image carved into totem poles and woven into ancient
+    stories.
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!114 &3375471501293120524
@@ -174221,9 +174240,12 @@ MonoBehaviour:
   dialogBox: {fileID: 1707178025}
   dialogText: {fileID: 1739819346}
   dialogs:
-  - Have you heard of the Kermode Bear?
-  - They're the provincial animal of British Columbia.
-  - Sometimes they have white fur. Those ones are called Spirit Bears!
+  - "Look closely \u2014 that rare white bear is known as the Kermode bear, found
+    only in British Columbia."
+  - "Despite its white fur, the Kermode bear is actually a black bear \u2014 a unique
+    gene gives some of them their striking white coat."
+  - Indigenous peoples of BC call it the Spirit Bear, a sacred symbol of peace and
+    harmony between humans and nature.
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!61 &3408239390900075463
@@ -174906,7 +174928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &7931083404982648797
 BoxCollider2D:
   m_ObjectHideFlags: 0
