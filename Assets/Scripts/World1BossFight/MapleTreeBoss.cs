@@ -38,6 +38,7 @@ namespace World1BossFight
         [Header("Questions")]
         [SerializeField] private QuestionBubble questionBubble;
         [SerializeField] private BossQuestion[] bossQuestions;
+        [SerializeField] private Vector3Int questionPhaseCounts = new Vector3Int(2, 2, 4);
         [SerializeField] private TextMeshProUGUI[] questions;
         [SerializeField] private Transform[] answerPositions;
         [SerializeField] private GameObject questionMapleLeafSlamPrefab;
@@ -51,6 +52,9 @@ namespace World1BossFight
         [SerializeField] private Vector3Int rollingLogStageCount;
         [SerializeField] private Vector3 rollingLogStageSpeed;
         [SerializeField] private Vector3 rollingLogStageAttackSpeed;
+        [SerializeField] private int maxRollingLogAttacksPerQuestionCycle = 1;
+        [SerializeField] private int rollingLogCountReduction = 1;
+        [SerializeField] private float rollingLogAttackSpacingMultiplier = 0.85f;
         [Space]
         [SerializeField] private Transform leftRollingLogSpawnPoint;
         [SerializeField] private Transform rightRollingLogSpawnPoint;
@@ -81,6 +85,11 @@ namespace World1BossFight
         private BoxCollider2D _boxCollider2D;
         private Animator _animator;
         private AudioSource _audioSource;
+        private int _rollingLogAttacksThisCycle;
+        private int _currentPhaseIndex;
+        private readonly List<int>[] _phaseQuestionIndexes = new List<int>[3];
+        private readonly List<int>[] _phaseQuestionQueue = new List<int>[3];
+        private readonly int[] _lastBossQuestionIndexByPhase = { -1, -1, -1 };
 
         private void Awake()
         {
@@ -90,6 +99,8 @@ namespace World1BossFight
             _boxCollider2D = GetComponent<BoxCollider2D>();
             _animator = GetComponent<Animator>();
             _audioSource = GetComponent<AudioSource>();
+            _currentPhaseIndex = 0;
+            InitializeQuestionPhases();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -115,7 +126,27 @@ namespace World1BossFight
         
         public BossQuestion GetRandomBossQuestion()
         {
-            return bossQuestions[Random.Range(0, bossQuestions.Length)];
+            if (bossQuestions == null || bossQuestions.Length == 0) return null;
+
+            int phaseIndex = Mathf.Clamp(_currentPhaseIndex, 0, _phaseQuestionQueue.Length - 1);
+            if (_phaseQuestionQueue[phaseIndex] == null || _phaseQuestionQueue[phaseIndex].Count == 0)
+            {
+                RefillPhaseQuestionQueue(phaseIndex);
+            }
+
+            var phaseQuestions = _phaseQuestionQueue[phaseIndex];
+            if (phaseQuestions == null || phaseQuestions.Count == 0) return null;
+
+            int selectedIndex = 0;
+            if (phaseQuestions.Count > 1 && phaseQuestions[0] == _lastBossQuestionIndexByPhase[phaseIndex])
+            {
+                selectedIndex = 1;
+            }
+
+            int questionIndex = phaseQuestions[selectedIndex];
+            phaseQuestions.RemoveAt(selectedIndex);
+            _lastBossQuestionIndexByPhase[phaseIndex] = questionIndex;
+            return bossQuestions[questionIndex];
         }
 
         public void PerformAttack()
@@ -123,6 +154,7 @@ namespace World1BossFight
             if (_attacksCount >= attacksUntilQuestion)
             {
                 _attacksCount = 0;
+                _rollingLogAttacksThisCycle = 0;
                 PerformHedgeSplitAttack();
                 return;
             }
@@ -130,7 +162,13 @@ namespace World1BossFight
             //PerformMapleLeafSlamAttack();
             //return;
             
-            var rand = Random.Range(0, 3);
+            var availableAttacks = new List<int> { 0, 1, 2 };
+            if (_rollingLogAttacksThisCycle >= maxRollingLogAttacksPerQuestionCycle)
+            {
+                availableAttacks.Remove(0);
+            }
+
+            var rand = availableAttacks[Random.Range(0, availableAttacks.Count)];
             switch (rand)
             {
                 case 0:
@@ -148,21 +186,28 @@ namespace World1BossFight
 
         private float GetStageValue(Vector3 value)
         {
-            var ratio = (float)_health / maxHealth;
-            if (ratio < hardStageUpperPercentage) return value.z;
-            return ratio < mediumStageUpperPercentage ? value.y : value.x;
+            switch (Mathf.Clamp(_currentPhaseIndex, 0, 2))
+            {
+                case 0:
+                    return value.x;
+                case 1:
+                    return value.y;
+                default:
+                    return value.z;
+            }
         }
 
         public void PerformRollingLogAttack()
         {
+            _rollingLogAttacksThisCycle++;
             StartCoroutine(RollingLogAttackRoutine());
         }
 
         private IEnumerator RollingLogAttackRoutine()
         {
-            var count = GetStageValue(rollingLogStageCount);
+            var count = Mathf.Max(1, Mathf.RoundToInt(GetStageValue(rollingLogStageCount)) - rollingLogCountReduction);
             var speed = GetStageValue(rollingLogStageSpeed);
-            var attackSpeed = GetStageValue(rollingLogStageAttackSpeed);
+            var attackSpeed = Mathf.Max(0.1f, GetStageValue(rollingLogStageAttackSpeed) * rollingLogAttackSpacingMultiplier);
             for (var i = 0; i < count; i++)
             {
                 var spawnLeft = Random.Range(0, 2) == 1;
@@ -240,6 +285,12 @@ namespace World1BossFight
             hedgeSplit.Split(delay, duration);
 
             var question = GetRandomBossQuestion();
+            if (question == null)
+            {
+                yield return new WaitForSeconds(delay + duration + attackCooldown);
+                PerformAttack();
+                yield break;
+            }
             questionBubble.ShowMessage(question.question, delay);
 
             var setIndexes = new List<int>();
@@ -293,6 +344,7 @@ namespace World1BossFight
         {
             bossHeart.Damaged -= BossHeartOnDamaged;
             _health--;
+            _currentPhaseIndex = Mathf.Clamp(maxHealth - _health, 0, 2);
         }
 
         private void SpawnWrongAnswerSlams(int correctIndex)
@@ -320,7 +372,7 @@ namespace World1BossFight
 
         private IEnumerator ChangeStateRoutine()
         {
-            var stage = GetStageValue(new Vector3(0, 1, 2));
+            var stage = Mathf.Clamp(_currentPhaseIndex, 0, 2);
             var colorA = Color.white;
             var colorB= Color.white;
             switch (stage)
@@ -348,6 +400,66 @@ namespace World1BossFight
             }
             
             PerformAttack();
+        }
+
+        private void InitializeQuestionPhases()
+        {
+            for (int phaseIndex = 0; phaseIndex < 3; phaseIndex++)
+            {
+                _phaseQuestionIndexes[phaseIndex] = new List<int>();
+                _phaseQuestionQueue[phaseIndex] = new List<int>();
+            }
+
+            if (bossQuestions == null || bossQuestions.Length == 0) return;
+
+            int[] phaseCounts =
+            {
+                Mathf.Max(0, questionPhaseCounts.x),
+                Mathf.Max(0, questionPhaseCounts.y),
+                Mathf.Max(0, questionPhaseCounts.z)
+            };
+
+            int bossQuestionIndex = 0;
+            for (int phaseIndex = 0; phaseIndex < phaseCounts.Length && bossQuestionIndex < bossQuestions.Length; phaseIndex++)
+            {
+                for (int count = 0; count < phaseCounts[phaseIndex] && bossQuestionIndex < bossQuestions.Length; count++)
+                {
+                    _phaseQuestionIndexes[phaseIndex].Add(bossQuestionIndex);
+                    bossQuestionIndex++;
+                }
+            }
+
+            while (bossQuestionIndex < bossQuestions.Length)
+            {
+                _phaseQuestionIndexes[2].Add(bossQuestionIndex);
+                bossQuestionIndex++;
+            }
+
+            for (int phaseIndex = 0; phaseIndex < 3; phaseIndex++)
+            {
+                if (_phaseQuestionIndexes[phaseIndex].Count == 0)
+                {
+                    _phaseQuestionIndexes[phaseIndex].AddRange(_phaseQuestionIndexes[Mathf.Max(0, phaseIndex - 1)]);
+                }
+
+                RefillPhaseQuestionQueue(phaseIndex);
+            }
+        }
+
+        private void RefillPhaseQuestionQueue(int phaseIndex)
+        {
+            if (_phaseQuestionIndexes[phaseIndex] == null) return;
+
+            _phaseQuestionQueue[phaseIndex].Clear();
+            _phaseQuestionQueue[phaseIndex].AddRange(_phaseQuestionIndexes[phaseIndex]);
+
+            for (int i = _phaseQuestionQueue[phaseIndex].Count - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                int temp = _phaseQuestionQueue[phaseIndex][i];
+                _phaseQuestionQueue[phaseIndex][i] = _phaseQuestionQueue[phaseIndex][randomIndex];
+                _phaseQuestionQueue[phaseIndex][randomIndex] = temp;
+            }
         }
 
         private IEnumerator DieRoutine()

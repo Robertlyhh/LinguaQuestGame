@@ -24137,8 +24137,7 @@ MonoBehaviour:
   loseScoreTMP: {fileID: 2008471010}
   nextStepTMP: {fileID: 453553736}
   endMessages:
-  - This is the end of our test.
-  - Press Q to quit the whole game.
+  - Congrats you have got an crystall!
   - Press E to go back to the main world and keep exploring.
   - Press R to restart the Mini game.
   winSound: {fileID: 8300000, guid: a00329ff3a5f46c458b2688bf0a87acf, type: 3}
@@ -192254,6 +192253,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WinPage
       objectReference: {fileID: 0}
+    - target: {fileID: 5700633439467154466, guid: 1ac2d01db77d3e94fb60a0f70041176d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6467463807818600596, guid: 1ac2d01db77d3e94fb60a0f70041176d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -192720,6 +192723,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2660289091560093592, guid: b74fce5e7048e144780c5912ae567f3f, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 3733978130930692662, guid: b74fce5e7048e144780c5912ae567f3f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -192803,6 +192810,10 @@ PrefabInstance:
     - target: {fileID: 8144380140096089378, guid: b74fce5e7048e144780c5912ae567f3f, type: 3}
       propertyPath: m_Name
       value: LosePage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144380140096089378, guid: b74fce5e7048e144780c5912ae567f3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

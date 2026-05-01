@@ -110,7 +110,9 @@ public class PlayerExploring : MonoBehaviour
 
         if (footprintSystem == null)
             footprintSystem = GetComponent<FootprintsFromPlayerExploring>();
-        footprintSystem.enabled = true;
+        if (footprintSystem != null)
+            footprintSystem.enabled = true;
+
         foreach (var trail in slipTrails)
         {
             if (trail != null) trail.emitting = false;
@@ -439,6 +441,7 @@ public class PlayerExploring : MonoBehaviour
             if (playerDefeatedSignal != null)
             {
                 playerDefeatedSignal.Raise();
+                currentHealth.runtimeValue = currentHealth.initialValue;
             }
             else
             {

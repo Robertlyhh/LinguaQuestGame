@@ -27,6 +27,8 @@ public class FishingMiniGame : MonoBehaviour
 
     [SerializeField] SpriteRenderer hookspriteRenderer;
     [SerializeField] Transform progressbarCan;
+    [SerializeField] Signal winSignal;
+    [SerializeField] Signal loseSignal;
 
     bool pause = false;
 
@@ -101,6 +103,7 @@ public class FishingMiniGame : MonoBehaviour
     {
         pause = true;
         Debug.Log("You Win");
+        winSignal.Raise();
 
         if (currentSpot != null)
         {
@@ -136,6 +139,7 @@ public class FishingMiniGame : MonoBehaviour
     {
         pause = true;
         Debug.Log("You Lose");
+        loseSignal.Raise();
         failtimer = 10f;
         hookProgress = 0f;
         Invoke(nameof(Rest), 1f);

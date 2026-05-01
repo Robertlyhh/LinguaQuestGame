@@ -20,11 +20,15 @@ public class Sign : Interactable
             dialogText = dialogBox.GetComponentInChildren<TextMeshProUGUI>();
         }
 
+        // Clear any stale serialized state from the scene so only nearby signs react.
+        dialogActive = false;
+        currentDialogIndex = 0;
+
         base.Start();
     }
     public virtual void Update()
     {
-        if (dialogActive && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             if (audioSource != null && interactSound != null)
             {
@@ -34,6 +38,7 @@ public class Sign : Interactable
             if (!dialogBox.activeSelf)
             {
                 dialogBox.SetActive(true);
+                Debug.Log("Dialog box activated, showing first message of " + gameObject.name + ".");
                 currentDialogIndex = 0;
                 dialogText.text = dialogs.Length > 0 ? dialogs[currentDialogIndex] : "";
             }
@@ -54,19 +59,19 @@ public class Sign : Interactable
                 }
             }
         }
-        else if (dialogActive && Input.GetKeyDown(KeyCode.Escape))
+        else if (dialogBox.activeSelf && playerInRange && Input.GetKeyDown(KeyCode.Escape))
         {
             dialogBox.SetActive(false);
             dialogActive = false;
             currentDialogIndex = 0;
         }
-        else if (dialogActive && Input.GetKeyDown(KeyCode.Space))
+        else if (dialogBox.activeSelf && playerInRange && Input.GetKeyDown(KeyCode.Space))
         {
             dialogBox.SetActive(false);
             dialogActive = false;
             currentDialogIndex = 0;
         }
-        else if (dialogActive && Input.GetKeyDown(KeyCode.Return))
+        else if (dialogBox.activeSelf && playerInRange && Input.GetKeyDown(KeyCode.Return))
         {
             dialogBox.SetActive(false);
             dialogActive = false;
@@ -79,6 +84,7 @@ public class Sign : Interactable
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
+            playerInRange = true;
             dialogActive = true;
             currentDialogIndex = 0;
             context.Raise();
@@ -89,6 +95,7 @@ public class Sign : Interactable
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
+            playerInRange = false;
             dialogActive = false;
             dialogBox.SetActive(false);
             context.Raise();

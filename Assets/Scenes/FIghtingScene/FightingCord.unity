@@ -316,7 +316,7 @@ MonoBehaviour:
   incorrectSignal: {fileID: 11400000, guid: e68bcdf6a90fe0d4f931ff409d52a9e5, type: 2}
   winScreen: {fileID: 1924762383}
   loseScreen: {fileID: 1480414789}
-  UItext: {fileID: 1308560317}
+  instructionsText: {fileID: 0}
   feedbackText: {fileID: 1615548387}
   battleMessages:
   - Get ready for a syntax challenge!
@@ -1030,8 +1030,6 @@ MonoBehaviour:
   questions:
   - {fileID: 11400000, guid: 8affa79eb2a19434287d42753d2d1515, type: 2}
   - {fileID: 11400000, guid: 9970a42a7fb66eb4db6b4573518b4512, type: 2}
-  - {fileID: 11400000, guid: b58a9354a3b13f2479ef39695c6208df, type: 2}
-  - {fileID: 11400000, guid: 8c1f4dd33db6a8048ae473543c133faa, type: 2}
   currentQuestionIndex: 0
   currentSentenceText: {fileID: 1468934467}
   feedbackText: {fileID: 142225330}

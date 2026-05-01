@@ -40,15 +40,8 @@ public class SentenceRuntimeBank : ScriptableObject
 
     private IEnumerator LoadFileCoroutine(string fileName)
     {
-        foreach (var path in GetCandidatePaths(fileName))
+        foreach (var requestPath in GetCandidateRequestPaths(fileName))
         {
-            if (!File.Exists(path))
-            {
-                continue;
-            }
-
-            string requestPath = new System.Uri(path).AbsoluteUri;
-
             using (UnityWebRequest request = UnityWebRequest.Get(requestPath))
             {
                 yield return request.SendWebRequest();
@@ -59,17 +52,28 @@ public class SentenceRuntimeBank : ScriptableObject
                     yield break;
                 }
 
-                Debug.LogError($"[Error] Could not load {fileName} from {path}: {request.error}");
+                Debug.LogWarning($"[Bank] Could not load {fileName} from {requestPath}: {request.error}");
             }
         }
 
-        Debug.LogError($"[Error] Could not find {fileName} in StreamingAssets or Assets/Scripts/SyntaxSword.");
+        Debug.LogError($"[Bank] Could not load {fileName} from any configured path.");
     }
 
-    private IEnumerable<string> GetCandidatePaths(string fileName)
+    private IEnumerable<string> GetCandidateRequestPaths(string fileName)
     {
-        yield return Path.Combine(Application.streamingAssetsPath, fileName);
-        yield return Path.Combine(Application.dataPath, "Scripts", "SyntaxSword", fileName);
+        string streamingAssetsPath = Path.Combine(Application.streamingAssetsPath, fileName);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        yield return streamingAssetsPath;
+#else
+        yield return new System.Uri(streamingAssetsPath).AbsoluteUri;
+
+        string editorPath = Path.Combine(Application.dataPath, "Scripts", "SyntaxSword", fileName);
+        if (File.Exists(editorPath))
+        {
+            yield return new System.Uri(editorPath).AbsoluteUri;
+        }
+#endif
     }
 
     [Preserve]
