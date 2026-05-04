@@ -342,18 +342,29 @@ PrefabInstance:
       objectReference: {fileID: 1739819346}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Try our Nanaimo Bars!
+      value: "We sell Nanaimo bars \u2014 a beloved Canadian dessert named after
+        Nanaimo, British Columbia."
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: '*The gift shop is currently closed for renovations.'
+      value: 'It has three delicious layers: a crumbly chocolate base, a creamy custard
+        filling, and a smooth chocolate top.'
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
+      value: "No baking required \u2014 it is one of Canada's sweetest and most iconic
+        treats."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[3]'
+      value: '*The shop is currently closed for renovations.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[4]'
       value: '* We apologize for any inconvenience. - Management'
       objectReference: {fileID: 0}
     - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
@@ -174298,7 +174309,7 @@ MonoBehaviour:
   dialogText: {fileID: 1739819346}
   dialogs:
   - Welcome to the Rocky Mountains!
-  - This is just one of the 31 mountain ranges in BC!
+  - This is just one of the 31 mountain ranges in British Columbia, Canada!
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!114 &3375471500983788300
@@ -174323,9 +174334,12 @@ MonoBehaviour:
   dialogBox: {fileID: 1707178025}
   dialogText: {fileID: 1739819346}
   dialogs:
-  - We've been standing here for hours hoping to see some orcas.
-  - But all we've seen are killer whales!
-  - Oh wait i think they are the same thing!
+  - "Look there, in the water \u2014 that magnificent creature is an orca!"
+  - Orcas, also known as killer whales, are found all across the world, but they
+    thrive along Canada's west coast
+  - Indigenous peoples of the Pacific Northwest have honored them for centuries.
+  - You will often find their image carved into totem poles and woven into ancient
+    stories.
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!114 &3375471501293120524

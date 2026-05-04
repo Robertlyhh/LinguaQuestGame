@@ -159391,7 +159391,7 @@ MonoBehaviour:
   dialogs:
   - "You\u2019ll hear all kinds of different terms around here."
   - Try to figure out what each thing actually is.
-  - Clothing, food, or just everyday items.
+  - Clothing, food, or just an everyday item.
   - Once you get that, it all starts to make sense.
   dialogActive: 0
   currentDialogIndex: 0
@@ -159476,8 +159476,9 @@ MonoBehaviour:
   dialogs:
   - Hey, you look new around here.
   - If someone says bunny hug, they mean a hoodie.
-  - "You\u2019ll see a lot of toques too, especially in the cold."
-  - "And parkas\u2026 you\u2019ll definitely need one of those."
+  - "You\u2019ll see a lot of toques too, especially in the cold. This is a knitted
+    cap."
+  - "And parkas\u2026 you\u2019ll definitely need one of those for yourself too."
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!114 &6610298952838081892
@@ -159503,7 +159504,7 @@ MonoBehaviour:
   dialogText: {fileID: 1557676180}
   dialogs:
   - Some of the words here might sound a bit strange.
-  - A scrubby is just a little dishcloth
+  - A scrubby is just a little dishcloth.
   - "And a chesterfield, that\u2019s what some people call a couch."
   - Snow brush is exactly what it sounds like, for your car.
   dialogActive: 0
@@ -159532,8 +159533,8 @@ MonoBehaviour:
   dialogs:
   - You ever had a double-double before?
   - "That\u2019s just a coffee with two cream and two sugar."
-  - "Poutine\u2019s another one, fries with gravy and cheese curds."
-  - "And Saskatoon berry pie, that\u2019s a local thing."
+  - "And Saskatoon berry pie, that\u2019s a traditional Canadian dessert, particularly
+    in Saskatchewan."
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!82 &6823835802356079760

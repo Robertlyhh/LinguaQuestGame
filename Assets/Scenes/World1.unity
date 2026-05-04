@@ -251,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: df844c6a50c328e46a83e54b550dcc1b, type: 2}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: firstInteractionDone
@@ -259,11 +259,18 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 799e4f20ed16ab642b9c350383829544, type: 2}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Watch out for black ice on roads.
+      value: "Be careful where you step, Explorer \u2014 black ice is one of Canada's
+        sneakiest winter hazards."
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: Black ice looks invisible but is very slippery.
+      value: "Unlike regular ice, black ice is nearly invisible \u2014 it blends
+        seamlessly with the road or ground beneath it."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[2]'
+      value: One moment you are walking confidently, the next you are performing
+        an unplanned ice skating routine!
       objectReference: {fileID: 0}
     - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: m_Size.x
@@ -879,7 +886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: ' If you can not escape, try beat it up!'
+      value: I trust you can beat it!
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
@@ -164465,6 +164472,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5078555104730874548, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078555104730874548, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078555104730874548, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078555104730874548, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogBox
       value: 
@@ -164474,30 +164497,74 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2015795234}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: dialogActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 8
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[0]'
+      value: Hi Explorer, just a quick refresher on the controls!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[1]'
+      value: Press E to interact.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[2]'
+      value: Right-click mouse to break objects.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
-      value: Click B to open the bag system if you collect anything.
+      value: Press B to access your backpack with items you collect.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[4]'
-      value: To win the game, you will have to explore the main area and 3 regions
-        connected to the main area
+      value: To win the game, you will have to explore the main area here and three
+        other regions connected to this area.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[5]'
-      value: And collect at least two keys or crystal ball won from the minigame
-        in the region to start boss fight.
+      value: 'On the left you will find West Coast Canada. '
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[6]'
-      value: Beat the boss and win the game!
+      value: On the right you will find the Prairie Provinces.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[7]'
+      value: On the right you will also find the French speaking Quebec area.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[8]'
+      value: Win at least two keys or crystal ball from the minigame in the regions
+        to start boss fight.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[9]'
+      value: Beat the boss and win the game!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[10]'
       value: Let's go!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -164527,9 +164594,12 @@ MonoBehaviour:
   dialogText: {fileID: 2015795234}
   dialogs:
   - 'Welcome to the Praries. '
+  - The Canadian Prairies is a region in Western Canada.
+  - It includes the Canadian portion of the Great Plains and the Prairie provinces,
+    namely Alberta, Saskatchewan, and Manitoba.
   - Wide open fields, country spanning railways, and small communities represent
     rural life in Canada.
-  - 'As you explore, you will e counter local terms used across the region. '
+  - 'As you explore, you will encounter local terms used across the region. '
   - Learn what you can here before moving on to apply that knowledge ahead.
   dialogActive: 0
   currentDialogIndex: 0
@@ -164582,13 +164652,9 @@ MonoBehaviour:
   dialogBox: {fileID: 49120102}
   dialogText: {fileID: 2015795234}
   dialogs:
-  - Hi explorer, the west coast area is ahead.
-  - there are very fun things.
-  - click mouse to break breakable objects
-  - simply touch the hearts and coin in the scene to collect them
-  - Click B to open the bag system if you collect anything.
-  - Also try to open as many chest as you can!
-  - Now let's have a try!
+  - Hi Explorer, the West Coast of Canada is ahead.
+  - "It consists primarily of British Columbia\u2019s Pacific coastline."
+  - It is a region known for its rugged mountains, lush rainforests, and mild climate.
   dialogActive: 0
   currentDialogIndex: 0
 --- !u!114 &6610298951741229963

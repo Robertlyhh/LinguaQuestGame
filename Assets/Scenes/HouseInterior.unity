@@ -20665,40 +20665,45 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[0]'
+      value: Dear Explorer,
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[1]'
       value: Welcome to the world of Canada!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[2]'
-      value: 'Here, you will discover new language skills '
+      value: Here, you will discover new language skills and embark on a journey
+        filled with adventure and learning.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[3]'
-      value: and embark on a journey filled with adventure and learning.
+      value: I am your guiding spirit, and I will be with you every step of the way.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[4]'
-      value: I am your guiding spirit and I will be with you every step of the way.
-      objectReference: {fileID: 0}
-    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[5]'
       value: Let us begin!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[5]'
+      value: Use WASD to move around the world.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[6]'
-      value: Press V to skip current sentence
+      value: Press E to interact with characters and objects you encounter.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[7]'
-      value: Use WASD or arrow keys to move around the world.
+      value: Left-click to swing your sword.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[8]'
-      value: Press E to interact with objects and continue dialogue.
+      value: "Some obstacles will block your path \u2014 strike them down to continue."
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[9]'
-      value: Left click to swing your sword.
+      value: Be careful! Enemies will engage you the moment you get too close.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[10]'
@@ -20706,7 +20711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[11]'
-      value: Also, if you noticed anything unsual, definitely try to interact with
+      value: Also, if you notice anything unsual, definitely try to interact with
         it!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}

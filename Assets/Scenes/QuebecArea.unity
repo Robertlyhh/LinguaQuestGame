@@ -65740,20 +65740,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Question 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
-      propertyPath: 'dialogs.Array.data[1]'
       value: 'True or False: In Quebec, ice fishing can be part of winter traditions
         and community activities.'
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
+      propertyPath: 'dialogs.Array.data[1]'
+      value: 'Head down if True / Head up if False '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: ' Fish in down spot for True / Fish in the top spot for False '
+      value: 'Head down if True / Head up if False '
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
@@ -65957,7 +65957,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e3b2daa9c3528bc4a8f9c2d9f705bb0f, type: 3}
+  m_Resource: {fileID: 8300000, guid: 42eaed73515955d45b2f281e272a0e08, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -66175,7 +66175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: firstInteractionDone
@@ -66183,19 +66183,19 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 00f6cabd34fc53b4fb41a1cedc51716c, type: 2}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: hey there some weird portal thing on the other side
+      value: There's some weird portal thing on the other side.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: i wanna check it out but i cant!
+      value: The last time I entered a portal it brought me here in Quebec.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: rocks are blocking the way
+      value: but you should be able to check it out
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
-      value: plus i can leave my spot open
+      value: but you should be able to check it out
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[4]'
@@ -67312,11 +67312,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Question 3 What do ice fishers cut or drill into the ice?
+      value: "What is tourti\xE8re?"
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: ' Fish in down spot for Hole / Fish in the top spot for Tree'
+      value: Head down for 'traditional Quebec meat pie' / Head up if 'French dessert'
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
@@ -73892,23 +73892,27 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: a42d3fda4dae8cf42b0f0002eb1288f9, type: 2}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: ahhh!
+      value: "Ah, bienvenue! Welcome to Quebec \u2014 where the coffee is strong
+        and the winters are stronger!"
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: OH!
+      value: "Here, you will find some of the friendliest people in Canada \u2014
+        though they may greet you in French before they greet you in English!"
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: your a new face
+      value: "Do not worry if you feel a little lost \u2014 Quebec has a way of making
+        everyone feel delightfully confused at first."
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
-      value: 'I would love to help you but, i got ice fishing to do '
+      value: "We are enjoying a warm tourti\xE8re \u2014 a traditional Quebec meat
+        pie eaten during the winter season."
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[4]'
-      value: Head on up im sure some one will help you.
+      value: "Head up \u2014 someone will help you!"
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[5]'
@@ -74114,15 +74118,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: FYI
+      value: 'The sign reads: These cabins are for ice fishing ONLY!'
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: These Cabins are used for Ice Fishning ONLY!
+      value: Ice fishing is serious business around here, Explorer.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: Please do not cook in here!
+      value: Do not let anyone catch you in there without a fishing rod!
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
@@ -74434,7 +74438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: firstInteractionDone
@@ -74442,17 +74446,18 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8222d1175384cf148a88dc24c9d5cf65, type: 2}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: "Ice fishing is a special part of Quebec\u2019s winter culture."
+      value: Ice fishing is a cherished part of Quebec's winter culture, passed down
+        through generations.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: It brings people together through family traditions, friendship, and
-        community gatherings
+      value: Families and friends gather on frozen lakes, sharing stories, laughter,
+        and the thrill of the catch.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: any people in Quebec use small fishing cabins on the ice, which makes
-        the experience both practical and cultural.
+      value: "These small cabins on the ice are more than just shelter \u2014 they
+        are a place where community and tradition come alive."
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
@@ -95254,39 +95259,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: you will be tested on what you learned
+      value: Time to fish and also test your knowledge!
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: to answer the up coming questions fish in either spot
+      value: To answer the questions head either upwards or downwards.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: ' if you answer correctly the path will open'
+      value: Pay attention whether its up or down!
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
-      value: ' if you answer incorrectly a sign will appear with the correct answer'
+      value: If you answer correctly the path will open.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[4]'
-      value: Ready ?
+      value: If you answer incorrectly a sign will appear with the correct answer.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[5]'
-      value: 'True or False: Ice fishing is a popular winter activity in Quebec?'
+      value: Ready?
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[6]'
-      value: ' Fish in down spot for False / Fish in the top spot for True '
+      value: 'What language will you likely be greeted in first when visiting Quebec? '
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[7]'
-      value: Good luck!
+      value: 'Head down if English / Head up if French '
       objectReference: {fileID: 0}
     - target: {fileID: 7335428159206204728, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: m_Size.x
@@ -96221,19 +96226,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Congrats you made it!
+      value: Congratulations Explorer, you made it to the top!
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: Go down and you can move one to the next area
+      value: I must admit, I had my doubts for a moment there.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
-      value: Push Q
+      value: "Now head back down \u2014 greatness awaits at the bottom, and your
+        legs could use the workout!"
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[3]'
@@ -97012,12 +97018,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Question 4 What kind of small buildings are often seen on the ice in
-        Quebec during ice fishing season?
+      value: What kind of small buildings are often seen on the ice in Quebec during
+        ice fishing season?
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: Fish in down spot for Castles / Fish in the top spot for Cabins
+      value: Head down for Igloos / Head down for Cabins
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
