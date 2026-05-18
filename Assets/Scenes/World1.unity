@@ -594,6 +594,7 @@ MonoBehaviour:
   - Stay alert and be ready!
   - That is all from me, good luck!
   playerHasMoved: 0
+  playerHasSprinted: 0
   playerHasInteracted: 0
   playerHasThrownFireball: 0
   playerHasSwungSword: 0
@@ -601,6 +602,7 @@ MonoBehaviour:
   isWaitingForAction: 0
   playerHasCollectedCoin: 0
   playerHasCollectedHeart: 0
+  typewriterSpeed: 0.04
 --- !u!114 &93750204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165534,6 +165536,59 @@ PrefabInstance:
     - target: {fileID: 6815641998803265146, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: startMessages.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[0]'
+      value: On the left you will find the West Coast of Canada.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[1]'
+      value: This region's province is called British Columbia.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[2]'
+      value: Heading up towards the snow will take you to
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[3]'
+      value: the wonderful province of Quebec which is in Central Canada.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[4]'
+      value: A little further ahead is the Prairie Provinces.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[5]'
+      value: These are Manitoba, Saskatchewan and Alberta.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[6]'
+      value: 'Once you collect at least two keys, '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[7]'
+      value: you will be able to play the final boss! Goodluck!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[8]'
+      value: Try read the signs on the map, they might contain important information!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[9]'
+      value: Also, if you noticed something unsual, definitely try interact with
+        it!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[10]'
+      value: You will probably be surprised!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[11]'
+      value: Now let's give it a try!
       objectReference: {fileID: 0}
     - target: {fileID: 8637259316320850483, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: m_Name

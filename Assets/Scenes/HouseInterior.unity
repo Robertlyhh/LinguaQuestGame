@@ -20730,32 +20730,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[1]'
-      value: Welcome to the world of Canada!
+      value: Welcome to Canada!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[2]'
-      value: Here, you will discover new language skills and embark on a journey
-        filled with adventure and learning.
+      value: Here, you will discover new language skills
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[3]'
-      value: I am your guiding spirit, and I will be with you every step of the way.
+      value: ' and embark on a journey filled with adventure and learning.'
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[4]'
-      value: I have been told I am a bit clingy.
+      value: I am your guiding spirit, and I will be with you every step of the way.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[5]'
-      value: Let us begin!
+      value: I have been told I am a bit clingy.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[6]'
-      value: "Some obstacles will block your path \u2014 strike them down to continue."
+      value: Let us begin!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[7]'
-      value: Be careful! Enemies will engage you the moment you get too close.
+      value: Be careful! Enemies will engage the moment you get too close.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[8]'
@@ -20768,7 +20767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[10]'
-      value: Interact with all objects in this room.
+      value: Interact with all the glowing objects in this room.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[11]'
@@ -20776,11 +20775,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[12]'
-      value: 
+      value: Then finish the quiz to explore further. Good luck!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[13]'
-      value: Good luck!
+      value: Then finish the quiz to explore further. Good luck!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[14]'
@@ -24590,7 +24589,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -24858,6 +24857,10 @@ MonoBehaviour:
   audioSource: {fileID: 5697726141130212445}
   correctSound: {fileID: 8300000, guid: 0f8cde85d2fb5ce4591ef3b129296c98, type: 3}
   wrongSound: {fileID: 8300000, guid: db4ffd0535ec1da49bfa631b341234a5, type: 3}
+  panelBackground: {fileID: 0}
+  correctFlashColor: {r: 0, g: 1, b: 0, a: 0.4}
+  wrongFlashColor: {r: 1, g: 0, b: 0, a: 0.4}
+  flashDuration: 0.3
   questionsSet: []
   PlayerPrefab: {fileID: 0}
   EnemyPrefab: {fileID: 0}
@@ -24878,7 +24881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3197373132828509577
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25401,7 +25404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86, y: -299}
+  m_AnchoredPosition: {x: -192, y: -89}
   m_SizeDelta: {x: 672.9347, y: 133.6284}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5448635275598532990

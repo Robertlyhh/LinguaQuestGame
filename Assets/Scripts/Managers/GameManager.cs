@@ -45,11 +45,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Initialize player data or load from saved data
+#if UNITY_EDITOR
+        // In editor, don't redirect — test the current scene directly
+        Debug.Log("Editor mode: skipping scene redirect");
+#else
+        // In a real build, always start from StartingPage
         SceneManager.LoadScene(startingSceneName);
+#endif
+
         tutorialIntroShown.runtimeValue = false;
         houseIntroShown.runtimeValue = false;
-
     }
 
     public void PlaySound(AudioClip clip)

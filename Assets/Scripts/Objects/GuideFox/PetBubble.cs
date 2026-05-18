@@ -45,12 +45,10 @@ public class PetBubble : MonoBehaviour
     private bool showing = false;
     public Coroutine currentRoutine;
     private PetMovement petMovement;
+    public float typewriterSpeed = 0.04f; // seconds per character
 
 
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+
 
     void Start()
     {
@@ -117,14 +115,26 @@ public class PetBubble : MonoBehaviour
 
             while (elapsed < duration && !skipToNext)
             {
-                if (isPaused)
+                if (!isWaitingForAction && !isPaused)
                 {
-                    yield return null;
-                    continue;
+                    elapsed += Time.deltaTime;
                 }
+
+                // First V press = complete text instantly
                 if (Input.GetKeyDown(KeyCode.V))
-                    skipToNext = true;
-                elapsed += Time.deltaTime;
+                {
+                    if (typewriterCoroutine != null)
+                    {
+                        StopCoroutine(typewriterCoroutine);
+                        typewriterCoroutine = null;
+                        bubbleText.text = message; // show full text instantly
+                    }
+                    else
+                    {
+                        skipToNext = true; // second press = skip to next
+                    }
+                }
+
                 yield return null;
             }
 
@@ -184,12 +194,29 @@ public class PetBubble : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
+    // Replace ShowMessage with this
     public void ShowMessage(string message)
     {
-        bubbleText.text = message;
         bubbleCanvas.gameObject.SetActive(true);
         timer = 0f;
         showing = true;
+
+        if (typewriterCoroutine != null)
+            StopCoroutine(typewriterCoroutine);
+
+        typewriterCoroutine = StartCoroutine(TypewriterEffect(message));
+    }
+
+    private Coroutine typewriterCoroutine;
+
+    private IEnumerator TypewriterEffect(string message)
+    {
+        bubbleText.text = "";
+        foreach (char letter in message)
+        {
+            bubbleText.text += letter;
+            yield return new WaitForSeconds(typewriterSpeed);
+        }
     }
 
     public void ShowMessagesToPlayer(List<string> messages)
