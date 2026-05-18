@@ -5,7 +5,7 @@ using UnityEngine;
 public class Coin : Supply
 {
     public Inventory playerInventory;
-
+    public PetBubble petBubble;
 
 
     public IEnumerator OnTriggerEnter2D(Collider2D collision)
@@ -23,6 +23,8 @@ public class Coin : Supply
             supplySignal.Raise(); // Notify that the coin has been collected
             yield return new WaitForSeconds(0.3f); // Optional delay for sound effect
             Destroy(gameObject); // Destroy the coin after collection
+            if (petBubble != null)
+                petBubble.playerHasCollectedCoin = true;
         }
         else
         {

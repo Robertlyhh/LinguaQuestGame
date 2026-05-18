@@ -1566,6 +1566,62 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &570764406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 570764408}
+  - component: {fileID: 570764407}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &570764407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570764406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca25d7f1f51c3642b765e86e8b010f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  playerData:
+    playerName: New Player
+    score: 0
+    currentCharacterClass: Linguist
+    syntaxPoints: 0
+    morphologyPoints: 0
+    phonologyPoints: 0
+  audioSource: {fileID: 0}
+  startingSceneName: StartingPage
+  playerName: Explorer
+  tutorialIntroShown: {fileID: 11400000, guid: 1b4b5210e38f5db4bbcbe63076f5ad03, type: 2}
+  houseIntroShown: {fileID: 11400000, guid: 4b43fb77c2f463545a98fcdccc35638f, type: 2}
+--- !u!4 &570764408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570764406}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.86737, y: -2.34409, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &786281811
 GameObject:
   m_ObjectHideFlags: 0
@@ -20661,8 +20717,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: hasShownIntroduction
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b43fb77c2f463545a98fcdccc35638f, type: 2}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: startMessages.Array.size
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[0]'
@@ -20683,44 +20743,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[4]'
-      value: Let us begin!
+      value: I have been told I am a bit clingy.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[5]'
-      value: Use WASD to move around the world.
+      value: Let us begin!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[6]'
-      value: Press E to interact with characters and objects you encounter.
-      objectReference: {fileID: 0}
-    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[7]'
-      value: Left-click to swing your sword.
-      objectReference: {fileID: 0}
-    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[8]'
       value: "Some obstacles will block your path \u2014 strike them down to continue."
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[9]'
+      propertyPath: 'startMessages.Array.data[7]'
       value: Be careful! Enemies will engage you the moment you get too close.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[10]'
+      propertyPath: 'startMessages.Array.data[8]'
       value: Read the signs on the map, they might contain important information!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[11]'
+      propertyPath: 'startMessages.Array.data[9]'
       value: Also, if you notice anything unsual, definitely try to interact with
         it!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
-      propertyPath: 'startMessages.Array.data[12]'
+      propertyPath: 'startMessages.Array.data[10]'
       value: Interact with all objects in this room.
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[11]'
+      value: Then finish the quiz to explore further. Good luck!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
+      propertyPath: 'startMessages.Array.data[12]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[13]'
-      value: Then finish the puzzle to explore further.
+      value: Good luck!
       objectReference: {fileID: 0}
     - target: {fileID: 8354995504025756402, guid: 2c81843eef9bd4f40bf939326e4acf49, type: 3}
       propertyPath: 'startMessages.Array.data[14]'
@@ -24741,6 +24801,7 @@ MonoBehaviour:
   - I probably need more preparation
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
   sculptureID: 0
   spriteRenderer: {fileID: 0}
   isCompleted: 0
@@ -26389,6 +26450,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 570764408}
   - {fileID: 1653998663}
   - {fileID: 786281813}
   - {fileID: 166423377}

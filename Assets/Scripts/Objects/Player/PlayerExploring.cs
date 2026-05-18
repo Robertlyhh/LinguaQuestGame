@@ -27,6 +27,10 @@ public class PlayerExploring : MonoBehaviour
     public PlayerState currentState = PlayerState.walk;
     public UnityEngine.Vector3 change = UnityEngine.Vector3.zero;
 
+    [Header("Sprint")]
+    public float sprintSpeed = 9f;
+    public float normalSpeed = 5f;
+
     [Header("Health & Magic")]
     public FloatValue currentHealth;
     public FloatValue magicLevel;
@@ -97,6 +101,9 @@ public class PlayerExploring : MonoBehaviour
     public TrailRenderer[] slipTrails;
     public FootprintsFromPlayerExploring footprintSystem;
 
+    [Header("Tutorial")]
+    public PetBubble petBubble;
+
     // --- Unity Methods ---
     void Start()
     {
@@ -166,6 +173,20 @@ public class PlayerExploring : MonoBehaviour
         change.z = 0;
         change.Normalize();
 
+
+        if (petBubble != null)
+        {
+            if (change != Vector3.zero)
+                petBubble.playerHasMoved = true;
+
+            if (change != Vector3.zero && Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) )
+                petBubble.playerHasSprinted = true;
+
+            if (Input.GetKeyDown(KeyCode.F))
+                petBubble.playerHasThrownFireball = true;
+
+        }
+
         if (Input.GetMouseButtonDown(0) && currentState != PlayerState.attack && currentState != PlayerState.falling)
         {
             StartCoroutine(AttackCo());
@@ -200,7 +221,6 @@ public class PlayerExploring : MonoBehaviour
             animator.SetBool("moving", true);
             foreach (var trail in slipTrails) if (trail) trail.emitting = false;
 
-            // --- MOVEMENT CALCULATION ---
             float currentMoveSpeed = speed;
 
             // APPLY PENALTY IF FALLING
@@ -208,12 +228,14 @@ public class PlayerExploring : MonoBehaviour
             {
                 currentMoveSpeed *= fallingSpeedPenalty;
             }
+            // SPRINT IF HOLDING SHIFT
+            else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                currentMoveSpeed = sprintSpeed;
+            }
 
-            // Move
-            // Use fixedDeltaTime here because MovePosition is processed on the physics step; multiple Update calls between physics ticks would otherwise shrink the per-step move.
             myRigidbody.MovePosition(myRigidbody.position + (Vector2)change * currentMoveSpeed * Time.fixedDeltaTime);
 
-            // Play sound only if walking (optional: could disable sound when falling if desired)
             if (stepSoundManager != null && lastStepSoundTime >= stepSoundCooldown)
             {
                 lastStepSoundTime = 0f;
@@ -226,7 +248,6 @@ public class PlayerExploring : MonoBehaviour
             animator.SetBool("moving", false);
         }
     }
-
     private void UpdateAnimationSlip()
     {
         currentSlipTimer -= Time.deltaTime;

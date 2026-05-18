@@ -70,11 +70,25 @@ public class SceneTransition : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("Collision detected with: " + collision.name);
+        Debug.Log("Trigger entered by: " + collision.name + " tag: " + collision.tag + " isTrigger: " + collision.isTrigger);
+
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
+            Debug.Log("Player detected! Loading: " + sceneToLoad);
+
+            if (playerStorage == null)
+            {
+                Debug.LogError("playerStorage is null!");
+                return;
+            }
+
             playerStorage.runtimeValue = playerPosition;
-            sceneTracker.RecordSceneAndPosition(collision.transform.position);
+
+            if (sceneTracker != null)
+                sceneTracker.RecordSceneAndPosition(collision.transform.position);
+            else
+                Debug.LogWarning("SceneTracker is null, skipping.");
+
             StartCoroutine(FadeOutAndLoadScene());
         }
     }

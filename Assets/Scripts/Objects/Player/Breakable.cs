@@ -7,6 +7,7 @@ public class Breakable : MonoBehaviour
     private Animator animator;
     public AudioSource audioSource;
     public AudioClip smashSound;
+    public PetBubble petBubble;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,11 @@ public class Breakable : MonoBehaviour
 
     public virtual void Break()
     {
+        // ---- TUTORIAL FLAG ----
+        if (petBubble != null)
+            petBubble.playerHasSwungSword = true;
+        // -----------------------
+
         animator.SetBool("smash", true);
         StartCoroutine(BreakCo());
     }

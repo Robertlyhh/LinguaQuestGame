@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Heart : Supply
 {
+
+
+    public PetBubble petBubble;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,9 @@ public class Heart : Supply
             supplySignal.Raise(); // Notify that the supply has been collected
             yield return new WaitForSeconds(0.3f); // Optional delay for sound effect
             Destroy(gameObject); // Destroy the heart object after collection
+
+            if (petBubble != null)
+                petBubble.playerHasCollectedHeart = true;
         }
     }
 }

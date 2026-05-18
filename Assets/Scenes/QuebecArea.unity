@@ -65915,6 +65915,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 7426952691462463115, guid: 6fd006cd33205d84d9425700b88f5759, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7421987924500848716, guid: 6fd006cd33205d84d9425700b88f5759, type: 3}
     - {fileID: 8132065934847564163, guid: 6fd006cd33205d84d9425700b88f5759, type: 3}
@@ -95255,7 +95259,7 @@ PrefabInstance:
       objectReference: {fileID: 1343049532}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: dialogs.Array.size
@@ -96513,8 +96517,8 @@ Camera:
   m_GameObject: {fileID: 2035704377}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource;
     public string startingSceneName = "StartingPage";
     public string playerName = "Explorer";
+    public BoolValue tutorialIntroShown;
+    public BoolValue houseIntroShown;
 
     private PetSignalManager petSignalManager;
 
@@ -45,6 +47,9 @@ public class GameManager : MonoBehaviour
     {
         // Initialize player data or load from saved data
         SceneManager.LoadScene(startingSceneName);
+        tutorialIntroShown.runtimeValue = false;
+        houseIntroShown.runtimeValue = false;
+
     }
 
     public void PlaySound(AudioClip clip)

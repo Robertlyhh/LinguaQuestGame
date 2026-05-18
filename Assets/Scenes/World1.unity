@@ -593,6 +593,14 @@ MonoBehaviour:
   - Enemies will immediately engage you in combat when you touch them.
   - Stay alert and be ready!
   - That is all from me, good luck!
+  playerHasMoved: 0
+  playerHasInteracted: 0
+  playerHasThrownFireball: 0
+  playerHasSwungSword: 0
+  isPaused: 0
+  isWaitingForAction: 0
+  playerHasCollectedCoin: 0
+  playerHasCollectedHeart: 0
 --- !u!114 &93750204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,6 +1136,7 @@ MonoBehaviour:
   - solve the answer or fight!
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
   WizardQuizManager: {fileID: 2015426809}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
@@ -3984,6 +3993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   smashSound: {fileID: 8300000, guid: d38824e141108b4428e5121cb640fc2d, type: 3}
+  petBubble: {fileID: 0}
 --- !u!82 &771938830
 AudioSource:
   m_ObjectHideFlags: 0
@@ -163977,6 +163987,7 @@ MonoBehaviour:
   - if you can't escape, beat them up!
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!61 &5180623973885884684
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164506,11 +164517,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[0]'
-      value: Hi Explorer, just a quick refresher on the controls!
+      value: Hi Explorer,come back here for a quick refresher on the controls!
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[1]'
-      value: Press E to interact.
+      value: Press E to interact with signs and objects.
       objectReference: {fileID: 0}
     - target: {fileID: 6610298952553556158, guid: 6f33585c79d1b3c41b5ae35e609bb957, type: 3}
       propertyPath: 'dialogs.Array.data[2]'
@@ -164603,6 +164614,7 @@ MonoBehaviour:
   - Learn what you can here before moving on to apply that knowledge ahead.
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &6610298951181438689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164630,6 +164642,7 @@ MonoBehaviour:
   - Who knows you might be tested on.
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &6610298951684991165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164657,6 +164670,7 @@ MonoBehaviour:
   - It is a region known for its rugged mountains, lush rainforests, and mild climate.
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &6610298951741229963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164686,6 +164700,7 @@ MonoBehaviour:
   - Use your brain and knowledge learned to win!
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!212 &6686647033064286566
 SpriteRenderer:
   m_ObjectHideFlags: 0
