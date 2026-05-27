@@ -32,7 +32,7 @@ public class EnableFishMiniGame : MonoBehaviour
         if (fishingSpot == null || fishingMiniGame == null || miniGame == null)
             return;
 
-        if (fishingSpot.playerInZone && Input.GetKeyDown(KeyCode.Q))
+        if (fishingSpot.playerInZone && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Player entered fishing zone and pressed Q. Enabling fishing mini-game.");
             fishingMiniGame.SetCurrentSpot(fishingSpot);
