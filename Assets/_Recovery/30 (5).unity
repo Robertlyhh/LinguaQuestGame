@@ -1024,15 +1024,7 @@ MonoBehaviour:
   targetScore: 10
   startingObjectCount: 6
   respawnDelay: 0.75
-  tossablePrefabs:
-  - {fileID: 7750552174005004277, guid: 6b47fbed4f5735743b1ae2cedbd7abef, type: 3}
-  - {fileID: 7750552174005004277, guid: da6b83768f18479438e05bc25b72c74a, type: 3}
-  - {fileID: 7750552174005004277, guid: 7127e6bbd096a7f46acbc15d6b20cf8f, type: 3}
-  - {fileID: 7750552174005004277, guid: 0ea9958ac53b75e41be62632960f172b, type: 3}
-  - {fileID: 7750552174005004277, guid: 7ab025e979e0a3b46b5be021f9ce3bc1, type: 3}
-  - {fileID: 7750552174005004277, guid: 757e1e42d3ab1bc4f824bac848e518e3, type: 3}
-  - {fileID: 7750552174005004277, guid: 3f41d06a1e498aa4eb3357a7709d5733, type: 3}
-  - {fileID: 7750552174005004277, guid: 710d62f4ab789114bb9c7d2ab689f466, type: 3}
+  tossablePrefab: {fileID: 7750552174005004277, guid: 9814ceaf158784b4cbed915e5a8bc598, type: 3}
   playerTransform: {fileID: 2511885089642652395}
   playerLasso: {fileID: 1296326057}
   bottomLeftBound: {fileID: 1096750565}
@@ -112110,7 +112102,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 4, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2062632613}
@@ -112127,9 +112119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044aa400d2c088e408f939bc54265835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatchZone
-  acceptedType: 1
   pointsOverride: -1
-  destroyWrongObject: 1
 --- !u!61 &1088291624
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -113086,7 +113076,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 4, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1189429098}
@@ -113103,9 +113093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044aa400d2c088e408f939bc54265835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  acceptedType: 0
   pointsOverride: -1
-  destroyWrongObject: 1
 --- !u!61 &1241949687
 BoxCollider2D:
   m_ObjectHideFlags: 0

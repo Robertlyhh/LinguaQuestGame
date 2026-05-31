@@ -115,7 +115,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 6617321523597834973}
   - component: {fileID: 5087699871661495220}
   - component: {fileID: 2782327602294753450}
+  - component: {fileID: 5018802784494092259}
   m_Layer: 0
   m_Name: Bamboo 1
   m_TagString: box
@@ -406,3 +407,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9735891, y: 0.47504663}
   m_EdgeRadius: 0
+--- !u!114 &5018802784494092259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750552174005004277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f74d2c2a91646b428fbe98c28f3ec86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  points: 1
+  outOfBoundsPadding: 2

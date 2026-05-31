@@ -149,6 +149,13 @@ public class LassoScript : MonoBehaviour
         if (hitBody == null) return;
 
         targetBody = hitBody;
+
+        TossableObject tossable = targetBody.GetComponent<TossableObject>();
+        if (tossable != null)
+        {
+            tossable.OnLatched();
+        }
+
         isOrbiting = false;
 
         originalDrag = targetBody.linearDamping;
@@ -202,6 +209,12 @@ public class LassoScript : MonoBehaviour
 
             targetBody.linearDamping = originalDrag;
             targetBody.angularDamping = originalAngularDrag;
+
+            TossableObject tossable = targetBody.GetComponent<TossableObject>();
+            if (tossable != null)
+            {
+                tossable.OnReleased();
+            }
         }
 
         targetBody = null;
