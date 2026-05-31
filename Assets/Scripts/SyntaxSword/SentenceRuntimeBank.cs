@@ -8,7 +8,7 @@ using UnityEngine.Scripting;
 [CreateAssetMenu(menuName = "LinguaQuest/Sentence Runtime Bank", fileName = "SentenceRuntimeBank")]
 public class SentenceRuntimeBank : ScriptableObject
 {
-    public List<string> jsonFiles = new() { "S1.json" };
+    public List<string> jsonFiles = new() { "S2.json" };
     [HideInInspector] public List<SentenceData> sentences = new();
 
     // Change 'void' to 'IEnumerator' and add a callback
@@ -18,24 +18,7 @@ public class SentenceRuntimeBank : ScriptableObject
 
         foreach (var fileName in jsonFiles)
         {
-            string path = Path.Combine(Application.streamingAssetsPath, fileName);
-
-            // UNITY WEBREQUEST (Works in WebGL AND Editor)
-            using (UnityWebRequest request = UnityWebRequest.Get(path))
-            {
-                // Wait for the "download" to finish
-                yield return request.SendWebRequest();
-
-                if (request.result == UnityWebRequest.Result.Success)
-                {
-                    string json = request.downloadHandler.text;
-                    ProcessJson(json, fileName);
-                }
-                else
-                {
-                    Debug.LogError($"[Error] Could not load {fileName}: {request.error}");
-                }
-            }
+            yield return LoadFileCoroutine(fileName);
         }
 
         Debug.Log($"[Bank] Finished loading {sentences.Count} sentences.");
@@ -53,6 +36,40 @@ public class SentenceRuntimeBank : ScriptableObject
         {
             sentences.AddRange(pack.sentences);
         }
+    }
+
+    private IEnumerator LoadFileCoroutine(string fileName)
+    {
+        foreach (var path in GetCandidatePaths(fileName))
+        {
+            if (!File.Exists(path))
+            {
+                continue;
+            }
+
+            string requestPath = new System.Uri(path).AbsoluteUri;
+
+            using (UnityWebRequest request = UnityWebRequest.Get(requestPath))
+            {
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    ProcessJson(request.downloadHandler.text, fileName);
+                    yield break;
+                }
+
+                Debug.LogError($"[Error] Could not load {fileName} from {path}: {request.error}");
+            }
+        }
+
+        Debug.LogError($"[Error] Could not find {fileName} in StreamingAssets or Assets/Scripts/SyntaxSword.");
+    }
+
+    private IEnumerable<string> GetCandidatePaths(string fileName)
+    {
+        yield return Path.Combine(Application.streamingAssetsPath, fileName);
+        yield return Path.Combine(Application.dataPath, "Scripts", "SyntaxSword", fileName);
     }
 
     [Preserve]

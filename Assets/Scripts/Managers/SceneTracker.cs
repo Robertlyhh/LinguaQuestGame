@@ -7,6 +7,7 @@ public class SceneTracker : MonoBehaviour
 
     public string previousSceneName;
     public Vector3 playerReturnPosition;
+    public bool isReturningFromBattle = false;
     private bool shouldRespawnAfterLoad = false;
     private Vector3 pendingRespawnPosition;
 
@@ -28,6 +29,7 @@ public class SceneTracker : MonoBehaviour
     {
         previousSceneName = SceneManager.GetActiveScene().name;
         playerReturnPosition = playerPos;
+        Debug.Log("Recorded scene: " + previousSceneName + " with player position: " + playerReturnPosition);
     }
 
     public void ReturnToPreviousScene(bool isWin)
@@ -35,13 +37,16 @@ public class SceneTracker : MonoBehaviour
         if (string.IsNullOrEmpty(previousSceneName))
         {
             Debug.LogWarning("No previous scene recorded!");
-            return;
+            SceneManager.LoadScene("World1_Revamped");
+            //return;
         }
 
         if (isWin)
         {
             // Just load previous scene
+            isReturningFromBattle = true;
             SceneManager.LoadScene(previousSceneName);
+
         }
         else
         {
@@ -77,5 +82,22 @@ public class SceneTracker : MonoBehaviour
 
             shouldRespawnAfterLoad = false;
         }
+
+        if (isReturningFromBattle)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                Debug.Log("Returning player to recorded position: " + playerReturnPosition);
+                player.transform.position = playerReturnPosition;
+            }
+            else
+            {
+                Debug.LogWarning("Player not found in scene after load!");
+            }
+
+            isReturningFromBattle = false;
+        }
+
     }
 }

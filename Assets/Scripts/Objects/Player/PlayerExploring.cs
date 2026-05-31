@@ -31,6 +31,15 @@ public class PlayerExploring : MonoBehaviour
     public FloatValue currentHealth;
     public FloatValue magicLevel;
 
+    [Header("Damage")]
+    [SerializeField] private float damageInvulnerabilityDuration = 1f;
+    [SerializeField] private float damageFlashDuration = 0.2f;
+    [SerializeField] private Color damageFlashColor = new Color(1f, 0f, 0f, 0.65f);
+    private float nextDamageTime;
+    private Coroutine damageFlashCoroutine;
+    private SpriteRenderer playerSpriteRenderer;
+    private SpriteRenderer damageFlashRenderer;
+
     [Header("Inventory & Items")]
     public Inventory inventory;
     public SpriteRenderer receiveItemSprite;
@@ -38,6 +47,7 @@ public class PlayerExploring : MonoBehaviour
     [Header("Signals")]
     public Signal playerHealthSignal;
     public Signal playerAttackSignal;
+    [SerializeField] private Signal playerDefeatedSignal;
 
     [Header("Step Sound")]
     public StepSoundManager stepSoundManager;
@@ -93,6 +103,8 @@ public class PlayerExploring : MonoBehaviour
         animator = GetComponent<Animator>();
         stepSoundManager = FindFirstObjectByType<StepSoundManager>();
         myRigidbody = GetComponent<Rigidbody2D>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        SetupDamageFlashRenderer();
 
         defaultSlipSpeedMultiplier = slipSpeedMultiplier;
 
@@ -106,8 +118,26 @@ public class PlayerExploring : MonoBehaviour
 
         animator.SetFloat("moveX", 0);
         animator.SetFloat("moveY", -1);
-        myRigidbody.position = StartingPosition.initialValue;
+        myRigidbody.position = StartingPosition.runtimeValue;
         magicLevel.runtimeValue = magicLevel.initialValue;
+    }
+
+    void LateUpdate()
+    {
+        if (damageFlashRenderer == null) return;
+        if (!damageFlashRenderer.enabled) return;
+
+        SyncDamageFlashRenderer();
+    }
+
+    void OnDisable()
+    {
+        if (damageFlashRenderer != null)
+        {
+            damageFlashRenderer.enabled = false;
+        }
+
+        damageFlashCoroutine = null;
     }
 
     void Update()
@@ -391,5 +421,87 @@ public class PlayerExploring : MonoBehaviour
     public Vector2 GetCurrentMovementDirection()
     {
         return new Vector2(animator.GetFloat("moveX"), animator.GetFloat("moveY")).normalized;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (Time.time < nextDamageTime) return;
+
+        nextDamageTime = Time.time + damageInvulnerabilityDuration;
+        currentHealth.runtimeValue -= damage;
+        playerHealthSignal.Raise();
+
+        if (currentHealth.runtimeValue <= 0)
+        {
+            // Handle player death (e.g., trigger death animation, disable controls, etc.)
+            Debug.Log("Player has died.");
+
+            if (playerDefeatedSignal != null)
+            {
+                playerDefeatedSignal.Raise();
+            }
+            else
+            {
+                // For now, we just reset health for testing purposes
+                currentHealth.runtimeValue = currentHealth.initialValue;
+                nextDamageTime = 0f;
+                playerHealthSignal.Raise();
+            }
+        }
+
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
+        }
+
+        damageFlashCoroutine = StartCoroutine(TakeDamageCo());
+    }
+
+    private IEnumerator TakeDamageCo()
+    {
+        Debug.Log("Player took damage, current health: " + currentHealth.runtimeValue);
+        if (damageFlashRenderer == null)
+        {
+            damageFlashCoroutine = null;
+            yield break;
+        }
+
+        SyncDamageFlashRenderer();
+        damageFlashRenderer.enabled = true;
+
+        yield return new WaitForSeconds(damageFlashDuration);
+
+        damageFlashRenderer.enabled = false;
+        damageFlashCoroutine = null;
+    }
+
+    private void SetupDamageFlashRenderer()
+    {
+        if (playerSpriteRenderer == null) return;
+
+        var overlayObject = new GameObject("DamageFlashOverlay");
+        overlayObject.transform.SetParent(transform, false);
+
+        damageFlashRenderer = overlayObject.AddComponent<SpriteRenderer>();
+        damageFlashRenderer.enabled = false;
+        damageFlashRenderer.color = damageFlashColor;
+        SyncDamageFlashRenderer();
+    }
+
+    private void SyncDamageFlashRenderer()
+    {
+        if (playerSpriteRenderer == null || damageFlashRenderer == null) return;
+
+        damageFlashRenderer.sprite = playerSpriteRenderer.sprite;
+        damageFlashRenderer.flipX = playerSpriteRenderer.flipX;
+        damageFlashRenderer.flipY = playerSpriteRenderer.flipY;
+        damageFlashRenderer.drawMode = playerSpriteRenderer.drawMode;
+        damageFlashRenderer.size = playerSpriteRenderer.size;
+        damageFlashRenderer.maskInteraction = playerSpriteRenderer.maskInteraction;
+        damageFlashRenderer.spriteSortPoint = playerSpriteRenderer.spriteSortPoint;
+        damageFlashRenderer.sortingLayerID = playerSpriteRenderer.sortingLayerID;
+        damageFlashRenderer.sortingOrder = playerSpriteRenderer.sortingOrder + 1;
+        damageFlashRenderer.sharedMaterial = playerSpriteRenderer.sharedMaterial;
+        damageFlashRenderer.color = damageFlashColor;
     }
 }

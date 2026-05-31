@@ -1,0 +1,144 @@
+{
+  "packName": "Canadian Culture – Syntax Sword",
+  "language": "en",
+  "sentences": [
+    {
+      "guid": "culture-can-001",
+      "sentence": "My parka is very warm.",
+      "topic": "word_classes",
+      "subtopic": "adjective_vs_noun",
+      "difficulty": 1,
+      "entries": [
+        {"word": "My", "shownLabel": "Determiner", "isLabelCorrect": true},
+        {"word": "parka", "shownLabel": "Noun", "isLabelCorrect": true},
+        {"word": "is", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "very", "shownLabel": "Adjective", "isLabelCorrect": false},
+        {"word": "warm", "shownLabel": "Adjective", "isLabelCorrect": true}
+      ]
+    },
+    {
+      "guid": "culture-can-002",
+      "sentence": "Black ice looks invisible.",
+      "topic": "word_classes",
+      "subtopic": "noun_phrases",
+      "difficulty": 2,
+      "entries": [
+        {"word": "Black", "shownLabel": "Adjective", "isLabelCorrect": true},
+        {"word": "ice", "shownLabel": "Verb", "isLabelCorrect": false},
+        {"word": "looks", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "invisible", "shownLabel": "Noun", "isLabelCorrect": false}
+      ]
+    },
+    {
+      "guid": "culture-can-003",
+      "sentence": "I ate poutine for lunch.",
+      "topic": "word_classes",
+      "subtopic": "noun_vs_verb",
+      "difficulty": 1,
+      "entries": [
+        {"word": "I", "shownLabel": "Pronoun", "isLabelCorrect": true},
+        {"word": "ate", "shownLabel": "Noun", "isLabelCorrect": false},
+        {"word": "poutine", "shownLabel": "Noun", "isLabelCorrect": true},
+        {"word": "for", "shownLabel": "Preposition", "isLabelCorrect": true},
+        {"word": "lunch", "shownLabel": "Verb", "isLabelCorrect": false}
+      ]
+    },
+    {
+      "guid": "culture-can-004",
+      "sentence": "She wore soft leather moccasins.",
+      "topic": "word_classes",
+      "subtopic": "adjective_ordering",
+      "difficulty": 3,
+      "entries": [
+        {"word": "She", "shownLabel": "Pronoun", "isLabelCorrect": true},
+        {"word": "wore", "shownLabel": "Adjective", "isLabelCorrect": false},
+        {"word": "soft", "shownLabel": "Adjective", "isLabelCorrect": true},
+        {"word": "leather", "shownLabel": "Noun", "isLabelCorrect": true},
+        {"word": "moccasins", "shownLabel": "Noun", "isLabelCorrect": true}
+      ]
+    },
+    {
+      "guid": "culture-can-005",
+      "sentence": "We boiled sap for syrup.",
+      "topic": "word_classes",
+      "subtopic": "verb_recognition",
+      "difficulty": 2,
+      "entries": [
+        {"word": "We", "shownLabel": "Noun", "isLabelCorrect": false},
+        {"word": "boiled", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "sap", "shownLabel": "Adjective", "isLabelCorrect": false},
+        {"word": "for", "shownLabel": "Preposition", "isLabelCorrect": true},
+        {"word": "syrup", "shownLabel": "Noun", "isLabelCorrect": true}
+      ]
+    },
+    {
+      "guid": "culture-can-006",
+      "sentence": "The faceoff started the game.",
+      "topic": "word_classes",
+      "subtopic": "noun_vs_verb",
+      "difficulty": 2,
+      "entries": [
+        {"word": "The", "shownLabel": "Determiner", "isLabelCorrect": true},
+        {"word": "faceoff", "shownLabel": "Verb", "isLabelCorrect": false},
+        {"word": "started", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "the", "shownLabel": "Noun", "isLabelCorrect": false},
+        {"word": "game", "shownLabel": "Noun", "isLabelCorrect": true}
+      ]
+    },
+    {
+      "guid": "culture-can-007",
+      "sentence": "Snowshoes help walking on snow.",
+      "topic": "word_classes",
+      "subtopic": "noun_vs_verb",
+      "difficulty": 2,
+      "entries": [
+        {"word": "Snowshoes", "shownLabel": "Noun", "isLabelCorrect": true},
+        {"word": "help", "shownLabel": "Adjective", "isLabelCorrect": false},
+        {"word": "walking", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "on", "shownLabel": "Preposition", "isLabelCorrect": true},
+        {"word": "snow", "shownLabel": "Verb", "isLabelCorrect": false}
+      ]
+    },
+    {
+      "guid": "culture-can-008",
+      "sentence": "They carried the heavy canoe.",
+      "topic": "word_classes",
+      "subtopic": "adjectives",
+      "difficulty": 2,
+      "entries": [
+        {"word": "They", "shownLabel": "Pronoun", "isLabelCorrect": true},
+        {"word": "carried", "shownLabel": "Noun", "isLabelCorrect": false},
+        {"word": "the", "shownLabel": "Determiner", "isLabelCorrect": true},
+        {"word": "heavy", "shownLabel": "Adjective", "isLabelCorrect": true},
+        {"word": "canoe", "shownLabel": "Adjective", "isLabelCorrect": false}
+      ]
+    },
+    {
+      "guid": "culture-can-009",
+      "sentence": "He said bonjour loudly.",
+      "topic": "word_classes",
+      "subtopic": "adverbs",
+      "difficulty": 2,
+      "entries": [
+        {"word": "He", "shownLabel": "Pronoun", "isLabelCorrect": true},
+        {"word": "said", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "bonjour", "shownLabel": "Verb", "isLabelCorrect": false},
+        {"word": "loudly", "shownLabel": "Adjective", "isLabelCorrect": false}
+      ]
+    },
+    {
+      "guid": "culture-can-010",
+      "sentence": "The road was very slippery.",
+      "topic": "word_classes",
+      "subtopic": "adverbs_intensity",
+      "difficulty": 3,
+      "entries": [
+        {"word": "The", "shownLabel": "Determiner", "isLabelCorrect": true},
+        {"word": "road", "shownLabel": "Noun", "isLabelCorrect": true},
+        {"word": "was", "shownLabel": "Verb", "isLabelCorrect": true},
+        {"word": "very", "shownLabel": "Adjective", "isLabelCorrect": false},
+        {"word": "slippery", "shownLabel": "Adjective", "isLabelCorrect": true}
+      ]
+    }
+  ]
+}

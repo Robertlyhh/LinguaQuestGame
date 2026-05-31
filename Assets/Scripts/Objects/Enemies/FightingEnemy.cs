@@ -20,8 +20,13 @@ public class FightingEnemy : MonoBehaviour
 
     public Animator Animation;
     public Slider healthBar; // Reference to the health bar UI element
+
+    public float SFX_VOLUME = 1f;
+    public AudioSource audioSource;
+    public AudioClip damagedSFX;
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         Animation = GetComponent<Animator>();
         if (Animation != null)
@@ -40,6 +45,9 @@ public class FightingEnemy : MonoBehaviour
 
     public void takeDamage(float damage)
     {
+        // Move to top so that SFX still plays on enemy death (?)
+        audioSource.PlayOneShot(damagedSFX, SFX_VOLUME);
+
         StartCoroutine(BeingHit()); // Trigger stagger animation
         health -= damage; // Reduce health by the damage amount
         if (!healthBar.gameObject.activeInHierarchy)

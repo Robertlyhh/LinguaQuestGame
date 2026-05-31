@@ -152,7 +152,6 @@ Transform:
   m_Children:
   - {fileID: 6168016001006934075}
   - {fileID: 1709181673825587987}
-  - {fileID: 6418256346322995985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1923026738484244045
@@ -463,6 +462,7 @@ RectTransform:
   - {fileID: 8333304468706620431}
   - {fileID: 3197373134352411482}
   - {fileID: 4906830784322243302}
+  - {fileID: 6418256346322995985}
   m_Father: {fileID: 1709181673825587987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -786,11 +786,11 @@ Transform:
   m_GameObject: {fileID: 4563576975053730372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -562, y: -316, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4646240516898021981}
+  m_Father: {fileID: 1839618330680335348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2887023207042972571
 MonoBehaviour:
@@ -1770,6 +1770,10 @@ MonoBehaviour:
   wordOrderManager: {fileID: 0}
   featureMatchManager: {fileID: 0}
   PlayerPrefab: {fileID: 0}
+  preparedDialogs: []
+  actualDialogs: []
+  hasPreparedDialogs: 0
+  prereqs: []
   challengeType: 1
 --- !u!1 &7469435685832574237
 GameObject:

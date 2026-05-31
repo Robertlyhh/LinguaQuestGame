@@ -24,6 +24,7 @@ public class SyntaxShuffleManager : MonoBehaviour
     private WordButtonController firstSelected;
     private BattleManager battleManager;
     private bool answered = false;
+    private Color HIGHLIGHT_COLOR = Color.yellow;
 
     void Start()
     {
@@ -104,12 +105,12 @@ public class SyntaxShuffleManager : MonoBehaviour
         if (firstSelected == null)
         {
             firstSelected = clicked;
-            clicked.GetComponent<Image>().color = Color.yellow; // Highlight
+            clicked.GetComponent<Image>().color = HIGHLIGHT_COLOR;
         }
         else
         {
             SwapWords(firstSelected, clicked);
-            firstSelected.GetComponent<Image>().color = Color.white;
+            firstSelected.GetComponent<Image>().color = firstSelected.GetOriginalColor();
             firstSelected = null;
         }
     }

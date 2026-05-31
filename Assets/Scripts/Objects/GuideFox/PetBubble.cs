@@ -11,19 +11,18 @@ public class PetBubble : MonoBehaviour
     public float baseDisplayDuration = 4f;
     public BoolValue hasShownIntroduction;
     public List<string> startMessages = new List<string>() {
-        "Dear explorer,",
-        "Welcome to the Linguistic World!",
-        "Here, you'll discover new language skills,",
-        "and enjoy a journey filled with adventure and learning.",
-        "I am your guiding spirit, here to support you throughout your travels.",
-        "Let's begin your adventure!",
-        "Use WASD to move around.",
-        "Press E to interact with characters and objects.",
+        "Dear Explorer,",
+        "Welcome to the world of Canada!",
+        "Here, you will discover new language skills and embark on a journey filled with adventure and learning.",
+        "I am your guiding spirit, and I will be with you every step of the way.",
+        "Let us begin!",
+        "Use WASD to move around the world.",
+        "Press E to interact with characters and objects you encounter.",
         "Left-click to swing your sword.",
-        "Make sure to swing your sword at small obstacles blocking your path!",
-        "Enemies will immediately engage you in combat when you touch them.",
-        "Stay alert and be ready!",
-        "That is all from me, good luck!"
+        "Some obstacles will block your path — strike them down to continue.",
+        "Be careful! Enemies will engage you the moment you get too close.",
+        "Stay sharp, stay ready.",
+        "That is all from me. Safe travels, and good luck!"
     };
 
     private float timer = 0f;

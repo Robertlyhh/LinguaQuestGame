@@ -21,6 +21,7 @@ public class SceneTransition : MonoBehaviour
     public List<BoolValue> activateConditions;
     public Animator portalAnimator;
     public Camera targetCamera;
+    public SceneTracker sceneTracker;
 
     private void Awake()
     {
@@ -60,6 +61,10 @@ public class SceneTransition : MonoBehaviour
                 }
             }
         }
+        if (sceneTracker == null)
+        {
+            sceneTracker = FindFirstObjectByType<SceneTracker>();
+        }
 
     }
 
@@ -69,6 +74,7 @@ public class SceneTransition : MonoBehaviour
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             playerStorage.runtimeValue = playerPosition;
+            sceneTracker.RecordSceneAndPosition(collision.transform.position);
             StartCoroutine(FadeOutAndLoadScene());
         }
     }

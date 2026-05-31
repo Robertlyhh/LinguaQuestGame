@@ -81,6 +81,7 @@ public class FootprintsFromPlayerExploring : MonoBehaviour
     private void TryStamp()
     {
         Vector2 pos = transform.position;
+        //Debug.Log("Trying to stamp footprint at " + pos);
 
         // Only stamp on snow
         if (Physics2D.OverlapPoint(pos, snowColliderMask) == null) return;

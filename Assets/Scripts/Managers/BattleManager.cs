@@ -20,7 +20,7 @@ public class BattleManager : MonoBehaviour
     public Signal incorrectSignal;
     public Canvas winScreen;
     public Canvas loseScreen;
-    public TextMeshProUGUI UItext;
+    public TextMeshProUGUI instructionsText;
     public TextMeshProUGUI feedbackText;
     public string[] battleMessages = {
         "Get ready for a syntax challenge!",
@@ -64,10 +64,12 @@ public class BattleManager : MonoBehaviour
     public float turnDelay = 1.5f;
     private bool isPlayerTurn = true;
     public float battleDuration = 30f; // Total duration of the battle
+    
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        instructionsText.gameObject.SetActive(true);
         StartCoroutine(RunBattleIntroAndStartTurn());
 
         // Add this coroutine to handle the sequence
@@ -245,28 +247,28 @@ public class BattleManager : MonoBehaviour
     public IEnumerator ShowTextWithDelay(string message, float delay)
     {
 
-        UItext.text = message;
+        instructionsText.text = message;
 
         yield return new WaitForSeconds(delay);
 
-        UItext.text = string.Empty; // Clear the text after the delay
+        instructionsText.text = string.Empty; // Clear the text after the delay
     }
 
     public IEnumerator ShowBattleMessages()
     {
         foreach (string message in battleMessages)
         {
-            UItext.text = message;
+            instructionsText.text = message;
             audioSource.PlayOneShot(correctSound, 0.5f);
             yield return new WaitForSeconds(messageDisplayTime + messageDelay);
         }
-        UItext.text = string.Empty; // Clear the text after showing all messages
+        instructionsText.text = string.Empty; // Clear the text after showing all messages
     }
 
     public IEnumerator showTurnMessage()
     {
-        UItext.text = isPlayerTurn ? "Your Turn!" : "Enemy's Turn!";
+        instructionsText.text = isPlayerTurn ? "Your Turn!" : "Enemy's Turn!";
         yield return new WaitForSeconds(messageDisplayTime);
-        UItext.text = string.Empty; // Clear the text after the delay   
+        instructionsText.text = string.Empty; // Clear the text after the delay   
     }
 }

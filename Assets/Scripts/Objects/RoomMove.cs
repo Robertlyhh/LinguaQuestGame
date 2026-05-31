@@ -40,6 +40,7 @@ public class RoomMove : MonoBehaviour
             Debug.LogError("Text object is not assigned in the inspector.");
             yield break;
         }
+        text.GetComponent<TextMeshProUGUI>().text = placeName;
         text.SetActive(true);
         yield return new WaitForSeconds(2);
         text.SetActive(false);

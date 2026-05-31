@@ -164,7 +164,7 @@ MonoBehaviour:
     morphologyPoints: 0
     phonologyPoints: 0
   audioSource: {fileID: 0}
-  startingSceneName: World1_Revamped
+  startingSceneName: StartingPage
   playerName: Explorer
 --- !u!4 &462503847
 Transform:
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousSceneName: 
   playerReturnPosition: {x: 0, y: 0, z: 0}
+  isReturningFromBattle: 0
 --- !u!114 &462503849
 MonoBehaviour:
   m_ObjectHideFlags: 0
