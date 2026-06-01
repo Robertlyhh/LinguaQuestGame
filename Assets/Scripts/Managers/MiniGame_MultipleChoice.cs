@@ -166,7 +166,7 @@ public class MiniGame_MultipleChoice : MonoBehaviour
     private void FinishQuiz()
     {
         quizPanel.SetActive(false);
-        onMiniGameComplete?.Invoke(!answeredIncorrect);
+        onMiniGameComplete?.Invoke(true);
     }
 
     private void DisableButtons()

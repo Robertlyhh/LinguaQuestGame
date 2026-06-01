@@ -34,7 +34,7 @@ public class EnableFishMiniGame : MonoBehaviour
 
         if (fishingSpot.playerInZone && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Player entered fishing zone and pressed Q. Enabling fishing mini-game.");
+            Debug.Log("Player entered fishing zone and pressed E. Enabling fishing mini-game.");
             fishingMiniGame.SetCurrentSpot(fishingSpot);
             miniGame.SetActive(true);
         }
@@ -47,7 +47,7 @@ public class EnableFishMiniGame : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered fishing zone.");
+            Debug.Log("Player entered zone: " + gameObject.name);
             fishingSpot.playerInZone = true;
         }
     }
