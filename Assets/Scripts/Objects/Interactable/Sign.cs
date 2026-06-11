@@ -24,7 +24,7 @@ public class Sign : Interactable
 
     public virtual void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
         {
             if (audioSource != null && interactSound != null)
                 audioSource.PlayOneShot(interactSound);

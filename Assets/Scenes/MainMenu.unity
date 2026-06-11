@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 23f88a11ec82a5d4b814274edd631427, type: 3}
+  m_Sprite: {fileID: -4930271065895141840, guid: f636549284f6c6342b336cc371319dea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2408,7 +2408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1351184079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2418,15 +2418,15 @@ RectTransform:
   m_GameObject: {fileID: 1351184078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.70831, y: 0.70831, z: 0.70831}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 543936476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31, y: 401}
-  m_SizeDelta: {x: 516.4608, y: 200.6642}
+  m_AnchoredPosition: {x: 52, y: 320}
+  m_SizeDelta: {x: 900.927, y: 550.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1351184080
 MonoBehaviour:
@@ -2440,7 +2440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: ff47ca4b0abec4b43b365c1a0667ecde, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1724952434181247658, guid: 889aea1edfab69d4d80d436a39315848, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fee49b5f57377da48a4996fedd3e6d1d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2505,7 +2505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -529, y: -190.37521}
+  m_AnchoredPosition: {x: -531, y: -194}
   m_SizeDelta: {x: 172.3925, y: 198.0133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1372347717

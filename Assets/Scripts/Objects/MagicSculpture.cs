@@ -63,7 +63,7 @@ public class MagicSculpture : Sign
         {
             return;
         }
-        if (dialogActive && Input.GetKeyDown(KeyCode.E))
+        if (dialogActive && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
         {
             if (audioSource != null && interactSound != null)
             {

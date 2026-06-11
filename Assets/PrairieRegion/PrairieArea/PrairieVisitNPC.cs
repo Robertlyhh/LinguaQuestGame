@@ -8,7 +8,7 @@ public class PrairieVisitNPC : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && !visited && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && !visited && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
         {
             visited = true;
             PrairieNPCTracker.Instance.MarkVisited(npcID);
