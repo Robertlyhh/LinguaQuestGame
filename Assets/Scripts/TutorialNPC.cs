@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SimpleScript: MonoBehaviour, IInteractable
+public class TutorialNPC : MonoBehaviour
 {
     [Header("UI")]
     public GameObject dialoguePanel;
@@ -14,6 +13,7 @@ public class SimpleScript: MonoBehaviour, IInteractable
 
     [Header("Settings")]
     public float typingSpeed = 0.04f;
+    public KeyCode interactKey = KeyCode.E;
 
     [Header("Dialogue")]
     public List<string> tutorialLines = new List<string>()
@@ -21,7 +21,7 @@ public class SimpleScript: MonoBehaviour, IInteractable
         "Welcome to the market, little frog!",
         "There are wonderful stalls here, each with something to teach you.",
         "Walk up to a stall and press E to interact with the vendor.",
-        "They will share their knowledge with you — so listen closely!",
+        "They will share their knowledge with you � so listen closely!",
         "Go ahead, explore the market. Your adventure begins now!"
     };
 
@@ -31,8 +31,6 @@ public class SimpleScript: MonoBehaviour, IInteractable
     private int currentIndex = 0;
     private Coroutine typingCoroutine;
 
-    public bool CanInteract() => true; // ADD THIS
-
     void Start()
     {
         if (dialoguePanel != null)
@@ -41,33 +39,28 @@ public class SimpleScript: MonoBehaviour, IInteractable
             nameText.text = npcName;
     }
 
-    // Called by Unity's new Input System via Player Input component
-    public void OnInteract(InputAction.CallbackContext context)
+    void Update()
     {
-        if (!context.performed) return;
         if (!playerInRange) return;
-        HandleInteract();
-    }
 
-    // Fallback — also check keyboard manually
-    public void Interact() // ADD THIS
-    {
-        if (!isActive)
-            StartDialogue();
-        else if (isTyping)
-            SkipTyping();
-        else
-            NextLine();
-    }
-
-    private void HandleInteract()
-    {
-        if (!isActive)
-            StartDialogue();
-        else if (isTyping)
-            SkipTyping();
-        else
-            NextLine();
+        if (Input.GetKeyDown(interactKey) ||
+            Input.GetKeyDown(KeyCode.Return) ||
+            Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!isActive)
+            {
+                StartDialogue();
+            }
+            else if (isTyping)
+            {
+                // Skip to full line instantly
+                SkipTyping();
+            }
+            else
+            {
+                NextLine();
+            }
+        }
     }
 
     private void StartDialogue()
@@ -103,6 +96,7 @@ public class SimpleScript: MonoBehaviour, IInteractable
     {
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
+
         dialogueText.text = tutorialLines[currentIndex];
         isTyping = false;
     }
@@ -110,10 +104,15 @@ public class SimpleScript: MonoBehaviour, IInteractable
     private void NextLine()
     {
         currentIndex++;
+
         if (currentIndex < tutorialLines.Count)
+        {
             ShowLine(tutorialLines[currentIndex]);
+        }
         else
+        {
             EndDialogue();
+        }
     }
 
     private void EndDialogue()
@@ -123,6 +122,18 @@ public class SimpleScript: MonoBehaviour, IInteractable
         dialoguePanel.SetActive(false);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+            playerInRange = true;
+    }
 
-    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            EndDialogue();
+        }
+    }
 }
