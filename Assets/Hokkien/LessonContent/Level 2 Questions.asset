@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a95033faff4a4271a77a8f3b84af233, type: 3}
+  m_Name: Level 2 Questions
+  m_EditorClassIdentifier: Assembly-CSharp::HokkienQuizQuestionBank
+  questions:
+  - question: "What is the origin of Hsinchu Pork Ball (\u65B0\u7AF9\u8089\u4E38)\uFF1F"
+    choices:
+    - Created by a son for his blind mother
+    - Created by fisherman to make pork easier to store
+    - Created by workers to make pork easier to carry
+    - Created by a mother for her young son
+    correctAnswerIndex: 0
+    explanation: 
+  - question: Which of the following is equivalent to 30% off?
+    choices:
+    - "\u6253\u4E09\u6298 "
+    - "\u6253\u56DB\u6298"
+    - "\u6253\u4E03\u6298 "
+    - "\u6253\u4E09\u5341\u6298"
+    correctAnswerIndex: 0
+    explanation: 
+  - question: Which of the following is equivalent to 30% off?
+    choices:
+    - "\u6253\u4E09\u6298 "
+    - "\u6253\u56DB\u6298"
+    - "\u6253\u4E03\u6298 "
+    - "\u6253\u4E09\u5341\u6298"
+    correctAnswerIndex: 0
+    explanation: 
+  - question: If you ask for a discount, which of the following responses from the
+      vendor is NOT a rejection?
+    choices:
+    - "\u4ECA\u5929\u6CA1\u6709\u6298\u6263\u3002(No discount today.)"
+    - "\u5468\u672B\u624D\u6709\u6D3B\u52A8\u3002(Only on weekends. )"
+    - "\u6211\u5011\u5DF2\u7D93\u662F\u9019\u908A\u6700\u4FBF\u5B9C\u7684\u4E86\u3002(We
+      are already the cheapest here )"
+    - "\u7ED9\u4F60\u6253\u516B\u6298"
+    correctAnswerIndex: 3
+    explanation: 
