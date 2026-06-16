@@ -538,11 +538,193 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8038843264315626089, guid: 3985efa13a475e64386b848208414dd7, type: 3}
   m_PrefabInstance: {fileID: 183011244}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &186824098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 186824100}
+  - component: {fileID: 186824099}
+  m_Layer: 0
+  m_Name: NPCTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &186824099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186824098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e291af67d7f6b47abfb9b5a9737ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieNPCTracker
+  totalNPCs: 5
+  NPCsVisited: {fileID: 11400000, guid: 8c20cd6fccf53fe43bc97cd8b26c86cc, type: 2}
+--- !u!4 &186824100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186824098}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.10045, y: 1.62489, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &203188397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2511885089559273175, guid: 6fd006cd33205d84d9425700b88f5759, type: 3}
   m_PrefabInstance: {fileID: 1487896949}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &247619820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 247619821}
+  - component: {fileID: 247619823}
+  - component: {fileID: 247619822}
+  m_Layer: 5
+  m_Name: NPCCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &247619821
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247619820}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5895191, y: 0.5895191, z: 0.5895191}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1238702518}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 972.94086, y: 620.72217}
+  m_SizeDelta: {x: 218.9093, y: 63.8667}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &247619822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247619820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Talked to: 0 / 6'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 33.5
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &247619823
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247619820}
+  m_CullTransparentMesh: 1
 --- !u!1 &250512877
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,6 +1052,7 @@ GameObject:
   m_Component:
   - component: {fileID: 326950194}
   - component: {fileID: 326950195}
+  - component: {fileID: 326950201}
   - component: {fileID: 326950196}
   - component: {fileID: 326950199}
   - component: {fileID: 326950198}
@@ -927,6 +1110,10 @@ MonoBehaviour:
   audioSource: {fileID: 326950196}
   correctSound: {fileID: 8300000, guid: 0f8cde85d2fb5ce4591ef3b129296c98, type: 3}
   wrongSound: {fileID: 8300000, guid: db4ffd0535ec1da49bfa631b341234a5, type: 3}
+  panelBackground: {fileID: 0}
+  correctFlashColor: {r: 0, g: 1, b: 0, a: 0.4}
+  wrongFlashColor: {r: 1, g: 0, b: 0, a: 0.4}
+  flashDuration: 0.3
   questionsSet:
   - {fileID: 11400000, guid: 8251114c563c243449d13d99e02593cd, type: 2}
   - {fileID: 11400000, guid: e5d90402da7bb18408eeea3b3f532ba1, type: 2}
@@ -1153,6 +1340,19 @@ MonoBehaviour:
   - When you're ready to start, come talk to me again.
   dialogActive: 0
   currentDialogIndex: 0
+--- !u!114 &326950201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326950193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f50c5c459f7fbb548a1b663c12f7fc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LonghouseGreeter
+  lockedMessage: {fileID: 0}
 --- !u!1839735485 &359724935 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 2374007072019074615, guid: 9bc837f6be645fc4280fe8833e01e8f5, type: 3}
@@ -112275,6 +112475,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!224 &847763226 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3103180283255870401, guid: 60c8ac60bffe8694a9bca2d76b7d6081, type: 3}
+  m_PrefabInstance: {fileID: 2061432396}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &848013244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135536,6 +135741,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bc837f6be645fc4280fe8833e01e8f5, type: 3}
+--- !u!1 &1238702517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238702518}
+  - component: {fileID: 1238702519}
+  m_Layer: 0
+  m_Name: PrairieUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1238702518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238702517}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -890.94293, y: -559.86316, z: 0}
+  m_LocalScale: {x: 1.6962883, y: 1.6962883, z: 1.6962883}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 247619821}
+  m_Father: {fileID: 847763226}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1238702519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238702517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d4cc4e2608874b439461224a78ba377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieNPCUI
+  counterText: {fileID: 247619822}
 --- !u!82 &1336088345
 AudioSource:
   m_ObjectHideFlags: 0
@@ -158634,6 +158885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929174092}
   - component: {fileID: 1929174091}
+  - component: {fileID: 1929174093}
   m_Layer: 0
   m_Name: IndigenousSpriteSheet_1
   m_TagString: Untagged
@@ -158714,6 +158966,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1929174093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929174090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df0a52f04ee8fb4ba9c253db9a56dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieVisitNPC
+  npcID: 4
 --- !u!1 &1943842632
 GameObject:
   m_ObjectHideFlags: 0
@@ -174013,7 +174278,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3103180283255870401, guid: 60c8ac60bffe8694a9bca2d76b7d6081, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1238702518}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c8ac60bffe8694a9bca2d76b7d6081, type: 3}
 --- !u!1 &2061432397 stripped
@@ -174286,6 +174554,7 @@ MonoBehaviour:
   - I'm not strong enough to lift larger rocks yet.
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &3375471500714017971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174312,6 +174581,7 @@ MonoBehaviour:
   - This is just one of the 31 mountain ranges in British Columbia, Canada!
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &3375471500983788300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174342,6 +174612,7 @@ MonoBehaviour:
     stories.
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &3375471501293120524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174367,6 +174638,7 @@ MonoBehaviour:
   - Aren't they the same thing?
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &3375471501708061379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174393,6 +174665,7 @@ MonoBehaviour:
   - That's why animals like orcas are often seen on the bottom of totem poles!
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!114 &3375471501986386384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174420,6 +174693,7 @@ MonoBehaviour:
   - Sometimes they have white fur. Those ones are called Spirit Bears!
   dialogActive: 0
   currentDialogIndex: 0
+  petBubble: {fileID: 0}
 --- !u!61 &3408239390900075463
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -174985,9 +175259,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6185436776591779028}
   - component: {fileID: 8560442972593214609}
+  - component: {fileID: 8560442972593214611}
   - component: {fileID: 6438987216336622366}
   - component: {fileID: 7931083406243637950}
   - component: {fileID: 3375471500714017971}
+  - component: {fileID: 8560442972593214610}
   - component: {fileID: 1839201361}
   m_Layer: 0
   m_Name: MountainNPC
@@ -175006,6 +175282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6185436776324629355}
   - component: {fileID: 8560442972862952238}
+  - component: {fileID: 8560442972862952240}
   - component: {fileID: 6438987216605869217}
   - component: {fileID: 7931083405975997697}
   - component: {fileID: 3375471500983788300}
@@ -175027,9 +175304,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6185436775693653269}
   - component: {fileID: 8560442973573096784}
+  - component: {fileID: 8560442973573096786}
   - component: {fileID: 6438987216986235615}
   - component: {fileID: 7931083406419286911}
   - component: {fileID: 3375471500608664946}
+  - component: {fileID: 8560442973573096785}
   - component: {fileID: 1007576579}
   m_Layer: 0
   m_Name: FirepitNPC
@@ -175048,9 +175327,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6185436775564118692}
   - component: {fileID: 8560442971431418593}
+  - component: {fileID: 8560442971431418595}
   - component: {fileID: 6438987217330666862}
   - component: {fileID: 7931083405224395982}
   - component: {fileID: 3375471501708061379}
+  - component: {fileID: 8560442971431418594}
   - component: {fileID: 1477293014}
   m_Layer: 0
   m_Name: beachnpc3
@@ -175435,6 +175716,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8560442971431418594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175845553353087}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793decd470f63034b996c3365ff2c574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrackableNPC
+--- !u!114 &8560442971431418595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175845553353087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df0a52f04ee8fb4ba9c253db9a56dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieVisitNPC
+  npcID: 1
 --- !u!212 &8560442971725595122
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -175609,6 +175915,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8560442972593214610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175844559347471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793decd470f63034b996c3365ff2c574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrackableNPC
+--- !u!114 &8560442972593214611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175844559347471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df0a52f04ee8fb4ba9c253db9a56dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieVisitNPC
+  npcID: 3
 --- !u!212 &8560442972862952238
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -175667,6 +175998,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8560442972862952240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175844829083824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df0a52f04ee8fb4ba9c253db9a56dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieVisitNPC
+  npcID: 2
 --- !u!212 &8560442973573096784
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -175725,6 +176069,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8560442973573096785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175845255065294}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793decd470f63034b996c3365ff2c574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrackableNPC
+--- !u!114 &8560442973573096786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6878175845255065294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df0a52f04ee8fb4ba9c253db9a56dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrairieVisitNPC
+  npcID: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -175769,3 +176138,4 @@ SceneRoots:
   - {fileID: 156797543996934766}
   - {fileID: 648549619}
   - {fileID: 1078323312}
+  - {fileID: 186824100}
