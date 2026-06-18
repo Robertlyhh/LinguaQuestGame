@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a95033faff4a4271a77a8f3b84af233, type: 3}
+  m_Name: Tutorial Questions
+  m_EditorClassIdentifier: Assembly-CSharp::HokkienQuizQuestionBank
+  questions:
+  - question: How to Interact with Vendors?
+    choices:
+    - I don't know
+    - Get Close, then Press S
+    - Get Close, then Press Tab
+    - Get Close, then Press E
+    correctAnswerIndex: 3
+    explanation: Get Close to the Vendor and Press E to Trigger an Interaction
+  - question: How to Open the Menu?
+    choices:
+    - I don't know
+    - Press Tab
+    - Press S
+    - Press Space
+    correctAnswerIndex: 1
+    explanation: 'If you''re in the middle of a dialogue, exit it first. Else, press
+      Tab to open the Menu. '
+  - question: How do you unlock the next lesson?
+    choices:
+    - Find the Pineapple Juice Vendor and Talk to them
+    - Complete lesson-specific quiz
+    - Talk to all vendors
+    - Choose from the Menu
+    correctAnswerIndex: 1
+    explanation: To unlock the next lesson, you have to get 80% or above on lesson-specific
+      quiz

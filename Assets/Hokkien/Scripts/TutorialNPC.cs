@@ -3,39 +3,39 @@ using TMPro;
 
 public class TutorialNPC : MonoBehaviour
 {
-    public GameObject interactionPrompt; // Assign TutorialPanel / "Press E" UI here
-    public GameObject arrowContainer;     // Assign ArrowContainer here
+    public GameObject interactionPrompt; // "Press E" UI
+    public GameObject arrowContainer;     // Tracking Arrow
     
-    [Header("Dialogue UI Connections")]
-    public GameObject dialoguePanel;      // Assign DialoguePanel here
-    public TMP_Text dialogueText;         // Assign DialogueText here
+    [Header("Dialogue UI")]
+    public GameObject dialoguePanel;
+    public TMP_Text dialogueText;
     
-    [TextArea(3, 10)]
-    public string helloMessage = "Hello! Welcome to the night market.";
+    [Header("Dialogue Lines")]
+    [TextArea(2, 5)]
+    public string[] dialogueLines; // Array to hold your 2-3 sentences
+    private int currentLine = 0;   // Keeps track of which sentence we are on
 
     private bool isPlayerNearby = false;
-    private bool hasInteracted = false; // Tracks if the conversation started
+    private bool isTalking = false; 
 
     void Start()
     {
         if (interactionPrompt != null) interactionPrompt.SetActive(true); 
-        
         if (arrowContainer != null) arrowContainer.SetActive(true); 
         if (dialoguePanel != null) dialoguePanel.SetActive(false);  
     }
 
     void Update()
     {
-        // Only allow interaction if nearby AND they haven't talked to the NPC yet
-        if (isPlayerNearby && !hasInteracted && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNearby && !isTalking && Input.GetKeyDown(KeyCode.E))
         {
-            Interact();
+            StartDialogue();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !hasInteracted)
+        if (other.CompareTag("Player") && !isTalking)
         {
             isPlayerNearby = true;
             if (interactionPrompt != null) interactionPrompt.SetActive(true);
@@ -48,9 +48,7 @@ public class TutorialNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
-            
-            // FIX: Only hide the "Press E" prompt if they walk away WITHOUT interacting
-            if (!hasInteracted)
+            if (!isTalking)
             {
                 if (interactionPrompt != null) interactionPrompt.SetActive(false);
                 if (arrowContainer != null) arrowContainer.SetActive(true); 
@@ -58,26 +56,44 @@ public class TutorialNPC : MonoBehaviour
         }
     }
 
-    void Interact()
+    void StartDialogue()
     {
-        Debug.Log("Interacting with NPC! Dialogue locked open.");
-        hasInteracted = true; // Locks the dialogue state
-        
-        // 1. Turn off the tutorial hint prompt ("Press E to Interact") permanently
-        if (interactionPrompt != null) interactionPrompt.SetActive(false);
-        
-        // 2. Open the Dialogue box and assign the message text
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
-        if (dialogueText != null) dialogueText.text = helloMessage;
+        if (dialogueLines.Length == 0) return; // Safety check in case you forgot to type anything!
 
-        FinishTutorialStep();
+        isTalking = true; 
+        currentLine = 0; // Always start at the first sentence
+        
+        if (interactionPrompt != null) interactionPrompt.SetActive(false);
+        if (arrowContainer != null) Destroy(arrowContainer); // Get rid of the arrow
+        
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        dialogueText.text = dialogueLines[currentLine];
     }
 
-    void FinishTutorialStep()
+    // ==========================================
+    // UI BUTTON METHODS
+    // ==========================================
+
+    public void ContinueDialogue()
     {
-        if (arrowContainer != null)
+        Debug.Log("Continue button");
+        currentLine++; // Move to the next sentence in the list
+
+        // Check if we still have lines left to show
+        if (currentLine < dialogueLines.Length)
         {
-            Destroy(arrowContainer); 
+            dialogueText.text = dialogueLines[currentLine];
         }
+        else
+        {
+            // If we ran out of lines, just close the dialogue automatically
+            CloseDialogue(); 
+        }
+    }
+
+    public void CloseDialogue()
+    {
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        isTalking = false; // Resets so the player can press E to read it again if they want
     }
 }
