@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class CanadaGeoGame : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class CanadaGeoGame : MonoBehaviour
     public Image quebec;
     public Image westCoast;
 
+    [Header("Audio")]
+    public AudioSource musicSource;    // background music — loop
+    public AudioSource sfxSource;      // sound effects — no loop
+    public AudioClip backgroundMusic;
+    public AudioClip correctSound;
+    public AudioClip wrongSound;
+
     [Header("Questions")]
     public List<ProvinceQuestion> questions;
 
@@ -38,6 +46,14 @@ public class CanadaGeoGame : MonoBehaviour
 
     void Start()
     {
+        // Start background music
+        if (musicSource != null && backgroundMusic != null)
+        {
+            musicSource.clip = backgroundMusic;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+
         ShuffleQuestions();
         LoadQuestion();
     }
@@ -115,6 +131,8 @@ public class CanadaGeoGame : MonoBehaviour
 
         if (correct)
         {
+            if (sfxSource != null && correctSound != null)
+                sfxSource.PlayOneShot(correctSound);
             int points = Mathf.RoundToInt(timer * 100);
             score += points;
             feedbackText.text = "Correct! +" + points + " points\n" + fact;
@@ -123,6 +141,8 @@ public class CanadaGeoGame : MonoBehaviour
         }
         else
         {
+            if (sfxSource != null && wrongSound != null)
+                sfxSource.PlayOneShot(wrongSound);
             feedbackText.text = "Wrong! It was " + q.correctProvince + "\n" + fact;
             feedbackText.color = Color.red;
             HighlightRegion(q.correctProvince, Color.green); // show correct
@@ -167,6 +187,11 @@ public class CanadaGeoGame : MonoBehaviour
             "WestCoast" => westCoast,
             _ => null
         };
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void EndGame()
