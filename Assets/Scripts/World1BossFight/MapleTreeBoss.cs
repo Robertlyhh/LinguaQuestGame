@@ -79,6 +79,31 @@ namespace World1BossFight
         [SerializeField] private Vector3 hedgeSplitStageDelay;
         [SerializeField] private Vector3 hedgeSplitStageQuestionDuration;
 
+        [Header("Key System")]
+        [SerializeField] private Inventory inventory;
+
+
+        [Header("Zero Keys — Undefeatable")]
+        [SerializeField] private float zeroKey_AttackCooldown = 100;
+        [SerializeField] private int zeroKey_AttacksUntilQuestion = 125;
+        [SerializeField] private Vector3 zeroKey_RollingLogSpeed = new Vector3(80f, 100f, 120f);
+        [SerializeField] private Vector3Int zeroKey_RollingLogCount = new Vector3Int(500,750, 1000);
+        [SerializeField] private Vector3 zeroKey_RollingLogAttackSpeed = new Vector3(7f, 2f, 1f);
+
+        [Header("2-4 Keys — Hard")]
+        [SerializeField] private float twoKey_AttackCooldown = 4;
+        [SerializeField] private int twoKey_AttacksUntilQuestion = 6;
+        [SerializeField] private Vector3 twoKey_RollingLogSpeed = new Vector3(5f, 7f, 9f);
+        [SerializeField] private Vector3Int twoKey_RollingLogCount = new Vector3Int(2, 3, 4);
+        [SerializeField] private Vector3 twoKey_RollingLogAttackSpeed = new Vector3(0.6f, 0.5f, 0.4f);
+
+        [Header("5 Keys — Defeatable")]
+        [SerializeField] private float fiveKey_AttackCooldown = 2;
+        [SerializeField] private int fiveKey_AttacksUntilQuestion = 3;
+        [SerializeField] private Vector3 fiveKey_RollingLogSpeed = new Vector3(3f, 4f, 5f);
+        [SerializeField] private Vector3Int fiveKey_RollingLogCount = new Vector3Int(1, 2, 3);
+        [SerializeField] private Vector3 fiveKey_RollingLogAttackSpeed = new Vector3(1f, 0.8f, 0.6f);
+
         private int _health;
         private int _attacksCount;
         private SpriteRenderer _spriteRenderer;
@@ -91,6 +116,146 @@ namespace World1BossFight
         private readonly List<int>[] _phaseQuestionQueue = new List<int>[3];
         private readonly int[] _lastBossQuestionIndexByPhase = { -1, -1, -1 };
 
+        private void Start()
+        {
+            int keyCount = CountKeys();
+            Debug.Log("Boss fight starting with " + keyCount + " keys");
+            ApplyDifficulty(keyCount);
+        }
+
+        private int CountKeys()
+        {
+            if (inventory == null)
+            {
+                Debug.LogError("Boss inventory is NULL!");
+                return 0;
+            }
+
+            int count = 0;
+            foreach (var entry in inventory.items)
+            {
+                Debug.Log("Checking item: " + entry.item.itemName);
+                if (entry.item.itemName.Contains("Key") ||
+                    entry.item.itemName.Contains("key") ||
+                    entry.item.itemName == "KeyPiece")
+                {
+                    count += entry.quantity;
+                    Debug.Log("Found key: " + entry.item.itemName + " quantity: " + entry.quantity);
+                }
+            }
+
+            Debug.Log("Total keys found: " + count);
+            return count;
+        }
+
+        private void ApplyDifficulty(int keys)
+        {
+            if (keys >= 5)
+            {
+                // ?? DEFEATABLE ??
+                attackCooldown = fiveKey_AttackCooldown;
+                attacksUntilQuestion = fiveKey_AttacksUntilQuestion;
+
+                // Rolling Log
+                rollingLogStageSpeed = new Vector3(3f, 4f, 5f);
+                rollingLogStageCount = new Vector3Int(1, 2, 2);
+                rollingLogStageAttackSpeed = new Vector3(1f, 0.8f, 0.6f);
+                maxRollingLogAttacksPerQuestionCycle = 1;
+                rollingLogCountReduction = 1;
+                rollingLogAttackSpacingMultiplier = 1.2f;
+
+                // Branch Strike
+                branchStrikeStageCount = new Vector3Int(1, 2, 2);
+                branchStrikeStageDelay = new Vector3(1.5f, 1.2f, 1f);
+                branchStrikeStageSpeed = new Vector3(2f, 3f, 4f);
+                branchStrikeStageDuration = new Vector3(2f, 1.8f, 1.5f);
+                branchStrikeStageAttackSpeed = new Vector3(1.5f, 1.2f, 1f);
+
+                // Maple Leaf Slam
+                mapleLeafSlamStageCount = new Vector3Int(1, 2, 2);
+                mapleLeafSlamStageDelay = new Vector3(1.5f, 1.2f, 1f);
+                mapleLeafSlamStageAttackSpeed = new Vector3(1.2f, 1f, 0.8f);
+
+                // Hedge Split (question phase)
+                hedgeSplitStageDelay = new Vector3(2f, 1.8f, 1.5f);
+                hedgeSplitStageQuestionDuration = new Vector3(8f, 7f, 6f); // more time to answer
+
+                // Question phase counts — more questions means more damage chances
+                questionPhaseCounts = new Vector3Int(3, 3, 4);
+
+                Debug.Log("Difficulty: Defeatable (5 keys)");
+            }
+            else if (keys >= 2)
+            {
+                // ?? HARD ??
+                attackCooldown = twoKey_AttackCooldown;
+                attacksUntilQuestion = twoKey_AttacksUntilQuestion;
+
+                // Rolling Log
+                rollingLogStageSpeed = new Vector3(5f, 7f, 9f);
+                rollingLogStageCount = new Vector3Int(2, 3, 4);
+                rollingLogStageAttackSpeed = new Vector3(0.6f, 0.5f, 0.4f);
+                maxRollingLogAttacksPerQuestionCycle = 2;
+                rollingLogCountReduction = 0;
+                rollingLogAttackSpacingMultiplier = 0.95f;
+
+                // Branch Strike
+                branchStrikeStageCount = new Vector3Int(2, 3, 4);
+                branchStrikeStageDelay = new Vector3(1f, 0.8f, 0.6f);
+                branchStrikeStageSpeed = new Vector3(4f, 6f, 8f);
+                branchStrikeStageDuration = new Vector3(1.5f, 1.2f, 1f);
+                branchStrikeStageAttackSpeed = new Vector3(0.8f, 0.6f, 0.5f);
+
+                // Maple Leaf Slam
+                mapleLeafSlamStageCount = new Vector3Int(2, 3, 4);
+                mapleLeafSlamStageDelay = new Vector3(1f, 0.8f, 0.6f);
+                mapleLeafSlamStageAttackSpeed = new Vector3(0.8f, 0.6f, 0.5f);
+
+                // Hedge Split
+                hedgeSplitStageDelay = new Vector3(1.2f, 1f, 0.8f);
+                hedgeSplitStageQuestionDuration = new Vector3(5f, 4f, 3f); // less time
+
+                // Fewer question phases — less damage chances
+                questionPhaseCounts = new Vector3Int(2, 2, 3);
+
+                Debug.Log("Difficulty: Hard (2-4 keys)");
+            }
+            else
+            {
+                // ?? UNDEFEATABLE ??
+                attackCooldown = zeroKey_AttackCooldown;
+                attacksUntilQuestion = zeroKey_AttacksUntilQuestion;
+
+                // Rolling Log — insane
+                rollingLogStageSpeed = new Vector3(10f, 13f, 16f);
+                rollingLogStageCount = new Vector3Int(5, 6, 8);
+                rollingLogStageAttackSpeed = new Vector3(0.2f, 0.15f, 0.1f);
+                maxRollingLogAttacksPerQuestionCycle = 4;
+                rollingLogCountReduction = 0;
+                rollingLogAttackSpacingMultiplier = 0.7f;
+
+                // Branch Strike — rapid fire
+                branchStrikeStageCount = new Vector3Int(4, 5, 6);
+                branchStrikeStageDelay = new Vector3(0.4f, 0.3f, 0.2f);
+                branchStrikeStageSpeed = new Vector3(8f, 10f, 12f);
+                branchStrikeStageDuration = new Vector3(0.8f, 0.6f, 0.5f);
+                branchStrikeStageAttackSpeed = new Vector3(0.3f, 0.2f, 0.15f);
+
+                // Maple Leaf Slam — overwhelming
+                mapleLeafSlamStageCount = new Vector3Int(5, 6, 8);
+                mapleLeafSlamStageDelay = new Vector3(0.3f, 0.2f, 0.15f);
+                mapleLeafSlamStageAttackSpeed = new Vector3(0.3f, 0.2f, 0.15f);
+
+                // Hedge Split — barely any time to answer
+                hedgeSplitStageDelay = new Vector3(0.5f, 0.4f, 0.3f);
+                hedgeSplitStageQuestionDuration = new Vector3(2f, 1.5f, 1f); // almost impossible
+
+                // Minimal question phases — almost no damage chances
+                questionPhaseCounts = new Vector3Int(1, 1, 2);
+
+                Debug.Log("Difficulty: Undefeatable (0-1 keys)");
+            }
+        }
         private void Awake()
         {
             _health = maxHealth;
@@ -114,6 +279,16 @@ namespace World1BossFight
         private IEnumerator StartBattleRoutine()
         {
             _boxCollider2D.enabled = false;
+
+            // Show key warning
+            int keys = CountKeys();
+            if (keys >= 5)
+                Debug.Log("You have all 5 keys — the boss is vulnerable!");
+            else if (keys >= 2)
+                Debug.Log("You have " + keys + " keys — the boss will be tough!");
+            else
+                Debug.Log("You have no keys — the boss is undefeatable!");
+
             if (enableOnFightStart) enableOnFightStart.SetActive(true);
             if (disableOnFightStart) disableOnFightStart.SetActive(false);
             yield return new WaitForSeconds(1);
@@ -123,7 +298,7 @@ namespace World1BossFight
             _animator.SetTrigger("Idle");
             _audioSource.Play();
         }
-        
+
         public BossQuestion GetRandomBossQuestion()
         {
             if (bossQuestions == null || bossQuestions.Length == 0) return null;

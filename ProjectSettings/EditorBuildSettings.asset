@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartingPage.unity
     guid: bc64fdfa11c27914480ed57de00de5a6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: fea42ffd5139002498128d9877b8927a
   - enabled: 1
@@ -25,6 +25,9 @@ EditorBuildSettings:
     guid: 8195260901f467c4ca8e6a941ecc3b10
   - enabled: 1
     path: Assets/Scenes/World1.unity
+    guid: 73680c8633f4a3f438691a6f8f48f918
+  - enabled: 0
+    path: Assets/Scenes/World1_Old.unity
     guid: 515eb19eb21d3a144b46d9ae26c6c80d
   - enabled: 1
     path: Assets/Scenes/HouseInterior.unity
@@ -86,5 +89,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/QuebecArea.unity
     guid: 8dfd484fcc4cc374ca40cd565cc6f7ba
+  - enabled: 1
+    path: Assets/Scenes/GeoGame.unity
+    guid: dda629b1f3fab804b921c7d2152f697b
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

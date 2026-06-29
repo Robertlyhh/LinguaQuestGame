@@ -23,7 +23,7 @@ public class StartingPageUI : MonoBehaviour
     {
         // Load the quiz scene
         Debug.Log("Starting game...");
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Scene_0_Tutorial");
     }
 
     public void QuitGame()
