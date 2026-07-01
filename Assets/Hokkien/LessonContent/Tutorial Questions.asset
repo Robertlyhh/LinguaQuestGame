@@ -19,23 +19,33 @@ MonoBehaviour:
     - Get Close, then Press S
     - Get Close, then Press Tab
     - Get Close, then Press E
+    choiceExplanations:
+    - Get Close, then Press E
+    - Get Close, then Press E
+    - Get Close, then Press E
+    - 
     correctAnswerIndex: 3
-    explanation: Get Close to the Vendor and Press E to Trigger an Interaction
   - question: How to Open the Menu?
     choices:
     - I don't know
     - Press Tab
     - Press S
     - Press Space
+    choiceExplanations:
+    - Press Tab
+    - 
+    - Press Tab
+    - Press Tab
     correctAnswerIndex: 1
-    explanation: 'If you''re in the middle of a dialogue, exit it first. Else, press
-      Tab to open the Menu. '
   - question: How do you unlock the next lesson?
     choices:
     - Find the Pineapple Juice Vendor and Talk to them
     - Complete lesson-specific quiz
     - Talk to all vendors
     - Choose from the Menu
+    choiceExplanations:
+    - Complete lesson-specific quiz
+    - 
+    - Complete lesson-specific quiz
+    - Complete lesson-specific quiz
     correctAnswerIndex: 1
-    explanation: To unlock the next lesson, you have to get 80% or above on lesson-specific
-      quiz

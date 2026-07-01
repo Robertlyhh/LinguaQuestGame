@@ -12,11 +12,12 @@ public class HokkienQuizQuestionBank : ScriptableObject
 
         public string[] choices = new string[4];
 
+        [TextArea]
+        [Tooltip("Provide an explanation for each of the 4 choices above.")]
+        public string[] choiceExplanations = new string[4];
+
         [Range(0, 3)]
         public int correctAnswerIndex;
-
-        [TextArea]
-        public string explanation;
     }
 
     [Header("Questions")]
@@ -37,7 +38,10 @@ public class HokkienQuizQuestionBank : ScriptableObject
             runtimeQuestion.question = entry.question;
             runtimeQuestion.choices = entry.choices;
             runtimeQuestion.correctAnswerIndex = entry.correctAnswerIndex;
-            runtimeQuestion.explanation = entry.explanation;
+
+            // TRICK: We pack the 4 explanations into the single string using "|||" as a hidden divider!
+            runtimeQuestion.explanation = string.Join("|||", entry.choiceExplanations);
+            
             runtimeQuestions.Add(runtimeQuestion);
         }
 

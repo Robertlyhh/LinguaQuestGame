@@ -17,25 +17,57 @@ MonoBehaviour:
 
 '
     choices:
-    - "\u8001\u677F\u597D - Hello Boss"
-    - "\u600E\u4E48\u5356\uFF1F- how do you sell this? / how is this sold?"
-    - "\u4F60\u8981\u591A\u5C11 - how much do you want?"
-    - "\u8BF7\u95EE\u8FD9\u662F\u4EC0\u4E48\uFF1F- What is this?"
+    - "\u8001\u677F\u597D"
+    - "\u600E\u4E48\u5356\uFF1F"
+    - "\u4F60\u8981\u591A\u5C11"
+    - "\u8BF7\u95EE\u8FD9\u662F\u4EC0\u4E48\uFF1F"
+    choiceExplanations:
+    - "This means \u201CHello Boss\u201D, which is a greeting to the stall owner."
+    - "This means \u201Chow do you sell this\u201D, used to ask about the price of
+      the dish"
+    - "This means \u201Chow much do you want?\u201D, used by the vendor to ask how
+      much of something the buyer wants."
+    - "This means \u201CWhat is this?\u201D, you can use this to ask what others
+      are eating or selling."
     correctAnswerIndex: 1
-    explanation: polite
   - question: If you want to ask about what a food is, what do you say?
     choices:
-    - "\u8001\u677F\u597D - Hello Boss"
-    - "\u600E\u4E48\u5356\uFF1F- how do you sell this? / how is this sold?"
-    - "\u4F60\u8981\u591A\u5C11 - how much do you want?"
-    - "\u8BF7\u95EE\u8FD9\u662F\u4EC0\u4E48\uFF1F- What is this?"
+    - "\u8001\u677F\u597D"
+    - "\u600E\u4E48\u5356\uFF1F"
+    - "\u4F60\u8981\u591A\u5C11"
+    - "\u8BF7\u95EE\u8FD9\u662F\u4EC0\u4E48\uFF1F"
+    choiceExplanations:
+    - "This means \u201CHello Boss\u201D, which is a greeting to the stall owner."
+    - "This means \u201Chow do you sell this\u201D, used to ask about the price of
+      the dish"
+    - "This means \u201Chow much do you want?\u201D, used by the vendor to ask how
+      much of something the buyer wants."
+    - "This means \u201CWhat is this?\u201D, you can use this to ask what others
+      are eating or selling."
     correctAnswerIndex: 3
-    explanation: polite
   - question: "Which of the following is a worship food for \u4E03\u5A18\u5988\uFF1F\n"
     choices:
     - "\u51E4\u68A8\u9165 - pineapple cake"
     - "\u7B52\u4ED4\u7C73\u7CD5 - tube rice pudding"
     - "\u828B\u7CBF\u5DE7 - teamed Taro Cake"
     - "\u767D\u7CD6\u7CBF - fried Sweet Rice Cake"
+    choiceExplanations:
+    - "Pineapple cake (\u51E4\u68A8\u9165) is one of the most popular Taiwanese snacks.
+      It has pineapple and wintermelon filling, with a pastry shell, but it is not
+      a worship food for \u4E03\u5A18\u5988."
+    - "Tube rice pudding (\u7B52\u4ED4\u7C73\u7CD5) is a Taiwanese dish made with
+      glutinous rice. It is steamed with a tube. It is not a worship food for \u4E03\u5A18\u5988."
+    - "Steamed Taro Cake (\u828B\u7CBF\u5DE7) is a Taiwanese dish made with taro
+      and glutinous rice. It is often shaped like a moon or Moon blocks (wooden or
+      bamboo divination blocks). It is a worship food for the Ghost Festival (\u4E2D\u5143\u8282),
+      but not specifically a worship food for \u4E03\u5A18\u5988."
+    - "Fried Sweet Rice Cake(\u767D\u7CD6\u7CBF) is a fried sticky rice dough served
+      with grinded peanuts or sesame. It is a worship food for \u4E03\u5A18\u5988
+      (Seven Star), the goddess who protects children that are under the age of sixteen
+      and couples. She is also known as \u7EC7\u5973, the weavergirl from Chinese
+      mythology, who has fallen in love with the cowherd \u725B\u90CE. They are separated
+      by the milky way because they have violated the laws of heaven, and are only
+      allowed to meet each other on the seventh day of the seventh month on the lunar
+      calendar. This day is celebrated as \u4E03\u5915\u8282 (QiXi Festival), which
+      is still celebrated as Valentines."
     correctAnswerIndex: 3
-    explanation: polite

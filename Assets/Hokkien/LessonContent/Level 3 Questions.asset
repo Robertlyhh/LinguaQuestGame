@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a95033faff4a4271a77a8f3b84af233, type: 3}
+  m_Name: Level 3 Questions
+  m_EditorClassIdentifier: Assembly-CSharp::HokkienQuizQuestionBank
+  questions:
+  - question: "Why is \u62C5\u4ED4\u9762 also called \u5EA6\u5C0F\u6708\u62C5\u4ED4\u9762\uFF1F"
+    choices:
+    - It was created by a person named Xiao Yue
+    - It was a celebration food that people ate during the small months
+    - It was a dish that fisherman carried on poles to sell during the small months
+    - It originated from a ferry crossing called Xiao Yue
+    choiceExplanations:
+    - This is made up.
+    - This is made up.
+    - "\u5EA6\u5C0F\u6708\u62C5\u4ED4\u9762 is noodles in a pork and shrimp head
+      broth, with shrimp, chicken, egg, and bean sprouts on top. Also known as \u5EA6\u5C0F\u6708\u62C5\u4ED4\u9762,
+      which directly translates to \u201Cget through the small month noodle on carrying
+      pole\u201D.  Months with frequent typhoons are called \u201C\u5C0F\u6708\u201D(small
+      month). During these times, it is hard to go out to sea, so fishermen carried
+      noodles on carrying poles and sold noodles for a living during these months.
+      The noodles on a carrying pole helps them get through the small month, giving
+      it the \u5EA6\u5C0F\u6708\u62C5\u4ED4\u9762 its name."
+    - This is made up.
+    correctAnswerIndex: 2
+  - question: Which of the following means allergy?
+    choices:
+    - "\u8FC7\u654F"
+    - "\u6599\u7406"
+    - "\u725B\u8089"
+    - "\u4E0D\u8981"
+    choiceExplanations:
+    - This means allergy in Hokkien.
+    - This means "cook" in Hokkien.
+    - This means "beef" in Hokkien.
+    - This means "I don't want..." in Hokkien.
+    correctAnswerIndex: 0
+  - question: "What is \u8089\u5706?"
+    choices:
+    - A Taiwanese dumpling made of starch and rice flour, filled with meat and vegetables
+    - A dish that fisherman carried on poles to sell during the small months
+    - A Taiwanese meat ball that is served in a meat and vegetable broth
+    - A Taiwanese dumpling made from wheat flour, filled with meat and vegetables
+    choiceExplanations:
+    - 
+    - 
+    - 
+    - 
+    correctAnswerIndex: 0

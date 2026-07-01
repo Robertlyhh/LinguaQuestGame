@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a95033faff4a4271a77a8f3b84af233, type: 3}
+  m_Name: Level 0 Questions
+  m_EditorClassIdentifier: Assembly-CSharp::HokkienQuizQuestionBank
+  questions:
+  - question: How do you say "One please." in Hokkien?
+    choices:
+    - "\u6211\u6B32\u4E00\u4E2A"
+    - "\u6211\u6B32\u4E24\u4E2A"
+    - "\u6211\u6B32\u4E09\u4E2A"
+    choiceExplanations:
+    - "\u4E00 = 1 "
+    - "For \"two\" of an object, Hokkien uses \u4E24/\u5169 (nn\u0304g) rather than
+      \u4E8C (j\u012B)."
+    - "\u4E09 = 3"
+    correctAnswerIndex: 0

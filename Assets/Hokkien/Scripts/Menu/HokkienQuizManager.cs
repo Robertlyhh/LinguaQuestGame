@@ -135,13 +135,28 @@ public class HokkienQuizManager : MonoBehaviour
             ? currentQuestion.choices[currentQuestion.correctAnswerIndex]
             : string.Empty;
 
+        // UNPACK the string to get the specific explanation for the clicked option
+        string specificExplanation = "";
+        if (!string.IsNullOrEmpty(currentQuestion.explanation))
+        {
+            string[] splitExplanations = currentQuestion.explanation.Split(new string[] { "|||" }, StringSplitOptions.None);
+            if (selectedIndex >= 0 && selectedIndex < splitExplanations.Length)
+            {
+                specificExplanation = splitExplanations[selectedIndex];
+            }
+            else
+            {
+                specificExplanation = currentQuestion.explanation; // Fallback
+            }
+        }
+
         results.Add(new QuizAnswerResult
         {
             question = currentQuestion.question,
             selectedAnswer = selectedAnswer,
             correctAnswer = correctAnswer,
             wasCorrect = isCorrect,
-            explanation = currentQuestion.explanation
+            explanation = specificExplanation
         });
 
         if (!isCorrect)
@@ -162,10 +177,10 @@ public class HokkienQuizManager : MonoBehaviour
         }
 
         SetAnswerButtonsVisible(false);
-        ShowExplanationCard(currentQuestion, selectedAnswer, correctAnswer, isCorrect);
+        ShowExplanationCard(currentQuestion, selectedAnswer, correctAnswer, isCorrect, specificExplanation);
     }
 
-    private void ShowExplanationCard(MultipleChoiceQuestion question, string selectedAnswer, string correctAnswer, bool isCorrect)
+    private void ShowExplanationCard(MultipleChoiceQuestion question, string selectedAnswer, string correctAnswer, bool isCorrect, string specificExplanation)
     {
         waitingForCardDismiss = true;
 
@@ -186,19 +201,19 @@ public class HokkienQuizManager : MonoBehaviour
 
         if (explanationBodyText != null)
         {
-            explanationBodyText.text = BuildExplanationBody(question, selectedAnswer, correctAnswer, isCorrect);
+            explanationBodyText.text = BuildExplanationBody(selectedAnswer, correctAnswer, isCorrect, specificExplanation);
         }
     }
 
-    private string BuildExplanationBody(MultipleChoiceQuestion question, string selectedAnswer, string correctAnswer, bool isCorrect)
+    private string BuildExplanationBody(string selectedAnswer, string correctAnswer, bool isCorrect, string specificExplanation)
     {
         string resultLine = isCorrect
             ? "You got it right."
             : $"Your answer: {selectedAnswer}\nCorrect answer: {correctAnswer}";
 
-        string explanationLine = string.IsNullOrWhiteSpace(question.explanation)
+        string explanationLine = string.IsNullOrWhiteSpace(specificExplanation)
             ? string.Empty
-            : $"\n\nExplanation:\n{question.explanation}";
+            : $"\n\nExplanation:\n{specificExplanation}";
 
         return resultLine + explanationLine + "\n\nPress Close to continue.";
     }
