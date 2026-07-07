@@ -104,6 +104,9 @@ public class PlayerExploring : MonoBehaviour
     [Header("Tutorial")]
     public PetBubble petBubble;
 
+    [Header("UI")]
+    public HeartManager heartManager; // drag HeartManager GameObject here
+
     // --- Unity Methods ---
     void Start()
     {
@@ -129,6 +132,9 @@ public class PlayerExploring : MonoBehaviour
         animator.SetFloat("moveY", -1);
         myRigidbody.position = StartingPosition.runtimeValue;
         magicLevel.runtimeValue = magicLevel.initialValue;
+
+        if (heartManager == null)
+            heartManager = FindFirstObjectByType<HeartManager>();
     }
 
     void LateUpdate()
@@ -454,11 +460,11 @@ public class PlayerExploring : MonoBehaviour
         currentHealth.runtimeValue -= damage;
         playerHealthSignal.Raise();
 
+        if (heartManager != null)
+            heartManager.UpdateHeart(); // ? direct call, no signal needed
+
         if (currentHealth.runtimeValue <= 0)
         {
-            // Handle player death (e.g., trigger death animation, disable controls, etc.)
-            Debug.Log("Player has died.");
-
             if (playerDefeatedSignal != null)
             {
                 playerDefeatedSignal.Raise();
@@ -466,21 +472,20 @@ public class PlayerExploring : MonoBehaviour
             }
             else
             {
-                // For now, we just reset health for testing purposes
                 currentHealth.runtimeValue = currentHealth.initialValue;
                 nextDamageTime = 0f;
-                playerHealthSignal.Raise();
             }
+
+            playerHealthSignal.Raise();
+            if (heartManager != null)
+                heartManager.UpdateHeart(); // ? also refresh on death/reset
         }
 
         if (damageFlashCoroutine != null)
-        {
             StopCoroutine(damageFlashCoroutine);
-        }
 
         damageFlashCoroutine = StartCoroutine(TakeDamageCo());
     }
-
     private IEnumerator TakeDamageCo()
     {
         Debug.Log("Player took damage, current health: " + currentHealth.runtimeValue);

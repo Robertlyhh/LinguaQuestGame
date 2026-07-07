@@ -6,6 +6,7 @@ namespace World1BossFight
 {
     public class RollingLog : MonoBehaviour
     {
+        [SerializeField] private float damageAmount = 1f;
         [SerializeField] private float dissolveDelay;
         [SerializeField] private Signal bossDamagedSignal;
         
@@ -16,6 +17,7 @@ namespace World1BossFight
 
         private bool _isRolling;
         private AudioSource _audioSource;
+
 
         private void Awake()
         {
@@ -41,10 +43,17 @@ namespace World1BossFight
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!_isRolling) return;
+
             if (other.CompareTag("Player"))
             {
                 Debug.Log("Damaged Player");
-                bossDamagedSignal?.Raise();
+
+                // Call TakeDamage directly on the player
+                PlayerExploring player = other.GetComponent<PlayerExploring>();
+                if (player != null)
+                    player.TakeDamage(damageAmount); // ? actually damages + fires health signal
+
+                // bossDamagedSignal should only raise when the BOSS is hit, not here
             }
             else if (other.CompareTag("Log"))
             {

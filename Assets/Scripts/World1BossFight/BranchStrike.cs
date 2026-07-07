@@ -27,8 +27,7 @@ namespace World1BossFight
         private AudioSource _audioSource;
 
         [Header("Damage")]
-        [SerializeField] private Signal bossDamagedSignal;
-
+        [SerializeField] private float damageAmount = 1f;
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -136,9 +135,9 @@ namespace World1BossFight
         {
             if (!other.CompareTag("Player")) return;
 
-            Debug.Log("Damaged Player");
-            bossDamagedSignal?.Raise();
-
+            PlayerExploring player = other.GetComponent<PlayerExploring>();
+            if (player != null)
+                player.TakeDamage(damageAmount);
         }
     }
 }

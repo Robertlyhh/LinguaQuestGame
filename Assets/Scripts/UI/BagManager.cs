@@ -23,6 +23,7 @@ public class BagManager : MonoBehaviour
 
     public Inventory playerInventory;
     private InventoryEntry selectedItem;
+    public PetBubble petBubble;
 
     void Start()
     {
@@ -46,6 +47,7 @@ public class BagManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseBag();
+            petBubble.playerHasOpenedBag = true;
         }
     }
 

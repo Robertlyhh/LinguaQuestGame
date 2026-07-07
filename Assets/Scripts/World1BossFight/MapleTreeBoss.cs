@@ -84,25 +84,18 @@ namespace World1BossFight
 
 
         [Header("Zero Keys — Undefeatable")]
-        [SerializeField] private float zeroKey_AttackCooldown = 100;
-        [SerializeField] private int zeroKey_AttacksUntilQuestion = 125;
-        [SerializeField] private Vector3 zeroKey_RollingLogSpeed = new Vector3(80f, 100f, 120f);
-        [SerializeField] private Vector3Int zeroKey_RollingLogCount = new Vector3Int(500,750, 1000);
-        [SerializeField] private Vector3 zeroKey_RollingLogAttackSpeed = new Vector3(7f, 2f, 1f);
+        [SerializeField] private float zeroKey_AttackCooldown = 150;
+        [SerializeField] private int zeroKey_AttacksUntilQuestion = 1;
+
 
         [Header("2-4 Keys — Hard")]
         [SerializeField] private float twoKey_AttackCooldown = 4;
         [SerializeField] private int twoKey_AttacksUntilQuestion = 6;
-        [SerializeField] private Vector3 twoKey_RollingLogSpeed = new Vector3(5f, 7f, 9f);
-        [SerializeField] private Vector3Int twoKey_RollingLogCount = new Vector3Int(2, 3, 4);
-        [SerializeField] private Vector3 twoKey_RollingLogAttackSpeed = new Vector3(0.6f, 0.5f, 0.4f);
 
         [Header("5 Keys — Defeatable")]
         [SerializeField] private float fiveKey_AttackCooldown = 2;
         [SerializeField] private int fiveKey_AttacksUntilQuestion = 3;
-        [SerializeField] private Vector3 fiveKey_RollingLogSpeed = new Vector3(3f, 4f, 5f);
-        [SerializeField] private Vector3Int fiveKey_RollingLogCount = new Vector3Int(1, 2, 3);
-        [SerializeField] private Vector3 fiveKey_RollingLogAttackSpeed = new Vector3(1f, 0.8f, 0.6f);
+
 
         private int _health;
         private int _attacksCount;
@@ -227,28 +220,28 @@ namespace World1BossFight
                 attacksUntilQuestion = zeroKey_AttacksUntilQuestion;
 
                 // Rolling Log — insane
-                rollingLogStageSpeed = new Vector3(10f, 13f, 16f);
-                rollingLogStageCount = new Vector3Int(5, 6, 8);
-                rollingLogStageAttackSpeed = new Vector3(0.2f, 0.15f, 0.1f);
-                maxRollingLogAttacksPerQuestionCycle = 4;
+                rollingLogStageSpeed = new Vector3(100f, 130f, 160f);
+                rollingLogStageCount = new Vector3Int(50, 60, 80);
+                rollingLogStageAttackSpeed = new Vector3(1f, 2f, 0.3f);
+                maxRollingLogAttacksPerQuestionCycle = 10;
                 rollingLogCountReduction = 0;
                 rollingLogAttackSpacingMultiplier = 0.7f;
 
                 // Branch Strike — rapid fire
-                branchStrikeStageCount = new Vector3Int(4, 5, 6);
+                branchStrikeStageCount = new Vector3Int(100, 50, 60);
                 branchStrikeStageDelay = new Vector3(0.4f, 0.3f, 0.2f);
                 branchStrikeStageSpeed = new Vector3(8f, 10f, 12f);
                 branchStrikeStageDuration = new Vector3(0.8f, 0.6f, 0.5f);
                 branchStrikeStageAttackSpeed = new Vector3(0.3f, 0.2f, 0.15f);
 
                 // Maple Leaf Slam — overwhelming
-                mapleLeafSlamStageCount = new Vector3Int(5, 6, 8);
-                mapleLeafSlamStageDelay = new Vector3(0.3f, 0.2f, 0.15f);
-                mapleLeafSlamStageAttackSpeed = new Vector3(0.3f, 0.2f, 0.15f);
+                mapleLeafSlamStageCount = new Vector3Int(55, 60, 80);
+                mapleLeafSlamStageDelay = new Vector3(0.1f, 0.2f, 0.15f);
+                mapleLeafSlamStageAttackSpeed = new Vector3(10f, 20f, 30f);
 
                 // Hedge Split — barely any time to answer
-                hedgeSplitStageDelay = new Vector3(0.5f, 0.4f, 0.3f);
-                hedgeSplitStageQuestionDuration = new Vector3(2f, 1.5f, 1f); // almost impossible
+                hedgeSplitStageDelay = new Vector3(0.1f, 0.1f, 0.1f);
+                hedgeSplitStageQuestionDuration = new Vector3(5f, 5f, 5f); // almost impossible
 
                 // Minimal question phases — almost no damage chances
                 questionPhaseCounts = new Vector3Int(1, 1, 2);

@@ -8,9 +8,9 @@ namespace World1BossFight
     public class MapleLeafSlam : MonoBehaviour
     {
         [SerializeField] private Vector2Int bounds;
+        [SerializeField] private float damageAmount = 1f;
         [SerializeField] private float dissolveDelay;
-        [SerializeField] private Signal bossDamagedSignal;
-        
+
         private Animator _animator;
         private PlatformData _platformData;
         private AudioSource _audioSource;
@@ -60,8 +60,9 @@ namespace World1BossFight
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Damaged Player");
-                bossDamagedSignal?.Raise();
+                PlayerExploring player = other.GetComponent<PlayerExploring>();
+                if (player != null)
+                    player.TakeDamage(damageAmount);
             }
         }
     }

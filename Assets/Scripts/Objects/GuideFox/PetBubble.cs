@@ -40,6 +40,8 @@ public class PetBubble : MonoBehaviour
     [HideInInspector] public bool isWaitingForAction = false;
     [HideInInspector] public bool playerHasCollectedCoin = false;
     [HideInInspector] public bool playerHasCollectedHeart = false;
+    [HideInInspector] public bool playerHasOpenedBag = false;
+
 
     private float timer = 0f;
     private bool showing = false;
@@ -48,7 +50,7 @@ public class PetBubble : MonoBehaviour
     public float typewriterSpeed = 0.04f; // seconds per character
 
 
-
+     
 
     void Start()
     {
@@ -188,6 +190,9 @@ public class PetBubble : MonoBehaviour
                 break;
             case "WAIT_HEART":
                 yield return new WaitUntil(() => playerHasCollectedHeart && !isPaused);
+                break;
+            case "WAIT_BAG":
+                yield return new WaitUntil(() => playerHasOpenedBag && !isPaused);
                 break;
         }
 
