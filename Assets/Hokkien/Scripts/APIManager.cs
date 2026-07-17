@@ -102,6 +102,8 @@ public class APIManager : MonoBehaviour
             return;
         }
 
+        Debug.Log($"[API] GET vendor profile: {baseUrl}/api/v1/vendors/{vendorId}");
+
         if (vendorCache.TryGetValue(vendorId, out var cachedVendor))
         {
             onSuccess?.Invoke(cachedVendor);
@@ -149,6 +151,8 @@ public class APIManager : MonoBehaviour
             onError?.Invoke("Dialogue node id is empty");
             return;
         }
+
+        Debug.Log($"[API] GET dialogue node: {baseUrl}/api/v1/dialogue/{nodeId}");
 
         if (dialogueNodeCache.TryGetValue(nodeId, out var cachedNode))
         {
@@ -277,6 +281,8 @@ public class APIManager : MonoBehaviour
     public void GetRootNodes(string npcId,
         Action<RootNodesResponse> onSuccess, Action<string> onError = null)
     {
+        Debug.Log($"[API] GET dialogue root nodes: {baseUrl}/api/v1/dialogue/root-nodes/{npcId}");
+
         StartCoroutine(GetRequest(
             $"{baseUrl}/api/v1/dialogue/root-nodes/{npcId}",
             json =>

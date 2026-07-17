@@ -146,6 +146,8 @@ public class NPC : MonoBehaviour, IInteractable
 
         int token = conversationToken;
 
+        Debug.Log($"[NPC] Interact resolved vendorId '{vendorId}' -> {APIManager.Instance.BaseUrl}/api/v1/vendors/{vendorId}");
+
         APIManager.Instance.GetVendorProfile(vendorId, vendor =>
         {
             if (!IsConversationValid(token))
@@ -153,6 +155,8 @@ public class NPC : MonoBehaviour, IInteractable
 
             currentNpcName = vendor.vendor_name;
             nameText.SetText(currentNpcName);
+
+            Debug.Log($"[NPC] Vendor '{currentNpcName}' resolved dialogue_node_id '{vendor.dialogue_node_id}'");
             FetchNode(vendor.dialogue_node_id, token);
         }, err =>
         {
