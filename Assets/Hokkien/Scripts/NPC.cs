@@ -30,6 +30,9 @@ public class NPC : MonoBehaviour, IInteractable
     public Button audioButton;
     public AudioSource audioSource;
 
+    [Header("Option POJ / Audio Generation")]
+    public AdminTranslationImporter translationImporter;
+
     [Header("Translation Toggle")]
     public Button translationToggleButton;
     public TMP_Text translationToggleLabel;
@@ -55,6 +58,10 @@ public class NPC : MonoBehaviour, IInteractable
 
     private TranslationMode translationMode = TranslationMode.Original;
     private AudioClip currentClip;
+    private readonly HashSet<string> autoPlayedNodeIds = new HashSet<string>();
+    private readonly Dictionary<string, AudioClip> optionAudioClips = new Dictionary<string, AudioClip>();
+    private readonly Dictionary<string, TMP_Text> optionTextLabels = new Dictionary<string, TMP_Text>();
+    private bool optionSelectionInProgress;
 
     private void Start()
     {
@@ -83,6 +90,13 @@ public class NPC : MonoBehaviour, IInteractable
         {
             audioButton.gameObject.SetActive(false);
             audioButton.onClick.AddListener(OnAudioButtonPressed);
+        }
+
+        if (translationImporter == null)
+        {
+            translationImporter = FindObjectOfType<AdminTranslationImporter>();
+            if (translationImporter == null)
+                translationImporter = gameObject.AddComponent<AdminTranslationImporter>();
         }
 
         if (translationToggleButton != null)
@@ -191,7 +205,7 @@ public class NPC : MonoBehaviour, IInteractable
             response =>
             {
                 if (IsConversationValid(token))
-                    OnNodeReceived(response, token);
+                    OnNodeReceived(response, token, nodeId);
             },
             err =>
             {
@@ -200,7 +214,7 @@ public class NPC : MonoBehaviour, IInteractable
             });
     }
 
-    private void OnNodeReceived(DialogueResponseData response, int token)
+    private void OnNodeReceived(DialogueResponseData response, int token, string nodeId)
     {
         if (!IsConversationValid(token))
             return;
@@ -208,6 +222,9 @@ public class NPC : MonoBehaviour, IInteractable
         if (response.dialogue == null) { EndDialogue(); return; }
 
         currentNode = response;
+        optionSelectionInProgress = false;
+        optionAudioClips.Clear();
+        optionTextLabels.Clear();
         ClearOptions();
 
         bool forceVendorSpeaker = response.dialogue.text == "Welcome! Our shaved ice is very refreshing! What toppings would you like?"
@@ -233,7 +250,19 @@ public class NPC : MonoBehaviour, IInteractable
 
         // Load audio clip from URL if available
         if (!string.IsNullOrEmpty(response.dialogue.audio))
-            StartCoroutine(LoadAudioClip($"{APIManager.Instance.BaseUrl}/{response.dialogue.audio}", token));
+            StartCoroutine(LoadAudioClip($"{APIManager.Instance.BaseUrl}/{response.dialogue.audio}", token, nodeId));
+
+        if (response.options != null)
+        {
+            foreach (DialogueOption option in response.options)
+            {
+                if (option != null && !string.IsNullOrWhiteSpace(option.option_id)
+                    && !string.IsNullOrWhiteSpace(option.audio))
+                {
+                    StartCoroutine(LoadOptionAudioClip(option, token));
+                }
+            }
+        }
 
 
         // Show translation toggle when any translation exists
@@ -294,7 +323,7 @@ public class NPC : MonoBehaviour, IInteractable
             APIManager.Instance.PrefetchDialogueNode(nextId);
     }
 
-    private IEnumerator LoadAudioClip(string url, int token)
+    private IEnumerator LoadAudioClip(string url, int token, string nodeId)
     {
         using var req = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
         yield return req.SendWebRequest();
@@ -307,11 +336,47 @@ public class NPC : MonoBehaviour, IInteractable
             currentClip = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(req);
             if (audioButton != null)
                 audioButton.gameObject.SetActive(true);
+
+            if (!string.IsNullOrEmpty(nodeId) && autoPlayedNodeIds.Add(nodeId) && audioSource != null)
+            {
+                audioSource.clip = currentClip;
+                audioSource.Play();
+            }
         }
         else
         {
             Debug.LogWarning($"[NPC] Failed to load audio: {req.error}");
         }
+    }
+
+    private IEnumerator LoadOptionAudioClip(DialogueOption option, int token)
+    {
+        string url = BuildAudioUrl(option.audio);
+        using var req = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
+        yield return req.SendWebRequest();
+
+        if (!IsConversationValid(token) || currentNode?.options == null)
+            yield break;
+
+        if (req.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+        {
+            optionAudioClips[option.option_id] = UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(req);
+        }
+        else
+        {
+            Debug.LogWarning($"[NPC] Failed to load option audio '{option.option_id}': {req.error}");
+        }
+    }
+
+    private string BuildAudioUrl(string audioPath)
+    {
+        if (audioPath.StartsWith("http://", System.StringComparison.OrdinalIgnoreCase)
+            || audioPath.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
+        {
+            return audioPath;
+        }
+
+        return APIManager.Instance.BaseUrl.TrimEnd('/') + "/" + audioPath.TrimStart('/');
     }
 
     private void OnAudioButtonPressed()
@@ -463,9 +528,59 @@ public class NPC : MonoBehaviour, IInteractable
         foreach (var opt in currentNode.options)
         {
             var btnObj = Instantiate(optionButtonPrefab, optionsContainer);
-            btnObj.GetComponentInChildren<TMP_Text>().SetText(opt.text);
+            TMP_Text label = btnObj.GetComponentInChildren<TMP_Text>();
+            label.SetText(BuildOptionText(opt));
+            if (!string.IsNullOrWhiteSpace(opt.option_id))
+                optionTextLabels[opt.option_id] = label;
             btnObj.GetComponent<Button>().onClick.AddListener(() => OnOptionPicked(opt));
         }
+
+        if (translationImporter != null)
+            StartCoroutine(GenerateMissingOptionContent(currentNode.options, conversationToken));
+    }
+
+    private IEnumerator GenerateMissingOptionContent(DialogueOption[] options, int token)
+    {
+        foreach (DialogueOption option in options)
+        {
+            if (!IsConversationValid(token))
+                yield break;
+            if (option == null || string.IsNullOrWhiteSpace(option.option_id)
+                || (!string.IsNullOrWhiteSpace(option.translation_POJ) && !string.IsNullOrWhiteSpace(option.audio)))
+                continue;
+
+            AdminTranslationImporter.TranslationResult generated = null;
+            yield return StartCoroutine(translationImporter.TranslateOptionThenTtsThenFetch(
+                option.option_id,
+                option.text,
+                result => generated = result,
+                error => Debug.LogWarning($"[NPC Option Generation] {option.option_id}: {error}")));
+
+            if (!IsConversationValid(token) || generated == null)
+                continue;
+
+            option.translation_POJ = generated.pojTranslation;
+            option.audio = generated.audioUrl;
+            if (optionTextLabels.TryGetValue(option.option_id, out TMP_Text label) && label != null)
+                label.SetText(BuildOptionText(option));
+
+            yield return StartCoroutine(translationImporter.DownloadAudioClip(
+                generated.audioUrl,
+                clip => optionAudioClips[option.option_id] = clip,
+                error => Debug.LogWarning($"[NPC Option Audio] {option.option_id}: {error}")));
+        }
+    }
+
+    private static string BuildOptionText(DialogueOption option)
+    {
+        if (option == null)
+            return string.Empty;
+
+        if (string.IsNullOrWhiteSpace(option.translation_POJ))
+            return option.text;
+
+        string audioIndicator = string.IsNullOrWhiteSpace(option.audio) ? string.Empty : "  <size=75%>🔊</size>";
+        return $"{option.text}\n<size=80%><color=#FFD966>{option.translation_POJ}</color>{audioIndicator}</size>";
     }
 
     private void ClearOptions()
@@ -479,9 +594,48 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void OnOptionPicked(DialogueOption option)
     {
+        if (optionSelectionInProgress)
+            return;
+
+        optionSelectionInProgress = true;
+        SetOptionButtonsInteractable(false);
+
+        if (option != null && !string.IsNullOrWhiteSpace(option.option_id)
+            && optionAudioClips.TryGetValue(option.option_id, out AudioClip optionClip)
+            && optionClip != null && audioSource != null)
+        {
+            StartCoroutine(PlayOptionAudioThenProcess(option, optionClip));
+            return;
+        }
+
         ClearOptions();
         isCurrentlyPlayerTurn = false;
         ProcessEvents(option);
+    }
+
+    private IEnumerator PlayOptionAudioThenProcess(DialogueOption option, AudioClip clip)
+    {
+        StopAudio();
+        audioSource.clip = clip;
+        audioSource.Play();
+        yield return new WaitForSeconds(clip.length);
+
+        if (!conversationActive)
+            yield break;
+
+        ClearOptions();
+        isCurrentlyPlayerTurn = false;
+        ProcessEvents(option);
+    }
+
+    private void SetOptionButtonsInteractable(bool interactable)
+    {
+        foreach (Transform child in optionsContainer)
+        {
+            Button button = child.GetComponent<Button>();
+            if (button != null)
+                button.interactable = interactable;
+        }
     }
 
     private void ProcessEvents(DialogueOption option)
