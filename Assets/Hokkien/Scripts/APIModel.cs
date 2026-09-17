@@ -8,6 +8,37 @@ public class ResponseMeta
     public int processTimeMS;
 }
 
+[Serializable]
+public class HokkienQuizResponse
+{
+    public string status;
+    public HokkienQuizData data;
+}
+
+[Serializable]
+public class HokkienQuizData
+{
+    public string quiz_id;
+    public int version;
+    public HokkienQuizQuestionData[] questions;
+}
+
+[Serializable]
+public class HokkienQuizQuestionData
+{
+    public string question;
+    public HokkienQuizChoiceData[] choices;
+    public int correct_answer_index;
+}
+
+[Serializable]
+public class HokkienQuizChoiceData
+{
+    public string text;
+    public string audio;
+    public string explanation;
+}
+
 // ─── Dialogue ─────────────────────────────────────────────────────────────────
 
 [Serializable]
@@ -56,6 +87,9 @@ public class DialogueOption
     public string next_node;
     public string option_id;
     public string text;
+    public string translation_HAN;
+    public string translation_POJ;
+    public string audio;
     public DialogueEvent[] events;
 }
 
