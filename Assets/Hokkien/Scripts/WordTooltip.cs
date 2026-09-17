@@ -68,6 +68,14 @@ public class WordTooltip : MonoBehaviour, IPointerClickHandler
             pos.y += Mathf.Abs(bottomEdge) + 20f;
         }
 
+        // --- TOP OVERFLOW ---
+        // If the tooltip goes above the top of the screen, shift it down.
+        float topEdge = pos.y;
+        if (topEdge > Screen.height - 20f)
+        {
+            pos.y -= (topEdge - (Screen.height - 20f));
+        }
+
         // 5. Apply the corrected position
         rect.position = pos;
     }

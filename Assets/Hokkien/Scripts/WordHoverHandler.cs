@@ -94,10 +94,14 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
 
                 // Calculate where to put the tooltip
                 int firstCharIndex = linkInfo.linkTextfirstCharacterIndex;
+                int lastCharIndex = firstCharIndex + linkInfo.linkTextLength - 1;
                 Vector3 bottomLeft = textMesh.textInfo.characterInfo[firstCharIndex].bottomLeft;
-                Vector3 wordPosition = textMesh.transform.TransformPoint(bottomLeft);
-                
-                wordPosition.y -= 20f; 
+                Vector3 bottomRight = textMesh.textInfo.characterInfo[lastCharIndex].bottomRight;
+                Vector3 wordCenter = (bottomLeft + bottomRight) * 0.5f;
+                Vector3 wordPosition = textMesh.transform.TransformPoint(wordCenter);
+
+                // Place the tooltip roughly above the underlined word.
+                wordPosition.y += 20f;
 
                 if (wordTooltip != null)
                     wordTooltip.ShowTooltip(kwData.word, romanized, kwData.context, wordPosition);
