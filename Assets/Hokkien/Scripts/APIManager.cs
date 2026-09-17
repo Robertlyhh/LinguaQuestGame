@@ -142,6 +142,32 @@ public class APIManager : MonoBehaviour
 
     // ─── Dialogue ─────────────────────────────────────────────────────────────
 
+    /// <summary>GET /api/v1/quizzes/{levelId}</summary>
+    public void GetHokkienQuiz(string levelId,
+        Action<HokkienQuizData> onSuccess, Action<string> onError = null)
+    {
+        if (string.IsNullOrWhiteSpace(levelId))
+        {
+            onError?.Invoke("Quiz level id is empty");
+            return;
+        }
+
+        StartCoroutine(GetRequest(
+            $"{baseUrl.TrimEnd('/')}/api/v1/quizzes/{levelId}",
+            json =>
+            {
+                HokkienQuizResponse response = JsonUtility.FromJson<HokkienQuizResponse>(json);
+                if (response?.data?.questions == null || response.data.questions.Length == 0)
+                {
+                    onError?.Invoke("Backend returned an empty quiz");
+                    return;
+                }
+
+                onSuccess?.Invoke(response.data);
+            },
+            onError));
+    }
+
     /// <summary>GET /api/v1/dialogue/{nodeId}</summary>
     public void GetDialogueNode(string nodeId,
         Action<DialogueResponseData> onSuccess, Action<string> onError = null)
