@@ -13,7 +13,7 @@ public class SessionManager : MonoBehaviour
 
     private GameData gameData;
     public GameData GameData => gameData;
-    private List<ISessionData> sessionDataObjects;
+    private List<ISessionData> sessionDataObjects = new List<ISessionData>();
     private FileDataHandler fileDataHandler;
 
     public static SessionManager Instance { get; private set; }
@@ -26,14 +26,17 @@ public class SessionManager : MonoBehaviour
                 " of Game Data Manager in the scene.");
         }
         Instance = this;
+
+        // Initialize the file handler early so SaveGame is safe even if Start
+        // did not run before application quit.
+        this.fileDataHandler ??= new FileDataHandler(
+            Application.persistentDataPath, fileName
+        );
+        this.sessionDataObjects = FindAllSessionDataObjects();
     }
 
     public void Start()
     {
-        this.fileDataHandler = new FileDataHandler(
-                Application.persistentDataPath, fileName
-            );
-        this.sessionDataObjects = FindAllSessionDataObjects();
         LoadGame();
     }
 
