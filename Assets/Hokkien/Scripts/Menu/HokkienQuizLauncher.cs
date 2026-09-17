@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,8 @@ public class HokkienQuizLauncher : MonoBehaviour
 
     [Header("Question Bank")]
     public HokkienQuizQuestionBank questionBank;
+    [Tooltip("Load quiz content from the backend and use the local bank only as a fallback.")]
+    public bool loadQuizFromBackend = true;
 
     [Header("Level Configs")]
     public List<HokkienQuizLevelData> levelConfigs = new List<HokkienQuizLevelData>();
@@ -80,8 +83,65 @@ public class HokkienQuizLauncher : MonoBehaviour
             quizOptionsPanel.SetActive(true);
         }
 
-        quizManager.LaunchQuestion(questionsToLaunch, success => OnQuizCompleted(success, activeLevel));
+        if (loadQuizFromBackend && APIManager.Instance != null && activeLevel != null)
+        {
+            string levelId = BuildBackendLevelId(activeLevel.levelName);
+            APIManager.Instance.GetHokkienQuiz(
+                levelId,
+                quiz => quizManager.LaunchQuestion(
+                    CreateRuntimeQuestions(quiz),
+                    success => OnQuizCompleted(success, activeLevel)),
+                error =>
+                {
+                    Debug.LogWarning($"[HokkienQuizLauncher] Backend quiz '{levelId}' unavailable ({error}); using local fallback.");
+                    quizManager.LaunchQuestion(questionsToLaunch, success => OnQuizCompleted(success, activeLevel));
+                });
+        }
+        else
+        {
+            quizManager.LaunchQuestion(questionsToLaunch, success => OnQuizCompleted(success, activeLevel));
+        }
         return true;
+    }
+
+    private static string BuildBackendLevelId(string levelName)
+    {
+        string normalized = Regex.Replace((levelName ?? string.Empty).Trim().ToLowerInvariant(), @"[^a-z0-9_-]+", "_");
+        return int.TryParse(normalized, out int levelNumber) ? $"level_{levelNumber}" : normalized;
+    }
+
+    private static List<MultipleChoiceQuestion> CreateRuntimeQuestions(HokkienQuizData quiz)
+    {
+        List<MultipleChoiceQuestion> result = new List<MultipleChoiceQuestion>();
+        foreach (HokkienQuizQuestionData source in quiz.questions)
+        {
+            if (source == null || source.choices == null || source.choices.Length == 0)
+                continue;
+
+            MultipleChoiceQuestion question = ScriptableObject.CreateInstance<MultipleChoiceQuestion>();
+            question.question = source.question;
+            question.correctAnswerIndex = source.correct_answer_index;
+            question.choices = new string[source.choices.Length];
+            question.choiceHokkienRomanizedTexts = new string[source.choices.Length];
+            question.choiceHokkienAudioUrls = new string[source.choices.Length];
+            question.choiceHokkienAudioClips = new AudioClip[source.choices.Length];
+            string[] explanations = new string[source.choices.Length];
+
+            for (int i = 0; i < source.choices.Length; i++)
+            {
+                HokkienQuizChoiceData choice = source.choices[i];
+                question.choices[i] = choice?.text ?? string.Empty;
+                explanations[i] = choice?.explanation ?? string.Empty;
+                string audioPath = choice?.audio ?? string.Empty;
+                question.choiceHokkienAudioUrls[i] = string.IsNullOrWhiteSpace(audioPath)
+                    ? string.Empty
+                    : APIManager.Instance.BaseUrl.TrimEnd('/') + "/" + audioPath.TrimStart('/');
+            }
+
+            question.explanation = string.Join("|||", explanations);
+            result.Add(question);
+        }
+        return result;
     }
 
     public void SetCurrentLevelIndex(int levelIndex)
