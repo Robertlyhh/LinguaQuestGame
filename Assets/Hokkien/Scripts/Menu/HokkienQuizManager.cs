@@ -44,6 +44,25 @@ public class HokkienQuizManager : MonoBehaviour
     private bool waitingForCardDismiss;
     private int questionDisplayToken;
 
+    public int CorrectAnswerCount
+    {
+        get
+        {
+            int correctCount = 0;
+            foreach (QuizAnswerResult result in results)
+            {
+                if (result.wasCorrect)
+                {
+                    correctCount++;
+                }
+            }
+
+            return correctCount;
+        }
+    }
+
+    public int AnsweredQuestionCount => results.Count;
+
     [Serializable]
     private class QuizAnswerResult
     {
@@ -555,17 +574,8 @@ public class HokkienQuizManager : MonoBehaviour
 
     private string BuildRecapText()
     {
-        int correctCount = 0;
-        foreach (QuizAnswerResult result in results)
-        {
-            if (result.wasCorrect)
-            {
-                correctCount++;
-            }
-        }
-
         System.Text.StringBuilder recapBuilder = new System.Text.StringBuilder();
-        recapBuilder.AppendLine($"Quiz complete: {correctCount}/{results.Count} correct");
+        recapBuilder.AppendLine($"Quiz complete: {CorrectAnswerCount}/{results.Count} correct");
         recapBuilder.AppendLine();
 
         for (int i = 0; i < results.Count; i++)

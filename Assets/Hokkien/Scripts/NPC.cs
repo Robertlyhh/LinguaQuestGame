@@ -678,12 +678,15 @@ public class NPC : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(autoAdvanceDelay);
 
-        if (continueButton != null)
-        {
-            continueButton.gameObject.SetActive(true);
-            continueButton.onClick.RemoveAllListeners();
-            continueButton.onClick.AddListener(() => EndDialogue());
-        }
+        if (!conversationActive)
+            yield break;
+
+        ClearOptions();
+        if (continueButton != null) continueButton.gameObject.SetActive(false);
+        if (audioButton != null) audioButton.gameObject.SetActive(false);
+        if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
+
+        HokkienCompletionFeedback.GetOrCreate().ShowLessonComplete(currentNpcName, EndDialogue);
     }
 
     private void ShowItemNotification(HokkienItem item)

@@ -83,6 +83,22 @@ public class HokkienQuizLauncher : MonoBehaviour
             quizOptionsPanel.SetActive(true);
         }
 
+        LaunchQuiz(activeLevel, questionsToLaunch);
+        return true;
+    }
+
+    private void LaunchQuiz(HokkienQuizLevelData activeLevel, List<MultipleChoiceQuestion> fallbackQuestions)
+    {
+        if (quizManager.quizPanel != null)
+        {
+            quizManager.quizPanel.SetActive(true);
+        }
+
+        if (quizOptionsPanel != null)
+        {
+            quizOptionsPanel.SetActive(true);
+        }
+
         if (loadQuizFromBackend && APIManager.Instance != null && activeLevel != null)
         {
             string levelId = BuildBackendLevelId(activeLevel.levelName);
@@ -94,14 +110,13 @@ public class HokkienQuizLauncher : MonoBehaviour
                 error =>
                 {
                     Debug.LogWarning($"[HokkienQuizLauncher] Backend quiz '{levelId}' unavailable ({error}); using local fallback.");
-                    quizManager.LaunchQuestion(questionsToLaunch, success => OnQuizCompleted(success, activeLevel));
+                    quizManager.LaunchQuestion(fallbackQuestions, success => OnQuizCompleted(success, activeLevel));
                 });
         }
         else
         {
-            quizManager.LaunchQuestion(questionsToLaunch, success => OnQuizCompleted(success, activeLevel));
+            quizManager.LaunchQuestion(fallbackQuestions, success => OnQuizCompleted(success, activeLevel));
         }
-        return true;
     }
 
     private static string BuildBackendLevelId(string levelName)
@@ -195,9 +210,6 @@ public class HokkienQuizLauncher : MonoBehaviour
 
     private void OnQuizCompleted(bool success, HokkienQuizLevelData activeLevel)
     {
-        PausePlayer(false);
-        SetQuizRunning(false);
-
         if (quizManager.quizPanel != null)
         {
             quizManager.quizPanel.SetActive(false);
@@ -208,21 +220,41 @@ public class HokkienQuizLauncher : MonoBehaviour
             quizOptionsPanel.SetActive(false);
         }
 
+        int correctCount = quizManager.CorrectAnswerCount;
+        int totalCount = quizManager.AnsweredQuestionCount;
+        HokkienCompletionFeedback.GetOrCreate().ShowQuizResult(
+            success,
+            correctCount,
+            totalCount,
+            success
+                ? () => CompleteQuizAndNavigate(activeLevel)
+                : () => RetryQuiz(activeLevel));
+    }
+
+    private void RetryQuiz(HokkienQuizLevelData activeLevel)
+    {
+        List<MultipleChoiceQuestion> questionsToLaunch = GetQuestionsToLaunch(activeLevel);
+        if (questionsToLaunch == null || questionsToLaunch.Count == 0)
+        {
+            Debug.LogWarning("[HokkienQuizLauncher] Cannot retry because no quiz questions are available.");
+            return;
+        }
+
+        LaunchQuiz(activeLevel, questionsToLaunch);
+    }
+
+    private void CompleteQuizAndNavigate(HokkienQuizLevelData activeLevel)
+    {
+        PausePlayer(false);
+        SetQuizRunning(false);
+
         string nextSuccessScene = activeLevel != null && !string.IsNullOrWhiteSpace(activeLevel.successSceneName)
             ? activeLevel.successSceneName
             : successSceneName;
 
-        string nextFailureScene = activeLevel != null && !string.IsNullOrWhiteSpace(activeLevel.failureSceneName)
-            ? activeLevel.failureSceneName
-            : failureSceneName;
-
-        if (success && !string.IsNullOrWhiteSpace(nextSuccessScene))
+        if (!string.IsNullOrWhiteSpace(nextSuccessScene))
         {
             SceneManager.LoadScene(nextSuccessScene);
-        }
-        else if (!success && !string.IsNullOrWhiteSpace(nextFailureScene))
-        {
-            SceneManager.LoadScene(nextFailureScene);
         }
         else if (menuController != null)
         {
