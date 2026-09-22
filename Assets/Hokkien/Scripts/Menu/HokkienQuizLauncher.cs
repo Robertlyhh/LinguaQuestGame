@@ -25,6 +25,7 @@ public class HokkienQuizLauncher : MonoBehaviour
     public string failureSceneName;
 
     private bool quizRunning;
+    private int quizRunToken;
 
     private void Awake()
     {
@@ -89,6 +90,9 @@ public class HokkienQuizLauncher : MonoBehaviour
 
     private void LaunchQuiz(HokkienQuizLevelData activeLevel, List<MultipleChoiceQuestion> fallbackQuestions)
     {
+        int runToken = ++quizRunToken;
+        quizManager.SetExitHandler(RequestExitQuiz);
+
         if (quizManager.quizPanel != null)
         {
             quizManager.quizPanel.SetActive(true);
@@ -104,19 +108,59 @@ public class HokkienQuizLauncher : MonoBehaviour
             string levelId = BuildBackendLevelId(activeLevel.levelName);
             APIManager.Instance.GetHokkienQuiz(
                 levelId,
-                quiz => quizManager.LaunchQuestion(
-                    CreateRuntimeQuestions(quiz),
-                    success => OnQuizCompleted(success, activeLevel)),
+                quiz =>
+                {
+                    if (!IsQuizRunCurrent(runToken))
+                    {
+                        return;
+                    }
+
+                    quizManager.LaunchQuestion(
+                        CreateRuntimeQuestions(quiz),
+                        success =>
+                        {
+                            if (IsQuizRunCurrent(runToken))
+                            {
+                                OnQuizCompleted(success, activeLevel);
+                            }
+                        });
+                },
                 error =>
                 {
+                    if (!IsQuizRunCurrent(runToken))
+                    {
+                        return;
+                    }
+
                     Debug.LogWarning($"[HokkienQuizLauncher] Backend quiz '{levelId}' unavailable ({error}); using local fallback.");
-                    quizManager.LaunchQuestion(fallbackQuestions, success => OnQuizCompleted(success, activeLevel));
+                    quizManager.LaunchQuestion(
+                        fallbackQuestions,
+                        success =>
+                        {
+                            if (IsQuizRunCurrent(runToken))
+                            {
+                                OnQuizCompleted(success, activeLevel);
+                            }
+                        });
                 });
         }
         else
         {
-            quizManager.LaunchQuestion(fallbackQuestions, success => OnQuizCompleted(success, activeLevel));
+            quizManager.LaunchQuestion(
+                fallbackQuestions,
+                success =>
+                {
+                    if (IsQuizRunCurrent(runToken))
+                    {
+                        OnQuizCompleted(success, activeLevel);
+                    }
+                });
         }
+    }
+
+    private bool IsQuizRunCurrent(int runToken)
+    {
+        return quizRunning && runToken == quizRunToken;
     }
 
     private static string BuildBackendLevelId(string levelName)
@@ -222,7 +266,21 @@ public class HokkienQuizLauncher : MonoBehaviour
 
         int correctCount = quizManager.CorrectAnswerCount;
         int totalCount = quizManager.AnsweredQuestionCount;
-        System.Action onExit = success ? null : ExitQuiz;
+        ShowQuizCompletionFeedback(success, activeLevel, correctCount, totalCount);
+    }
+
+    private void ShowQuizCompletionFeedback(
+        bool success,
+        HokkienQuizLevelData activeLevel,
+        int correctCount,
+        int totalCount)
+    {
+        System.Action onExit = success
+            ? null
+            : () => HokkienCompletionFeedback.GetOrCreate().ShowExitConfirmation(
+                ExitQuiz,
+                () => ShowQuizCompletionFeedback(false, activeLevel, correctCount, totalCount));
+
         HokkienCompletionFeedback.GetOrCreate().ShowQuizResult(
             success,
             correctCount,
@@ -233,8 +291,16 @@ public class HokkienQuizLauncher : MonoBehaviour
             onExit);
     }
 
+    private void RequestExitQuiz()
+    {
+        HokkienCompletionFeedback.GetOrCreate().ShowExitConfirmation(ExitQuiz, null);
+    }
+
     private void ExitQuiz()
     {
+        quizRunToken++;
+        quizManager.CancelQuiz();
+
         if (quizManager.quizPanel != null)
         {
             quizManager.quizPanel.SetActive(false);
@@ -268,6 +334,8 @@ public class HokkienQuizLauncher : MonoBehaviour
 
     private void CompleteQuizAndNavigate(HokkienQuizLevelData activeLevel)
     {
+        quizRunToken++;
+        quizManager.SetExitHandler(null);
         PausePlayer(false);
         SetQuizRunning(false);
 
@@ -306,12 +374,17 @@ public class HokkienQuizLauncher : MonoBehaviour
 
     private void RestoreMenuAfterFailedStart()
     {
+        quizRunToken++;
         PausePlayer(false);
         SetQuizRunning(false);
 
-        if (quizManager != null && quizManager.quizPanel != null)
+        if (quizManager != null)
         {
-            quizManager.quizPanel.SetActive(false);
+            quizManager.SetExitHandler(null);
+            if (quizManager.quizPanel != null)
+            {
+                quizManager.quizPanel.SetActive(false);
+            }
         }
 
         if (quizOptionsPanel != null)

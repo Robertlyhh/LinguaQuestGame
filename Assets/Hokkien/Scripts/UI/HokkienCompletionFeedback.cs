@@ -112,6 +112,19 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             null);
     }
 
+    public void ShowExitConfirmation(Action onConfirm, Action onCancel)
+    {
+        Show(
+            "Exit Quiz?",
+            string.Empty,
+            "Your current quiz progress will be lost.",
+            "Cancel",
+            "Exit Quiz",
+            false,
+            onCancel,
+            onConfirm);
+    }
+
     private void Show(
         string title,
         string score,
@@ -128,9 +141,14 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         titleText.color = success
             ? new Color32(255, 214, 102, 255)
             : new Color32(255, 183, 77, 255);
+        bool hasScore = !string.IsNullOrWhiteSpace(score);
         scoreText.text = score;
-        scoreText.gameObject.SetActive(!string.IsNullOrWhiteSpace(score));
+        scoreText.gameObject.SetActive(hasScore);
         messageText.text = message;
+        SetRect(
+            messageText.rectTransform,
+            new Vector2(70f, hasScore ? -245f : -165f),
+            new Vector2(-70f, hasScore ? -340f : -300f));
         primaryButtonText.text = buttonLabel;
         primaryButton.interactable = true;
 

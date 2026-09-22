@@ -43,6 +43,8 @@ public class HokkienQuizManager : MonoBehaviour
     private bool answeredIncorrect;
     private bool waitingForCardDismiss;
     private int questionDisplayToken;
+    private Button exitQuizButton;
+    private Action onExitRequested;
 
     public int CorrectAnswerCount
     {
@@ -87,6 +89,7 @@ public class HokkienQuizManager : MonoBehaviour
         }
 
         EnsureChoiceAudioButtons();
+        FindExitQuizButton();
 
         if (translationImporter == null)
         {
@@ -133,6 +136,44 @@ public class HokkienQuizManager : MonoBehaviour
         }
 
         ShowQuestion(currentQuestionIndex);
+    }
+
+    public void SetExitHandler(Action exitHandler)
+    {
+        onExitRequested = exitHandler;
+        if (exitQuizButton != null)
+        {
+            exitQuizButton.interactable = exitHandler != null;
+        }
+    }
+
+    public void CancelQuiz()
+    {
+        questionDisplayToken++;
+        StopAllCoroutines();
+
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
+        onQuizComplete = null;
+        onExitRequested = null;
+        results.Clear();
+        answeredIncorrect = false;
+        currentQuestionIndex = 0;
+        HideAllOverlays();
+        SetAnswerButtonsVisible(false);
+
+        if (exitQuizButton != null)
+        {
+            exitQuizButton.interactable = false;
+        }
+
+        if (quizPanel != null)
+        {
+            quizPanel.SetActive(false);
+        }
     }
 
     private void ShowQuestion(int index)
@@ -379,6 +420,51 @@ public class HokkienQuizManager : MonoBehaviour
         }
     }
 
+    private void FindExitQuizButton()
+    {
+        if (quizPanel == null || exitQuizButton != null)
+        {
+            return;
+        }
+
+        Button[] closeButtons = quizPanel.GetComponentsInChildren<Button>(true);
+        foreach (Button candidate in closeButtons)
+        {
+            if (candidate.name != "CloseButton")
+            {
+                continue;
+            }
+
+            bool belongsToExplanation = explanationCardPanel != null
+                && candidate.transform.IsChildOf(explanationCardPanel.transform);
+            bool belongsToRecap = recapPanel != null
+                && candidate.transform.IsChildOf(recapPanel.transform);
+            if (belongsToExplanation || belongsToRecap)
+            {
+                continue;
+            }
+
+            exitQuizButton = candidate;
+            break;
+        }
+
+        if (exitQuizButton == null)
+        {
+            Debug.LogWarning("[HokkienQuizManager] Could not find the quiz dialog CloseButton.");
+            return;
+        }
+
+        // Replace inconsistent scene-level actions with the shared exit flow.
+        exitQuizButton.onClick = new Button.ButtonClickedEvent();
+        exitQuizButton.onClick.AddListener(RequestExit);
+        exitQuizButton.interactable = false;
+    }
+
+    private void RequestExit()
+    {
+        onExitRequested?.Invoke();
+    }
+
     private void UpdateChoiceAudioButton(int choiceIndex, MultipleChoiceQuestion question)
     {
         if (choiceAudioButtons == null || choiceIndex < 0 || choiceIndex >= choiceAudioButtons.Length
@@ -609,7 +695,9 @@ public class HokkienQuizManager : MonoBehaviour
         }
 
         bool quizSuccess = !answeredIncorrect;
-        onQuizComplete?.Invoke(quizSuccess);
+        Action<bool> completionCallback = onQuizComplete;
+        onQuizComplete = null;
+        completionCallback?.Invoke(quizSuccess);
     }
 
     private void SetAnswerButtonsVisible(bool visible)
