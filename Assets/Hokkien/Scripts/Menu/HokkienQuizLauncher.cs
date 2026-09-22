@@ -222,13 +222,36 @@ public class HokkienQuizLauncher : MonoBehaviour
 
         int correctCount = quizManager.CorrectAnswerCount;
         int totalCount = quizManager.AnsweredQuestionCount;
+        System.Action onExit = success ? null : ExitQuiz;
         HokkienCompletionFeedback.GetOrCreate().ShowQuizResult(
             success,
             correctCount,
             totalCount,
             success
                 ? () => CompleteQuizAndNavigate(activeLevel)
-                : () => RetryQuiz(activeLevel));
+                : () => RetryQuiz(activeLevel),
+            onExit);
+    }
+
+    private void ExitQuiz()
+    {
+        if (quizManager.quizPanel != null)
+        {
+            quizManager.quizPanel.SetActive(false);
+        }
+
+        if (quizOptionsPanel != null)
+        {
+            quizOptionsPanel.SetActive(false);
+        }
+
+        PausePlayer(false);
+        SetQuizRunning(false);
+
+        if (menuController != null && menuController.menuCanvas != null)
+        {
+            menuController.menuCanvas.SetActive(false);
+        }
     }
 
     private void RetryQuiz(HokkienQuizLevelData activeLevel)
