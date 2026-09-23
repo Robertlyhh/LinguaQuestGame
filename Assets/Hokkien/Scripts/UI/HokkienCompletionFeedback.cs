@@ -13,6 +13,13 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
 {
     private const float FadeDuration = 0.2f;
 
+    private enum EscapeBehavior
+    {
+        None,
+        Primary,
+        Secondary
+    }
+
     private static HokkienCompletionFeedback instance;
 
     private GameObject feedbackRoot;
@@ -31,6 +38,7 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
     private AudioClip completionChime;
     private Action primaryAction;
     private Action secondaryAction;
+    private EscapeBehavior escapeBehavior;
 
     public static HokkienCompletionFeedback GetOrCreate()
     {
@@ -56,6 +64,18 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         return feedbackObject.GetComponent<HokkienCompletionFeedback>();
     }
 
+    public static bool TryHandleEscapeIfVisible()
+    {
+        // A visible feedback panel always consumes Escape.
+        if (instance == null || instance.feedbackRoot == null || !instance.feedbackRoot.activeInHierarchy)
+        {
+            return false;
+        }
+
+        instance.HandleEscape();
+        return true;
+    }
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -78,6 +98,7 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         Action onPrimary,
         Action onExit = null)
     {
+        // Successful results ignore Escape; failed results use Exit Quiz.
         string title = passed ? "Lesson Complete!" : "Try Again";
         string message = passed
             ? "Perfect! You answered every question correctly."
@@ -92,7 +113,8 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             passed ? string.Empty : "Exit Quiz",
             passed,
             onPrimary,
-            passed ? null : onExit);
+            passed ? null : onExit,
+            passed ? EscapeBehavior.None : EscapeBehavior.Secondary);
     }
 
     public void ShowLessonComplete(string npcName, Action onContinue)
@@ -109,7 +131,8 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             string.Empty,
             true,
             onContinue,
-            null);
+            null,
+            EscapeBehavior.Primary);
     }
 
     public void ShowExitConfirmation(Action onConfirm, Action onCancel)
@@ -122,7 +145,8 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             "Exit Quiz",
             false,
             onCancel,
-            onConfirm);
+            onConfirm,
+            EscapeBehavior.Primary);
     }
 
     private void Show(
@@ -133,10 +157,12 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         string secondaryButtonLabel,
         bool success,
         Action onPrimary,
-        Action onSecondary)
+        Action onSecondary,
+        EscapeBehavior onEscape)
     {
         primaryAction = onPrimary;
         secondaryAction = onSecondary;
+        escapeBehavior = onEscape;
         titleText.text = title;
         titleText.color = success
             ? new Color32(255, 214, 102, 255)
@@ -195,12 +221,26 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         HideAndInvoke(callback);
     }
 
+    private void HandleEscape()
+    {
+        switch (escapeBehavior)
+        {
+            case EscapeBehavior.Primary:
+                HandlePrimaryButton();
+                break;
+            case EscapeBehavior.Secondary:
+                HandleSecondaryButton();
+                break;
+        }
+    }
+
     private void HideAndInvoke(Action callback)
     {
         primaryButton.interactable = false;
         secondaryButton.interactable = false;
         primaryAction = null;
         secondaryAction = null;
+        escapeBehavior = EscapeBehavior.None;
 
         feedbackCanvasGroup.DOKill();
         cardRect.DOKill();

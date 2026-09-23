@@ -275,11 +275,8 @@ public class HokkienQuizLauncher : MonoBehaviour
         int correctCount,
         int totalCount)
     {
-        System.Action onExit = success
-            ? null
-            : () => HokkienCompletionFeedback.GetOrCreate().ShowExitConfirmation(
-                ExitQuiz,
-                () => ShowQuizCompletionFeedback(false, activeLevel, correctCount, totalCount));
+        // Confirmation is only needed while a quiz is still in progress.
+        System.Action onExit = success ? null : ExitQuiz;
 
         HokkienCompletionFeedback.GetOrCreate().ShowQuizResult(
             success,
@@ -289,6 +286,23 @@ public class HokkienQuizLauncher : MonoBehaviour
                 ? () => CompleteQuizAndNavigate(activeLevel)
                 : () => RetryQuiz(activeLevel),
             onExit);
+    }
+
+    public bool TryHandleEscape()
+    {
+        if (!quizRunning)
+        {
+            return false;
+        }
+
+        // Close quiz sub-panels before offering to exit the quiz.
+        if (quizManager != null && quizManager.TryHandleEscape())
+        {
+            return true;
+        }
+
+        RequestExitQuiz();
+        return true;
     }
 
     private void RequestExitQuiz()

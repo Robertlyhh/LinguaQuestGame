@@ -7,15 +7,23 @@ public class MenuController : MonoBehaviour
     public HokkienQuizLauncher quizLauncher;
 
     private bool quizActive;
+    private GameObject welcomePanel;
 
     void Start()
     {
         quizActive = false;
         menuCanvas.SetActive(false);
+        welcomePanel = FindSceneObject("Welcome Panel");
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            HandleEscape();
+            return;
+        }
+
         if (quizActive)
         {
             return;
@@ -31,6 +39,59 @@ public class MenuController : MonoBehaviour
                 inventoryDisplay.LoadInventory();
             }
         }
+    }
+
+    private void HandleEscape()
+    {
+        // Let the topmost UI state consume Escape first.
+        if (HokkienCompletionFeedback.TryHandleEscapeIfVisible())
+        {
+            return;
+        }
+
+        if (quizLauncher != null && quizLauncher.TryHandleEscape())
+        {
+            return;
+        }
+
+        if (NPC.TryHandleEscapeForActiveConversation())
+        {
+            return;
+        }
+
+        if (TutorialNPC.TryHandleEscapeForActiveConversation())
+        {
+            return;
+        }
+
+        if (welcomePanel != null && welcomePanel.activeInHierarchy)
+        {
+            welcomePanel.SetActive(false);
+            return;
+        }
+
+        if (menuCanvas != null && menuCanvas.activeInHierarchy)
+        {
+            menuCanvas.SetActive(false);
+        }
+    }
+
+    private GameObject FindSceneObject(string objectName)
+    {
+        // Search inactive scene objects without adding scene references.
+        foreach (GameObject root in gameObject.scene.GetRootGameObjects())
+        {
+            Transform[] descendants = root.GetComponentsInChildren<Transform>(true);
+            foreach (Transform descendant in descendants)
+            {
+                if (descendant.name == objectName)
+                {
+                    return descendant.gameObject;
+                }
+            }
+        }
+
+        return null;
     }
 
     public void OnQuizButtonPressed()

@@ -147,6 +147,24 @@ public class HokkienQuizManager : MonoBehaviour
         }
     }
 
+    public bool TryHandleEscape()
+    {
+        // Escape follows the close action of the visible quiz card.
+        if (explanationCardPanel != null && explanationCardPanel.activeInHierarchy)
+        {
+            OnExplanationCardClosed();
+            return true;
+        }
+
+        if (recapPanel != null && recapPanel.activeInHierarchy)
+        {
+            OnRecapClosed();
+            return true;
+        }
+
+        return false;
+    }
+
     public void CancelQuiz()
     {
         questionDisplayToken++;

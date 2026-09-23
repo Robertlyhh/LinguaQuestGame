@@ -3,6 +3,9 @@ using TMPro;
 
 public class TutorialNPC : MonoBehaviour
 {
+    // Tracks the tutorial conversation currently on screen.
+    private static TutorialNPC activeConversation;
+
     public GameObject interactionPrompt; // "Press E" UI
     public GameObject arrowContainer;     // Tracking Arrow
     
@@ -60,6 +63,7 @@ public class TutorialNPC : MonoBehaviour
     {
         if (dialogueLines.Length == 0) return; // Safety check in case you forgot to type anything!
 
+        activeConversation = this;
         isTalking = true; 
         currentLine = 0; // Always start at the first sentence
         
@@ -95,5 +99,29 @@ public class TutorialNPC : MonoBehaviour
     {
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         isTalking = false; // Resets so the player can press E to read it again if they want
+
+        if (activeConversation == this)
+        {
+            activeConversation = null;
+        }
+    }
+
+    public static bool TryHandleEscapeForActiveConversation()
+    {
+        if (activeConversation == null || !activeConversation.isTalking)
+        {
+            return false;
+        }
+
+        activeConversation.CloseDialogue();
+        return true;
+    }
+
+    private void OnDestroy()
+    {
+        if (activeConversation == this)
+        {
+            activeConversation = null;
+        }
     }
 }

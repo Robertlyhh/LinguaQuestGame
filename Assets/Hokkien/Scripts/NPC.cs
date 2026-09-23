@@ -7,6 +7,9 @@ using DG.Tweening;
 
 public class NPC : MonoBehaviour, IInteractable
 {
+    // Only one vendor conversation can own Escape at a time.
+    private static NPC activeConversation;
+
     [Header("NPC Identity")]
     public string vendorId;
     public Sprite npcPortrait;
@@ -108,6 +111,17 @@ public class NPC : MonoBehaviour, IInteractable
 
     public bool CanInteract() => !dialoguePanel.activeSelf;
 
+    public static bool TryHandleEscapeForActiveConversation()
+    {
+        if (activeConversation == null || !activeConversation.conversationActive)
+        {
+            return false;
+        }
+
+        activeConversation.EndDialogue();
+        return true;
+    }
+
     private IEnumerator PrewarmDialogue()
     {
         if (string.IsNullOrEmpty(vendorId))
@@ -141,6 +155,7 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void BeginConversation()
     {
+        activeConversation = this;
         conversationToken++;
         conversationActive = true;
         isCurrentlyPlayerTurn = false;
@@ -725,6 +740,11 @@ public class NPC : MonoBehaviour, IInteractable
         conversationActive = false;
         conversationToken++;
 
+        if (activeConversation == this)
+        {
+            activeConversation = null;
+        }
+
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         ClearOptions();
         StopAudio();
@@ -735,6 +755,14 @@ public class NPC : MonoBehaviour, IInteractable
         if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
 
         panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
+    }
+
+    private void OnDestroy()
+    {
+        if (activeConversation == this)
+        {
+            activeConversation = null;
+        }
     }
 
     private bool IsConversationValid(int token)
