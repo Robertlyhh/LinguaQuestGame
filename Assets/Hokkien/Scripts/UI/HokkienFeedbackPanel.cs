@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// The view is created at runtime so every Hokkien scene gets the same UI
 /// without duplicating scene-specific references.
 /// </summary>
-public sealed class HokkienCompletionFeedback : MonoBehaviour
+public sealed class HokkienFeedbackPanel : MonoBehaviour
 {
     private const float FadeDuration = 0.2f;
 
@@ -20,7 +20,7 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         Secondary
     }
 
-    private static HokkienCompletionFeedback instance;
+    private static HokkienFeedbackPanel instance;
 
     private GameObject feedbackRoot;
     private CanvasGroup feedbackCanvasGroup;
@@ -34,34 +34,38 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
     private RectTransform secondaryButtonRect;
     private Button secondaryButton;
     private TMP_Text secondaryButtonText;
+    private RectTransform reviewButtonRect;
+    private Button reviewButton;
     private AudioSource audioSource;
     private AudioClip completionChime;
+    private Sprite panelSprite;
     private Action primaryAction;
     private Action secondaryAction;
+    private Action reviewAction;
     private EscapeBehavior escapeBehavior;
 
-    public static HokkienCompletionFeedback GetOrCreate()
+    public static HokkienFeedbackPanel GetOrCreate()
     {
         if (instance != null)
         {
             return instance;
         }
 
-        instance = FindFirstObjectByType<HokkienCompletionFeedback>();
+        instance = FindFirstObjectByType<HokkienFeedbackPanel>();
         if (instance != null)
         {
             return instance;
         }
 
         GameObject feedbackObject = new GameObject(
-            "HokkienCompletionFeedback",
+            "HokkienFeedbackPanel",
             typeof(RectTransform),
             typeof(Canvas),
             typeof(CanvasScaler),
             typeof(GraphicRaycaster),
-            typeof(HokkienCompletionFeedback));
+            typeof(HokkienFeedbackPanel));
 
-        return feedbackObject.GetComponent<HokkienCompletionFeedback>();
+        return feedbackObject.GetComponent<HokkienFeedbackPanel>();
     }
 
     public static bool TryHandleEscapeIfVisible()
@@ -87,6 +91,7 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         instance = this;
         ConfigureCanvas();
         ConfigureAudio();
+        LoadPanelFrame();
         BuildView();
         feedbackRoot.SetActive(false);
     }
@@ -96,13 +101,15 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         int correctCount,
         int totalCount,
         Action onPrimary,
-        Action onExit = null)
+        Action onExit = null,
+        Action onReview = null,
+        bool playCompletionAudio = true)
     {
         // Successful results ignore Escape; failed results use Exit Quiz.
         string title = passed ? "Lesson Complete!" : "Try Again";
         string message = passed
             ? "Perfect! You answered every question correctly."
-            : "Review the explanations, then try the quiz again.";
+            : "Review your answers or try the quiz again.";
         string buttonLabel = passed ? "Continue" : "Retry";
 
         Show(
@@ -114,7 +121,9 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             passed,
             onPrimary,
             passed ? null : onExit,
-            passed ? EscapeBehavior.None : EscapeBehavior.Secondary);
+            onReview,
+            passed ? EscapeBehavior.None : EscapeBehavior.Secondary,
+            playCompletionAudio);
     }
 
     public void ShowLessonComplete(string npcName, Action onContinue)
@@ -132,7 +141,9 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             true,
             onContinue,
             null,
-            EscapeBehavior.Primary);
+            null,
+            EscapeBehavior.Primary,
+            true);
     }
 
     public void ShowExitConfirmation(Action onConfirm, Action onCancel)
@@ -146,7 +157,9 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
             false,
             onCancel,
             onConfirm,
-            EscapeBehavior.Primary);
+            null,
+            EscapeBehavior.Primary,
+            false);
     }
 
     private void Show(
@@ -158,15 +171,18 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         bool success,
         Action onPrimary,
         Action onSecondary,
-        EscapeBehavior onEscape)
+        Action onReview,
+        EscapeBehavior onEscape,
+        bool playCompletionAudio)
     {
         primaryAction = onPrimary;
         secondaryAction = onSecondary;
+        reviewAction = onReview;
         escapeBehavior = onEscape;
         titleText.text = title;
         titleText.color = success
-            ? new Color32(255, 214, 102, 255)
-            : new Color32(255, 183, 77, 255);
+            ? new Color32(177, 83, 43, 255)
+            : new Color32(164, 62, 62, 255);
         bool hasScore = !string.IsNullOrWhiteSpace(score);
         scoreText.text = score;
         scoreText.gameObject.SetActive(hasScore);
@@ -182,9 +198,13 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         secondaryButton.gameObject.SetActive(showSecondaryButton);
         secondaryButton.interactable = showSecondaryButton;
         secondaryButtonText.text = secondaryButtonLabel;
-        primaryButtonRect.anchoredPosition = new Vector2(showSecondaryButton ? 165f : 0f, 42f);
 
-        if (success && audioSource != null && completionChime != null)
+        bool showReviewButton = onReview != null;
+        reviewButton.gameObject.SetActive(showReviewButton);
+        reviewButton.interactable = showReviewButton;
+        LayoutButtons(showSecondaryButton, showReviewButton);
+
+        if (success && playCompletionAudio && audioSource != null && completionChime != null)
         {
             audioSource.PlayOneShot(completionChime);
         }
@@ -221,6 +241,48 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         HideAndInvoke(callback);
     }
 
+    private void HandleReviewButton()
+    {
+        if (!reviewButton.interactable)
+        {
+            return;
+        }
+
+        Action callback = reviewAction;
+        HideAndInvoke(callback);
+    }
+
+    private void LayoutButtons(bool showSecondaryButton, bool showReviewButton)
+    {
+        if (showReviewButton)
+        {
+            cardRect.sizeDelta = new Vector2(800f, 540f);
+            primaryButtonRect.sizeDelta = new Vector2(210f, 58f);
+            secondaryButtonRect.sizeDelta = new Vector2(210f, 58f);
+            reviewButtonRect.sizeDelta = new Vector2(240f, 58f);
+
+            if (showSecondaryButton)
+            {
+                secondaryButtonRect.anchoredPosition = new Vector2(-245f, 82f);
+                reviewButtonRect.anchoredPosition = new Vector2(0f, 82f);
+                primaryButtonRect.anchoredPosition = new Vector2(245f, 82f);
+            }
+            else
+            {
+                reviewButtonRect.anchoredPosition = new Vector2(-135f, 82f);
+                primaryButtonRect.anchoredPosition = new Vector2(135f, 82f);
+            }
+
+            return;
+        }
+
+        cardRect.sizeDelta = new Vector2(800f, 520f);
+        primaryButtonRect.sizeDelta = new Vector2(250f, 64f);
+        secondaryButtonRect.sizeDelta = new Vector2(250f, 64f);
+        primaryButtonRect.anchoredPosition = new Vector2(showSecondaryButton ? 140f : 0f, 72f);
+        secondaryButtonRect.anchoredPosition = new Vector2(-140f, 72f);
+    }
+
     private void HandleEscape()
     {
         switch (escapeBehavior)
@@ -238,8 +300,10 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
     {
         primaryButton.interactable = false;
         secondaryButton.interactable = false;
+        reviewButton.interactable = false;
         primaryAction = null;
         secondaryAction = null;
+        reviewAction = null;
         escapeBehavior = EscapeBehavior.None;
 
         feedbackCanvasGroup.DOKill();
@@ -300,6 +364,24 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         return clip;
     }
 
+    private void LoadPanelFrame()
+    {
+        panelSprite = FindLoadedAsset<Sprite>("DialogueBoxSimple_0");
+    }
+
+    private static T FindLoadedAsset<T>(string assetName) where T : UnityEngine.Object
+    {
+        foreach (T asset in Resources.FindObjectsOfTypeAll<T>())
+        {
+            if (asset.name == assetName)
+            {
+                return asset;
+            }
+        }
+
+        return null;
+    }
+
     private void BuildView()
     {
         feedbackRoot = CreateUiObject("FeedbackRoot", transform);
@@ -315,23 +397,25 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         cardRect.anchorMin = new Vector2(0.5f, 0.5f);
         cardRect.anchorMax = new Vector2(0.5f, 0.5f);
         cardRect.pivot = new Vector2(0.5f, 0.5f);
-        cardRect.sizeDelta = new Vector2(720f, 470f);
+        cardRect.sizeDelta = new Vector2(800f, 520f);
         cardRect.anchoredPosition = Vector2.zero;
 
         Image cardImage = card.AddComponent<Image>();
-        cardImage.color = new Color32(49, 37, 31, 255);
-        Outline cardOutline = card.AddComponent<Outline>();
-        cardOutline.effectColor = new Color32(235, 174, 65, 255);
-        cardOutline.effectDistance = new Vector2(4f, -4f);
-
-        GameObject accent = CreateUiObject("TopAccent", card.transform);
-        RectTransform accentRect = accent.GetComponent<RectTransform>();
-        accentRect.anchorMin = new Vector2(0f, 1f);
-        accentRect.anchorMax = new Vector2(1f, 1f);
-        accentRect.pivot = new Vector2(0.5f, 1f);
-        accentRect.sizeDelta = new Vector2(0f, 12f);
-        accentRect.anchoredPosition = Vector2.zero;
-        accent.AddComponent<Image>().color = new Color32(235, 174, 65, 255);
+        if (panelSprite != null)
+        {
+            cardImage.sprite = panelSprite;
+            // Match the menu panel's stretched pixel frame.
+            cardImage.type = Image.Type.Simple;
+            cardImage.color = Color.white;
+        }
+        else
+        {
+            // Keep the fallback light so the old dark-gold panel never returns.
+            cardImage.color = new Color32(244, 237, 243, 255);
+            Outline cardOutline = card.AddComponent<Outline>();
+            cardOutline.effectColor = new Color32(239, 153, 81, 255);
+            cardOutline.effectDistance = new Vector2(6f, -6f);
+        }
 
         titleText = CreateText("Title", card.transform, 46f, FontStyles.Bold);
         SetRect(titleText.rectTransform, new Vector2(50f, -52f), new Vector2(-50f, -125f));
@@ -340,65 +424,92 @@ public sealed class HokkienCompletionFeedback : MonoBehaviour
         scoreText = CreateText("Score", card.transform, 58f, FontStyles.Bold);
         SetRect(scoreText.rectTransform, new Vector2(70f, -145f), new Vector2(-70f, -230f));
         scoreText.alignment = TextAlignmentOptions.Center;
-        scoreText.color = Color.white;
+        scoreText.color = new Color32(73, 53, 61, 255);
 
         messageText = CreateText("Message", card.transform, 27f, FontStyles.Normal);
         SetRect(messageText.rectTransform, new Vector2(70f, -245f), new Vector2(-70f, -340f));
         messageText.alignment = TextAlignmentOptions.Center;
-        messageText.color = new Color32(245, 238, 225, 255);
+        messageText.color = new Color32(73, 53, 61, 255);
 
-        GameObject buttonObject = CreateUiObject("PrimaryButton", card.transform);
-        primaryButtonRect = buttonObject.GetComponent<RectTransform>();
-        primaryButtonRect.anchorMin = new Vector2(0.5f, 0f);
-        primaryButtonRect.anchorMax = new Vector2(0.5f, 0f);
-        primaryButtonRect.pivot = new Vector2(0.5f, 0f);
-        primaryButtonRect.sizeDelta = new Vector2(280f, 72f);
-        primaryButtonRect.anchoredPosition = new Vector2(0f, 42f);
+        primaryButton = CreateButton(
+            "PrimaryButton",
+            card.transform,
+            string.Empty,
+            28f,
+            new Color32(235, 174, 65, 255),
+            new Color32(207, 142, 45, 255),
+            new Color32(120, 105, 84, 255),
+            HandlePrimaryButton,
+            out primaryButtonRect,
+            out primaryButtonText);
+
+        reviewButton = CreateButton(
+            "ReviewButton",
+            card.transform,
+            "Review Answers",
+            24f,
+            new Color32(244, 192, 113, 255),
+            new Color32(220, 165, 92, 255),
+            new Color32(150, 135, 120, 255),
+            HandleReviewButton,
+            out reviewButtonRect,
+            out _);
+        reviewButton.gameObject.SetActive(false);
+
+        secondaryButton = CreateButton(
+            "SecondaryButton",
+            card.transform,
+            string.Empty,
+            28f,
+            new Color32(235, 174, 65, 255),
+            new Color32(207, 142, 45, 255),
+            new Color32(120, 105, 84, 255),
+            HandleSecondaryButton,
+            out secondaryButtonRect,
+            out secondaryButtonText);
+        secondaryButton.gameObject.SetActive(false);
+
+        LayoutButtons(false, false);
+    }
+
+    private static Button CreateButton(
+        string objectName,
+        Transform parent,
+        string label,
+        float fontSize,
+        Color32 backgroundColor,
+        Color32 pressedColor,
+        Color32 disabledColor,
+        UnityEngine.Events.UnityAction onClick,
+        out RectTransform buttonRect,
+        out TMP_Text buttonText)
+    {
+        GameObject buttonObject = CreateUiObject(objectName, parent);
+        buttonRect = buttonObject.GetComponent<RectTransform>();
+        buttonRect.anchorMin = new Vector2(0.5f, 0f);
+        buttonRect.anchorMax = new Vector2(0.5f, 0f);
+        buttonRect.pivot = new Vector2(0.5f, 0f);
 
         Image buttonImage = buttonObject.AddComponent<Image>();
-        buttonImage.color = new Color32(235, 174, 65, 255);
-        primaryButton = buttonObject.AddComponent<Button>();
-        primaryButton.targetGraphic = buttonImage;
-        ColorBlock colors = primaryButton.colors;
+        buttonImage.color = backgroundColor;
+
+        Button button = buttonObject.AddComponent<Button>();
+        button.targetGraphic = buttonImage;
+        ColorBlock colors = button.colors;
         colors.normalColor = Color.white;
         colors.highlightedColor = new Color32(255, 236, 178, 255);
-        colors.pressedColor = new Color32(207, 142, 45, 255);
-        colors.disabledColor = new Color32(120, 105, 84, 255);
-        primaryButton.colors = colors;
-        primaryButton.onClick.AddListener(HandlePrimaryButton);
+        colors.pressedColor = pressedColor;
+        colors.disabledColor = disabledColor;
+        button.colors = colors;
+        button.onClick.AddListener(onClick);
 
-        primaryButtonText = CreateText("Label", buttonObject.transform, 28f, FontStyles.Bold);
-        StretchToParent(primaryButtonText.rectTransform);
-        primaryButtonText.alignment = TextAlignmentOptions.Center;
-        primaryButtonText.color = new Color32(45, 32, 25, 255);
-        primaryButtonText.raycastTarget = false;
-
-        GameObject secondaryButtonObject = CreateUiObject("SecondaryButton", card.transform);
-        secondaryButtonRect = secondaryButtonObject.GetComponent<RectTransform>();
-        secondaryButtonRect.anchorMin = new Vector2(0.5f, 0f);
-        secondaryButtonRect.anchorMax = new Vector2(0.5f, 0f);
-        secondaryButtonRect.pivot = new Vector2(0.5f, 0f);
-        secondaryButtonRect.sizeDelta = new Vector2(280f, 72f);
-        secondaryButtonRect.anchoredPosition = new Vector2(-165f, 42f);
-
-        Image secondaryButtonImage = secondaryButtonObject.AddComponent<Image>();
-        secondaryButtonImage.color = new Color32(92, 73, 61, 255);
-        secondaryButton = secondaryButtonObject.AddComponent<Button>();
-        secondaryButton.targetGraphic = secondaryButtonImage;
-        ColorBlock secondaryColors = secondaryButton.colors;
-        secondaryColors.normalColor = Color.white;
-        secondaryColors.highlightedColor = new Color32(221, 205, 190, 255);
-        secondaryColors.pressedColor = new Color32(75, 57, 47, 255);
-        secondaryColors.disabledColor = new Color32(80, 75, 70, 255);
-        secondaryButton.colors = secondaryColors;
-        secondaryButton.onClick.AddListener(HandleSecondaryButton);
-
-        secondaryButtonText = CreateText("Label", secondaryButtonObject.transform, 28f, FontStyles.Bold);
-        StretchToParent(secondaryButtonText.rectTransform);
-        secondaryButtonText.alignment = TextAlignmentOptions.Center;
-        secondaryButtonText.color = new Color32(245, 238, 225, 255);
-        secondaryButtonText.raycastTarget = false;
-        secondaryButtonObject.SetActive(false);
+        buttonText = CreateText("Label", buttonObject.transform, fontSize, FontStyles.Bold);
+        buttonText.text = label;
+        StretchToParent(buttonText.rectTransform);
+        buttonText.alignment = TextAlignmentOptions.Center;
+        buttonText.color = new Color32(73, 53, 61, 255);
+        buttonText.raycastTarget = false;
+        return button;
     }
 
     private static GameObject CreateUiObject(string objectName, Transform parent)

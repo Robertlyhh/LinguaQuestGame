@@ -684,12 +684,12 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         if (hasLessonComplete)
-            StartCoroutine(ShowLessonCompleteAndEnd());
+            StartCoroutine(ShowLessonCompletionFeedback());
         else
             AdvanceDialogue(option.next_node);
     }
 
-    private IEnumerator ShowLessonCompleteAndEnd()
+    private IEnumerator ShowLessonCompletionFeedback()
     {
         yield return new WaitForSeconds(autoAdvanceDelay);
 
@@ -701,7 +701,7 @@ public class NPC : MonoBehaviour, IInteractable
         if (audioButton != null) audioButton.gameObject.SetActive(false);
         if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
 
-        HokkienCompletionFeedback.GetOrCreate().ShowLessonComplete(currentNpcName, EndDialogue);
+        HokkienFeedbackPanel.GetOrCreate().ShowLessonComplete(currentNpcName, EndDialogue);
     }
 
     private void ShowItemNotification(HokkienItem item)

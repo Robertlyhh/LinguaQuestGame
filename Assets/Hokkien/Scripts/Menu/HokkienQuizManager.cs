@@ -38,6 +38,7 @@ public class HokkienQuizManager : MonoBehaviour
     public List<MultipleChoiceQuestion> questionsSet;
 
     private Action<bool> onQuizComplete;
+    private Action onRecapClosed;
     private readonly List<QuizAnswerResult> results = new List<QuizAnswerResult>();
     private int currentQuestionIndex;
     private bool answeredIncorrect;
@@ -128,6 +129,7 @@ public class HokkienQuizManager : MonoBehaviour
         waitingForCardDismiss = false;
         results.Clear();
         onQuizComplete = onComplete;
+        onRecapClosed = null;
 
         HideAllOverlays();
         if (quizPanel != null)
@@ -176,6 +178,7 @@ public class HokkienQuizManager : MonoBehaviour
         }
 
         onQuizComplete = null;
+        onRecapClosed = null;
         onExitRequested = null;
         results.Clear();
         answeredIncorrect = false;
@@ -198,7 +201,7 @@ public class HokkienQuizManager : MonoBehaviour
     {
         if (questionsSet == null || index < 0 || index >= questionsSet.Count)
         {
-            ShowRecap();
+            CompleteQuiz();
             return;
         }
 
@@ -657,18 +660,29 @@ public class HokkienQuizManager : MonoBehaviour
         }
         else
         {
-            ShowRecap();
+            CompleteQuiz();
         }
     }
 
-    private void ShowRecap()
+    public void ShowRecap(Action onClosed)
     {
         HideAllOverlays();
+        onRecapClosed = onClosed;
 
-        if (recapPanel != null)
+        if (recapPanel == null)
         {
-            recapPanel.SetActive(true);
+            OnRecapClosed();
+            return;
         }
+
+        if (quizPanel != null)
+        {
+            quizPanel.SetActive(true);
+        }
+
+        SetAnswerButtonsVisible(false);
+
+        recapPanel.SetActive(true);
 
         if (recapText != null)
         {
@@ -701,8 +715,17 @@ public class HokkienQuizManager : MonoBehaviour
             recapBuilder.AppendLine("No questions were answered.");
         }
 
-        recapBuilder.AppendLine("Press Close to finish.");
+        recapBuilder.AppendLine("Press Close to return.");
         return recapBuilder.ToString();
+    }
+
+    private void CompleteQuiz()
+    {
+        bool quizSuccess = !answeredIncorrect;
+        Action<bool> completionCallback = onQuizComplete;
+        onQuizComplete = null;
+        SetExitHandler(null);
+        completionCallback?.Invoke(quizSuccess);
     }
 
     private void OnRecapClosed()
@@ -712,10 +735,9 @@ public class HokkienQuizManager : MonoBehaviour
             recapPanel.SetActive(false);
         }
 
-        bool quizSuccess = !answeredIncorrect;
-        Action<bool> completionCallback = onQuizComplete;
-        onQuizComplete = null;
-        completionCallback?.Invoke(quizSuccess);
+        Action callback = onRecapClosed;
+        onRecapClosed = null;
+        callback?.Invoke();
     }
 
     private void SetAnswerButtonsVisible(bool visible)

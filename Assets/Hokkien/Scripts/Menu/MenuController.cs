@@ -44,7 +44,7 @@ public class MenuController : MonoBehaviour
     private void HandleEscape()
     {
         // Let the topmost UI state consume Escape first.
-        if (HokkienCompletionFeedback.TryHandleEscapeIfVisible())
+        if (HokkienFeedbackPanel.TryHandleEscapeIfVisible())
         {
             return;
         }
