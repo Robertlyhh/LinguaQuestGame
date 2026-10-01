@@ -17,15 +17,21 @@ MonoBehaviour:
 
 '
     choices:
-    - "L\u0101u-p\u00E1n h\u00F3"
-    - "Ch\u00F3a\u207F b\u014De?"
-    - "L\u00ED beh g\u014Da-ch\u014De?"
-    - "Chhi\u00E1\u207F-mn\u0304g, che s\u012B si\u00E1nn-mih?"
+    - "\u8001\u677F\u597D"
+    - "\u600E\u4E48\u5356"
+    - "\u4F60\u8981\u591A\u5C11"
+    - "\u8BF7\u95EE\u8FD9\u662F\u4EC0\u4E48"
+    questionDialogueNodeId:
+    choiceDialogueNodeIds:
+    - quiz_opt_55a5015f
+    - quiz_opt_c58805d7
+    - quiz_opt_966bd70e
+    - quiz_opt_a38c3fd0
     choiceHokkienRomanizedTexts:
-    - ""
-    - ""
-    - ""
-    - ""
+    - "L\u0101u-p\xE1n h\xF3"
+    - "Ch\xF3a\u207F b\u014De?"
+    - "L\xED beh g\u014Da-ch\u014De?"
+    - "Chhi\xE1\u207F-mn\u0304g, che s\u012B si\xE1nn-mih?"
     choiceAudioResourcePaths:
     - HokkienQuizAudio/level1_boss_hello
     - HokkienQuizAudio/level1_how_sell
@@ -42,15 +48,21 @@ MonoBehaviour:
     correctAnswerIndex: 1
   - question: If you want to ask about what a food is, what do you say?
     choices:
-    - "L\u0101u-p\u00E1n h\u00F3"
-    - "Ch\u00F3a\u207F b\u014De?"
-    - "L\u00ED beh g\u014Da-ch\u014De?"
-    - "Chhi\u00E1\u207F-mn\u0304g, che s\u012B si\u00E1nn-mih?"
+    - "\u8001\u677F\u597D"
+    - "\u600E\u4E48\u5356"
+    - "\u4F60\u8981\u591A\u5C11"
+    - "\u8BF7\u95EE\u8FD9\u662F\u4EC0\u4E48"
+    questionDialogueNodeId:
+    choiceDialogueNodeIds:
+    - quiz_opt_89f1d072
+    - quiz_opt_64422501
+    - quiz_opt_050470a5
+    - quiz_opt_25e797fe
     choiceHokkienRomanizedTexts:
-    - ""
-    - ""
-    - ""
-    - ""
+    - "L\u0101u-p\xE1n h\xF3"
+    - "Ch\xF3a\u207F b\u014De?"
+    - "L\xED beh g\u014Da-ch\u014De?"
+    - "Chhi\xE1\u207F-mn\u0304g, che s\u012B si\xE1nn-mih?"
     choiceAudioResourcePaths:
     - HokkienQuizAudio/level1_boss_hello
     - HokkienQuizAudio/level1_how_sell
@@ -65,24 +77,32 @@ MonoBehaviour:
     - "This means \u201CWhat is this?\u201D, you can use this to ask what others
       are eating or selling."
     correctAnswerIndex: 3
-  - question: "Which of the following is traditionally used as a worship food for the Seven Sisters festival?"
+  - question: Which of the following is traditionally used as a worship food for
+      the Seven Sisters festival?
     choices:
-    - "\u00D4ng-l\u00E2i-so\u0358"
-    - "T\u00E2ng-\u00E1-b\u00ED-ko"
-    - "\u014C\u0358-ku\u00E9-khiau"
-    - "Pe\u030Dh-thn\u0302g-ku\u00E9"
+    - "\u51E4\u68A8\u9165 - pineapple cake"
+    - "\u7B52\u4ED4\u7C73\u7CD5 - tube rice pudding"
+    - "\u828B\u7CBF\u5DE7 - steamed taro cake"
+    - "\u767D\u7CD6\u7CBF - fried sweet rice cake"
+    questionDialogueNodeId:
+    choiceDialogueNodeIds:
+    - quiz_opt_f30edb0b
+    - quiz_opt_8a1ab6de
+    - quiz_opt_d37f91b6
+    - quiz_opt_185c5451
     choiceHokkienRomanizedTexts:
-    - ""
-    - ""
-    - ""
-    - ""
+    - "\xD4ng-l\xE2i-so\u0358"
+    - "T\xE2ng-\xE1-b\xED-ko"
+    - "\u014C\u0358-ku\xE9-khiau"
+    - "Pe\u030Dh-thn\u0302g-ku\xE9"
     choiceAudioResourcePaths:
     - HokkienQuizAudio/level1_pineapple_cake
     - HokkienQuizAudio/level1_tube_rice
     - HokkienQuizAudio/level1_taro_cake
     - HokkienQuizAudio/level1_sweet_rice_cake
     choiceExplanations:
-    - Pineapple cake is a popular Taiwanese snack, but not the expected worship food here.
+    - Pineapple cake is a popular Taiwanese snack, but not the expected worship food
+      here.
     - Tube rice pudding is not the expected worship food here.
     - Steamed taro cake is associated with other worship traditions.
     - Fried sweet rice cake is the expected answer for this lesson.

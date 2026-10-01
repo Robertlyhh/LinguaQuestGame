@@ -763,9 +763,10 @@ MonoBehaviour:
   quizOptionsPanel: {fileID: 89447832}
   questionBank: {fileID: 11400000, guid: d624774d678854d0aa33c9fb410b97a3, type: 2}
   loadQuizFromBackend: 1
-  levelConfigs: []
+  levelConfigs:
+  - {fileID: 11400000, guid: e63fbeed98b4343828b9d9f0107665be, type: 2}
   currentLevelIndex: 0
-  successSceneName: 
+  successSceneName: Hokkien4
   failureSceneName: 
 --- !u!1 &39237715
 GameObject:
@@ -241285,6 +241286,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 553187367}
   inventoryDisplay: {fileID: 2135736391}
   quizLauncher: {fileID: 36934368}
+  playerMovement: {fileID: 0}
 --- !u!114 &5785187114382037622
 MonoBehaviour:
   m_ObjectHideFlags: 0
