@@ -5,19 +5,35 @@ public class MenuController : MonoBehaviour
     public GameObject menuCanvas;
     public InventoryDisplay inventoryDisplay;
     public HokkienQuizLauncher quizLauncher;
+    public frogMove playerMovement;
 
     private bool quizActive;
     private GameObject welcomePanel;
+    // These flags track panels that may be closed directly by UI buttons.
+    private bool menuStateOwned;
+    private bool welcomeStateOwned;
+
+    private void Awake()
+    {
+        if (playerMovement == null)
+        {
+            playerMovement = FindObjectOfType<frogMove>();
+        }
+    }
 
     void Start()
     {
         quizActive = false;
         menuCanvas.SetActive(false);
         welcomePanel = FindSceneObject("Welcome Panel");
+        SyncOverlayStates();
     }
 
     void Update()
     {
+        // Close buttons can hide panels without calling this controller.
+        SyncOverlayStates();
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             HandleEscape();
@@ -29,24 +45,21 @@ public class MenuController : MonoBehaviour
             return;
         }
 
-        // Keep the menu from opening over an active conversation.
-        if (HokkienInteractionState.CurrentMode == HokkienInteractionMode.Dialogue)
+        if (HokkienInteractionState.CurrentMode != HokkienInteractionMode.World
+            && HokkienInteractionState.CurrentMode != HokkienInteractionMode.Menu)
         {
-            if (menuCanvas != null && menuCanvas.activeSelf)
-            {
-                menuCanvas.SetActive(false);
-            }
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            bool isOpening = !menuCanvas.activeSelf;
-            menuCanvas.SetActive(isOpening);
-
-            if (isOpening && inventoryDisplay != null)
+            if (menuCanvas.activeSelf)
             {
-                inventoryDisplay.LoadInventory();
+                CloseMenu();
+            }
+            else
+            {
+                OpenMenu();
             }
         }
     }
@@ -76,13 +89,63 @@ public class MenuController : MonoBehaviour
 
         if (welcomePanel != null && welcomePanel.activeInHierarchy)
         {
-            welcomePanel.SetActive(false);
+            CloseWelcomePanel();
             return;
         }
 
         if (menuCanvas != null && menuCanvas.activeInHierarchy)
         {
-            menuCanvas.SetActive(false);
+            CloseMenu();
+        }
+    }
+
+    private void SyncOverlayStates()
+    {
+        SyncWelcomeState();
+        SyncMenuState();
+    }
+
+    private void SyncWelcomeState()
+    {
+        if (welcomePanel == null)
+        {
+            return;
+        }
+
+        bool isVisible = welcomePanel.activeInHierarchy;
+        if (isVisible && !welcomeStateOwned
+            && HokkienInteractionState.TryEnter(HokkienInteractionMode.Welcome, this))
+        {
+            welcomeStateOwned = true;
+            SetPlayerMovementPaused(true);
+        }
+        else if (!isVisible && welcomeStateOwned)
+        {
+            welcomeStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    private void SyncMenuState()
+    {
+        if (menuCanvas == null)
+        {
+            return;
+        }
+
+        bool isVisible = menuCanvas.activeInHierarchy;
+        if (isVisible && !menuStateOwned
+            && HokkienInteractionState.TryEnter(HokkienInteractionMode.Menu, this))
+        {
+            menuStateOwned = true;
+            SetPlayerMovementPaused(true);
+        }
+        else if (!isVisible && menuStateOwned)
+        {
+            menuStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
         }
     }
 
@@ -106,21 +169,75 @@ public class MenuController : MonoBehaviour
 
     public void OnQuizButtonPressed()
     {
-        if (HokkienInteractionState.CurrentMode == HokkienInteractionMode.Dialogue)
-        {
-            menuCanvas.SetActive(false);
-            return;
-        }
-
         if (quizLauncher == null)
         {
             Debug.LogWarning("[MenuController] Quiz launcher is not assigned.");
             return;
         }
 
+        bool reopenMenuOnFailure = menuCanvas != null && menuCanvas.activeSelf;
+        // Let the quiz claim input after the menu releases it.
+        CloseMenu();
+
         if (!quizLauncher.StartQuiz())
         {
-            menuCanvas.SetActive(true); // If launcher fails to run, drops player back safely.
+            if (reopenMenuOnFailure && !menuCanvas.activeSelf)
+            {
+                OpenMenu();
+            }
+        }
+    }
+
+    public bool OpenMenu()
+    {
+        // Repeated calls should not reload the current menu.
+        if (menuStateOwned && menuCanvas != null && menuCanvas.activeSelf)
+        {
+            return true;
+        }
+
+        if (menuCanvas == null
+            || !HokkienInteractionState.TryEnter(HokkienInteractionMode.Menu, this))
+        {
+            return false;
+        }
+
+        menuStateOwned = true;
+        menuCanvas.SetActive(true);
+        SetPlayerMovementPaused(true);
+
+        if (inventoryDisplay != null)
+        {
+            inventoryDisplay.LoadInventory();
+        }
+
+        return true;
+    }
+
+    public void CloseMenu()
+    {
+        if (menuCanvas != null)
+        {
+            menuCanvas.SetActive(false);
+        }
+
+        if (menuStateOwned)
+        {
+            menuStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    private void CloseWelcomePanel()
+    {
+        welcomePanel.SetActive(false);
+
+        if (welcomeStateOwned)
+        {
+            welcomeStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
         }
     }
 
@@ -132,5 +249,18 @@ public class MenuController : MonoBehaviour
         {
             menuCanvas.SetActive(false);
         }
+    }
+
+    private void SetPlayerMovementPaused(bool paused)
+    {
+        if (playerMovement != null)
+        {
+            playerMovement.SetMovementPaused(paused);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        HokkienInteractionState.Exit(this);
     }
 }

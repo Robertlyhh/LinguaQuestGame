@@ -5,7 +5,9 @@ public enum HokkienInteractionMode
 {
     World,
     Dialogue,
-    Quiz
+    Quiz,
+    Menu,
+    Welcome
 }
 
 public static class HokkienInteractionState

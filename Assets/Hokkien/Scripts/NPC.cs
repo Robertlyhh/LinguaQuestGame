@@ -51,6 +51,7 @@ public class NPC : MonoBehaviour, IInteractable
     private enum TranslationMode { Original, Hokkien, POJ }
 
     private CanvasGroup panelCanvasGroup;
+    private Button dialogueCloseButton;
     private DialogueResponseData currentNode;
     private Coroutine typingRoutine;
     private bool isTyping;
@@ -85,6 +86,11 @@ public class NPC : MonoBehaviour, IInteractable
 
         if (continueButton != null)
             continueButton.gameObject.SetActive(false);
+
+        // Add a fallback for stale scene button bindings.
+        dialogueCloseButton = FindButtonByName(dialoguePanel, "CloseButton");
+        if (dialogueCloseButton != null)
+            dialogueCloseButton.onClick.AddListener(EndActiveConversation);
 
         if (itemNotificationPanel != null)
             itemNotificationPanel.SetActive(false);
@@ -121,6 +127,26 @@ public class NPC : MonoBehaviour, IInteractable
 
         activeConversation.EndDialogue();
         return true;
+    }
+
+    private static void EndActiveConversation()
+    {
+        // Always close the conversation currently on screen.
+        activeConversation?.EndDialogue();
+    }
+
+    private static Button FindButtonByName(GameObject root, string buttonName)
+    {
+        if (root == null)
+            return null;
+
+        foreach (Button button in root.GetComponentsInChildren<Button>(true))
+        {
+            if (button.name == buttonName)
+                return button;
+        }
+
+        return null;
     }
 
     private IEnumerator PrewarmDialogue()
@@ -744,6 +770,16 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void EndDialogue()
     {
+        // Old scene buttons may still point to a different vendor.
+        if (activeConversation != null && activeConversation != this)
+        {
+            activeConversation.EndDialogue();
+            return;
+        }
+
+        if (!conversationActive)
+            return;
+
         conversationActive = false;
         conversationToken++;
 
@@ -778,6 +814,11 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void OnDestroy()
     {
+        if (dialogueCloseButton != null)
+        {
+            dialogueCloseButton.onClick.RemoveListener(EndActiveConversation);
+        }
+
         if (activeConversation == this)
         {
             activeConversation = null;

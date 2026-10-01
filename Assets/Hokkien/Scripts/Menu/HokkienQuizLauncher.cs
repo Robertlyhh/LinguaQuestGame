@@ -380,7 +380,8 @@ public class HokkienQuizLauncher : MonoBehaviour
         else if (menuController != null)
         {
             menuController.SetQuizActive(false);
-            menuController.menuCanvas.SetActive(true);
+            // Stay in the menu when this level has no next scene.
+            menuController.OpenMenu();
         }
     }
 
@@ -429,7 +430,8 @@ public class HokkienQuizLauncher : MonoBehaviour
 
         if (menuController != null)
         {
-            menuController.menuCanvas.SetActive(true);
+            // Restore the locked menu after a failed launch.
+            menuController.OpenMenu();
         }
     }
 
