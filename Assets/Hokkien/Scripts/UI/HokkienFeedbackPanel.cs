@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Shared completion feedback for Hokkien lessons and quizzes.
+/// Shared feedback for Hokkien quizzes.
 /// The view is created at runtime so every Hokkien scene gets the same UI
 /// without duplicating scene-specific references.
 /// </summary>
@@ -124,26 +124,6 @@ public sealed class HokkienFeedbackPanel : MonoBehaviour
             onReview,
             passed ? EscapeBehavior.None : EscapeBehavior.Secondary,
             playCompletionAudio);
-    }
-
-    public void ShowLessonComplete(string npcName, Action onContinue)
-    {
-        string message = string.IsNullOrWhiteSpace(npcName)
-            ? "You completed this conversation."
-            : $"You completed your lesson with {npcName}.";
-
-        Show(
-            "Lesson Complete!",
-            string.Empty,
-            message,
-            "Continue",
-            string.Empty,
-            true,
-            onContinue,
-            null,
-            null,
-            EscapeBehavior.Primary,
-            true);
     }
 
     public void ShowExitConfirmation(Action onConfirm, Action onCancel)

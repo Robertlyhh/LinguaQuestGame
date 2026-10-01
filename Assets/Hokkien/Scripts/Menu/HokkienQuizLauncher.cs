@@ -42,7 +42,7 @@ public class HokkienQuizLauncher : MonoBehaviour
 
     public bool StartQuiz()
     {
-        if (quizRunning)
+        if (quizRunning || HokkienInteractionState.CurrentMode != HokkienInteractionMode.World)
         {
             return false;
         }
@@ -60,6 +60,11 @@ public class HokkienQuizLauncher : MonoBehaviour
         {
             Debug.LogWarning("[HokkienQuizLauncher] No quiz questions are assigned on the question bank or HokkienQuizManager.");
             RestoreMenuAfterFailedStart();
+            return false;
+        }
+
+        if (!HokkienInteractionState.TryEnter(HokkienInteractionMode.Quiz, this))
+        {
             return false;
         }
 
@@ -391,6 +396,11 @@ public class HokkienQuizLauncher : MonoBehaviour
     {
         quizRunning = isRunning;
 
+        if (!isRunning)
+        {
+            HokkienInteractionState.Exit(this);
+        }
+
         if (menuController != null)
         {
             menuController.SetQuizActive(isRunning);
@@ -421,5 +431,10 @@ public class HokkienQuizLauncher : MonoBehaviour
         {
             menuController.menuCanvas.SetActive(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        HokkienInteractionState.Exit(this);
     }
 }

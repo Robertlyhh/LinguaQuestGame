@@ -29,6 +29,16 @@ public class MenuController : MonoBehaviour
             return;
         }
 
+        // Keep the menu from opening over an active conversation.
+        if (HokkienInteractionState.CurrentMode == HokkienInteractionMode.Dialogue)
+        {
+            if (menuCanvas != null && menuCanvas.activeSelf)
+            {
+                menuCanvas.SetActive(false);
+            }
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             bool isOpening = !menuCanvas.activeSelf;
@@ -96,6 +106,12 @@ public class MenuController : MonoBehaviour
 
     public void OnQuizButtonPressed()
     {
+        if (HokkienInteractionState.CurrentMode == HokkienInteractionMode.Dialogue)
+        {
+            menuCanvas.SetActive(false);
+            return;
+        }
+
         if (quizLauncher == null)
         {
             Debug.LogWarning("[MenuController] Quiz launcher is not assigned.");

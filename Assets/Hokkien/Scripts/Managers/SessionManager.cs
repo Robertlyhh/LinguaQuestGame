@@ -15,6 +15,7 @@ public class SessionManager : MonoBehaviour
     public GameData GameData => gameData;
     private List<ISessionData> sessionDataObjects = new List<ISessionData>();
     private FileDataHandler fileDataHandler;
+    private bool gameDataLoaded;
 
     public static SessionManager Instance { get; private set; }
 
@@ -47,6 +48,7 @@ public class SessionManager : MonoBehaviour
 
     public void LoadGame()
     {
+        gameDataLoaded = false;
         this.gameData = this.fileDataHandler.Load();
         if (this.gameData == null)
         {
@@ -58,10 +60,24 @@ public class SessionManager : MonoBehaviour
         {
             sessionDataObject.LoadData(this.gameData);
         }
+
+        gameDataLoaded = true;
     }
 
     public void SaveGame()
     {
+        // Domain reloads can clear runtime-only fields before Unity quits.
+        if (!gameDataLoaded || this.gameData == null)
+        {
+            Debug.LogWarning("[SessionManager] Skipping save because game data was not loaded.");
+            return;
+        }
+
+        this.fileDataHandler ??= new FileDataHandler(
+            Application.persistentDataPath, fileName
+        );
+        this.sessionDataObjects ??= FindAllSessionDataObjects();
+
         foreach (ISessionData sessionDataObject in this.sessionDataObjects)
         {
             sessionDataObject.SaveData(ref this.gameData);

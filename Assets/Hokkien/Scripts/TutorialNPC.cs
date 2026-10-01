@@ -21,6 +21,16 @@ public class TutorialNPC : MonoBehaviour
     private bool isPlayerNearby = false;
     private bool isTalking = false; 
 
+    private void OnEnable()
+    {
+        HokkienInteractionState.ModeChanged += RefreshInteractionPrompt;
+    }
+
+    private void OnDisable()
+    {
+        HokkienInteractionState.ModeChanged -= RefreshInteractionPrompt;
+    }
+
     void Start()
     {
         if (interactionPrompt != null) interactionPrompt.SetActive(true); 
@@ -30,7 +40,9 @@ public class TutorialNPC : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNearby && !isTalking && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNearby && !isTalking
+            && HokkienInteractionState.CurrentMode == HokkienInteractionMode.World
+            && Input.GetKeyDown(KeyCode.E))
         {
             StartDialogue();
         }
@@ -41,7 +53,7 @@ public class TutorialNPC : MonoBehaviour
         if (other.CompareTag("Player") && !isTalking)
         {
             isPlayerNearby = true;
-            if (interactionPrompt != null) interactionPrompt.SetActive(true);
+            RefreshInteractionPrompt();
             if (arrowContainer != null) arrowContainer.SetActive(false); 
         }
     }
@@ -62,6 +74,7 @@ public class TutorialNPC : MonoBehaviour
     void StartDialogue()
     {
         if (dialogueLines.Length == 0) return; // Safety check in case you forgot to type anything!
+        if (!HokkienInteractionState.TryEnter(HokkienInteractionMode.Dialogue, this)) return;
 
         activeConversation = this;
         isTalking = true; 
@@ -104,6 +117,9 @@ public class TutorialNPC : MonoBehaviour
         {
             activeConversation = null;
         }
+
+        HokkienInteractionState.Exit(this);
+        RefreshInteractionPrompt();
     }
 
     public static bool TryHandleEscapeForActiveConversation()
@@ -122,6 +138,18 @@ public class TutorialNPC : MonoBehaviour
         if (activeConversation == this)
         {
             activeConversation = null;
+        }
+
+        HokkienInteractionState.Exit(this);
+    }
+
+    private void RefreshInteractionPrompt()
+    {
+        if (interactionPrompt != null)
+        {
+            bool showPrompt = isPlayerNearby && !isTalking
+                && HokkienInteractionState.CurrentMode == HokkienInteractionMode.World;
+            interactionPrompt.SetActive(showPrompt);
         }
     }
 }

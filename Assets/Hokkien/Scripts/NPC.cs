@@ -109,7 +109,8 @@ public class NPC : MonoBehaviour, IInteractable
         }
     }
 
-    public bool CanInteract() => !dialoguePanel.activeSelf;
+    public bool CanInteract() => HokkienInteractionState.CurrentMode == HokkienInteractionMode.World
+        && !dialoguePanel.activeSelf;
 
     public static bool TryHandleEscapeForActiveConversation()
     {
@@ -155,6 +156,11 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void BeginConversation()
     {
+        if (!HokkienInteractionState.TryEnter(HokkienInteractionMode.Dialogue, this))
+        {
+            return;
+        }
+
         activeConversation = this;
         conversationToken++;
         conversationActive = true;
@@ -684,12 +690,12 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         if (hasLessonComplete)
-            StartCoroutine(ShowLessonCompletionFeedback());
+            StartCoroutine(FinishLessonDialogue());
         else
             AdvanceDialogue(option.next_node);
     }
 
-    private IEnumerator ShowLessonCompletionFeedback()
+    private IEnumerator FinishLessonDialogue()
     {
         yield return new WaitForSeconds(autoAdvanceDelay);
 
@@ -697,11 +703,12 @@ public class NPC : MonoBehaviour, IInteractable
             yield break;
 
         ClearOptions();
-        if (continueButton != null) continueButton.gameObject.SetActive(false);
-        if (audioButton != null) audioButton.gameObject.SetActive(false);
-        if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
-
-        HokkienFeedbackPanel.GetOrCreate().ShowLessonComplete(currentNpcName, EndDialogue);
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(true);
+            continueButton.onClick.RemoveAllListeners();
+            continueButton.onClick.AddListener(EndDialogue);
+        }
     }
 
     private void ShowItemNotification(HokkienItem item)
@@ -754,7 +761,19 @@ public class NPC : MonoBehaviour, IInteractable
         if (audioButton != null) audioButton.gameObject.SetActive(false);
         if (translationToggleButton != null) translationToggleButton.gameObject.SetActive(false);
 
-        panelCanvasGroup.DOFade(0, 0.3f).OnComplete(() => dialoguePanel.SetActive(false));
+        // Input should unlock even if the fade is interrupted.
+        HokkienInteractionState.Exit(this);
+
+        panelCanvasGroup.DOKill();
+        panelCanvasGroup.DOFade(0, 0.3f)
+            .SetUpdate(true)
+            .OnComplete(FinishClosingDialogue);
+    }
+
+    private void FinishClosingDialogue()
+    {
+        dialoguePanel.SetActive(false);
+        HokkienInteractionState.RefreshWorldInteractions();
     }
 
     private void OnDestroy()
@@ -763,6 +782,8 @@ public class NPC : MonoBehaviour, IInteractable
         {
             activeConversation = null;
         }
+
+        HokkienInteractionState.Exit(this);
     }
 
     private bool IsConversationValid(int token)
