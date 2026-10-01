@@ -593,11 +593,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LESSON 0: WELCOME TO THE NIGHT MARKET
-
-
-    You will speak to 2 vendors.
-    Then, complete the Lesson 0 in the Main Menu Quiz to move to the next lesson.'
+  m_text: "LESSON 0: WELCOME TO THE NIGHT MARKET\n\nYou will speak to 2 vendors.
+    \nThen, complete the Lesson 0 Quiz in the Main Menu to move to the next lesson."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -987,6 +984,7 @@ MonoBehaviour:
   quizManager: {fileID: 1395120670}
   quizOptionsPanel: {fileID: 1334581576}
   questionBank: {fileID: 0}
+  loadQuizFromBackend: 1
   levelConfigs:
   - {fileID: 11400000, guid: 074c10e7c363542c792ee3c210314452, type: 2}
   currentLevelIndex: 0
@@ -217472,6 +217470,7 @@ MonoBehaviour:
   - {fileID: 1319809718}
   - {fileID: 1062626136}
   - {fileID: 1845576850}
+  choiceAudioButtons: []
   explanationCardPanel: {fileID: 1258409378}
   explanationTitleText: {fileID: 1660164653}
   explanationBodyText: {fileID: 1913013912}
@@ -217482,6 +217481,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   correctSound: {fileID: 0}
   wrongSound: {fileID: 0}
+  translationImporter: {fileID: 0}
   questionsSet: []
 --- !u!1001 &1400023026
 PrefabInstance:
@@ -223270,7 +223270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1824680117
 RectTransform:
   m_ObjectHideFlags: 0

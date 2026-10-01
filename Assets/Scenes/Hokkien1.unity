@@ -756,6 +756,7 @@ MonoBehaviour:
   quizManager: {fileID: 888015307}
   quizOptionsPanel: {fileID: 89447832}
   questionBank: {fileID: 0}
+  loadQuizFromBackend: 1
   levelConfigs:
   - {fileID: 11400000, guid: 5c00cca2f5abd455e9cacb9f0c04ffa3, type: 2}
   currentLevelIndex: 1
@@ -209866,6 +209867,7 @@ MonoBehaviour:
   - {fileID: 29011158}
   - {fileID: 693901736}
   - {fileID: 1952318879}
+  choiceAudioButtons: []
   explanationCardPanel: {fileID: 1485775788}
   explanationTitleText: {fileID: 1664130144}
   explanationBodyText: {fileID: 466692440}
@@ -209876,6 +209878,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   correctSound: {fileID: 0}
   wrongSound: {fileID: 0}
+  translationImporter: {fileID: 0}
   questionsSet: []
 --- !u!1 &896532238
 GameObject:
@@ -212751,11 +212754,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LESSON 1: ORDERING SNACKS
-
-
-    You will speak to 3 vendors. Then, complete
-    the Lesson 1 Quiz to move to the next lesson.'
+  m_text: "LESSON 1: ORDERING SNACKS\n\nYou will speak to 3 vendors. \nThen, complete
+    the Lesson 1 Quiz in the Main Menu to move to the next lesson."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
