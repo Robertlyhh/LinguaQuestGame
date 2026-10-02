@@ -217194,7 +217194,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LESSON 5: FINAL (TIMED) CHALLENGE'
+  m_text: 'LESSON 5: FINAL (TIMED) CHALLENGE
+
+
+    You are getting ready to head
+    back after a successful afternoon and evening of eating at the Taiwanese night
+    market. Before you leave, your friend sends you a message, asking you to buy
+    a couple items to bring back for them.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -240739,6 +240745,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 553187367}
   inventoryDisplay: {fileID: 2135736391}
   quizLauncher: {fileID: 36934368}
+  playerMovement: {fileID: 0}
 --- !u!114 &5785187114382037622
 MonoBehaviour:
   m_ObjectHideFlags: 0

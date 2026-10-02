@@ -212754,8 +212754,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "LESSON 1: ORDERING SNACKS\n\nYou will speak to 3 vendors. \nThen, complete
-    the Lesson 1 Quiz in the Main Menu to move to the next lesson."
+  m_text: 'LESSON 1: ORDERING SNACKS
+
+
+    You now interact with multiple vendors
+    independently (no more guided tutorial-style).
+
+    You purchase more snacks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -240836,6 +240841,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 553187367}
   inventoryDisplay: {fileID: 2135736391}
   quizLauncher: {fileID: 36934368}
+  playerMovement: {fileID: 0}
 --- !u!114 &5785187114382037622
 MonoBehaviour:
   m_ObjectHideFlags: 0

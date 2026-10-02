@@ -756,6 +756,7 @@ MonoBehaviour:
   quizManager: {fileID: 888015307}
   quizOptionsPanel: {fileID: 89447832}
   questionBank: {fileID: 0}
+  loadQuizFromBackend: 1
   levelConfigs:
   - {fileID: 11400000, guid: c301af267912444d4b4b8739634cecf6, type: 2}
   currentLevelIndex: 0
@@ -209591,6 +209592,7 @@ MonoBehaviour:
   - {fileID: 29011158}
   - {fileID: 693901736}
   - {fileID: 1952318879}
+  choiceAudioButtons: []
   explanationCardPanel: {fileID: 1485775788}
   explanationTitleText: {fileID: 1664130144}
   explanationBodyText: {fileID: 466692440}
@@ -209601,6 +209603,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   correctSound: {fileID: 0}
   wrongSound: {fileID: 0}
+  translationImporter: {fileID: 0}
   questionsSet: []
 --- !u!1 &896532238
 GameObject:
@@ -217313,12 +217316,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "LESSON 4: Customization\n\nYou ate a lot and is feeling quite full, but
-    there is always room for a sweet treat\nSince you've ordered a lot and now understand
-    many of the dishes being sold at the market, you start being pickier and customizing
-    the dishes catered to your preferences\n\nLearning objectives\nCommon customization
-    terms\nToppings and ingredients\nExpressing preferences / likes and dislikes
-    \nAdjusting sugar / toppings / portions levels\n"
+  m_text: 'LESSON 4: Customization
+
+
+    You ate a lot and is feeling quite full,
+    but there is always room for a sweet treat
+
+    Since you''ve ordered a lot and
+    now understand many of the dishes being sold at the market, you start being pickier
+    and customizing the dishes catered to your preferences.
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -217345,7 +217354,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.8
+  m_fontSize: 45.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -240852,6 +240861,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 553187367}
   inventoryDisplay: {fileID: 2135736391}
   quizLauncher: {fileID: 36934368}
+  playerMovement: {fileID: 0}
 --- !u!114 &5785187114382037622
 MonoBehaviour:
   m_ObjectHideFlags: 0

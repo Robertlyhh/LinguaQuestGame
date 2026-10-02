@@ -19,6 +19,22 @@ MonoBehaviour:
     - Created by fisherman to make pork easier to store
     - Created by workers to make pork easier to carry
     - Created by a mother for her young son
+    questionDialogueNodeId:
+    choiceDialogueNodeIds:
+    - quiz_opt_4e2c6f93
+    - quiz_opt_f6857d3a
+    - quiz_opt_670e1d4c
+    - quiz_opt_ca0a9717
+    choiceHokkienRomanizedTexts:
+    -
+    -
+    -
+    -
+    choiceAudioResourcePaths:
+    -
+    -
+    -
+    -
     choiceExplanations:
     - "Hsinchu Pork Ball (\u65B0\u7AF9\u8089\u4E38) is a meat ball made from beating
       pork into a paste and shaping into balls. It is a dish said to have been created
@@ -36,12 +52,28 @@ MonoBehaviour:
     - "\u6253\u56DB\u6298"
     - "\u6253\u4E03\u6298 "
     - "\u6253\u4E09\u5341\u6298"
+    questionDialogueNodeId:
+    choiceDialogueNodeIds:
+    - quiz_opt_94d49342
+    - quiz_opt_6bd11024
+    - quiz_opt_04026d94
+    - quiz_opt_3769ebab
+    choiceHokkienRomanizedTexts:
+    -
+    -
+    -
+    -
+    choiceAudioResourcePaths:
+    -
+    -
+    -
+    -
     choiceExplanations:
     - "The phrase \u201C\u6253X\u6298\u201D is equivalent to \u201C100%-10X% off\u201D"
     - "The phrase \u201C\u6253X\u6298\u201D is equivalent to \u201C100%-10X% off\u201D"
     - "The phrase \u201C\u6253X\u6298\u201D is equivalent to \u201C100%-10X% off\u201D"
     - "The phrase \u201C\u6253X\u6298\u201D is equivalent to \u201C100%-10X% off\u201D"
-    correctAnswerIndex: 0
+    correctAnswerIndex: 2
   - question: If you ask for a discount, which of the following responses from the
       vendor is NOT a rejection?
     choices:
@@ -49,6 +81,22 @@ MonoBehaviour:
     - "\u5468\u672B\u624D\u6709\u6D3B\u52A8\u3002"
     - "\u6211\u5011\u5DF2\u7D93\u662F\u9019\u908A\u6700\u4FBF\u5B9C\u7684\u4E86\u3002"
     - "\u7ED9\u4F60\u6253\u516B\u6298 "
+    questionDialogueNodeId:
+    choiceDialogueNodeIds:
+    - quiz_opt_6766cd8a
+    - quiz_opt_3fc1298c
+    - quiz_opt_f3e84b42
+    - quiz_opt_eb7a1199
+    choiceHokkienRomanizedTexts:
+    -
+    -
+    -
+    -
+    choiceAudioResourcePaths:
+    -
+    -
+    -
+    -
     choiceExplanations:
     - "This means \u201Cthere is no discount today\u201D, which is a rejection."
     - "This means \u201Cthere\u2019s only discounts on weekends\u201D, which is a
