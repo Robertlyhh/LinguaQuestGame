@@ -191,6 +191,8 @@ public class NPC : MonoBehaviour, IInteractable
         conversationToken++;
         conversationActive = true;
         isCurrentlyPlayerTurn = false;
+        // Auto-play each line once per conversation, so reopening the dialogue plays it again.
+        autoPlayedNodeIds.Clear();
         SetPlayerMovementPaused(true);
         dialoguePanel.SetActive(true);
         portraitImage.sprite = npcPortrait;
