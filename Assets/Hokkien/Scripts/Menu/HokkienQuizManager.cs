@@ -33,6 +33,8 @@ public class HokkienQuizManager : MonoBehaviour
     public AudioClip correctSound;
     public AudioClip wrongSound;
     public AdminTranslationImporter translationImporter;
+    [Tooltip("Ask the admin backend to translate and TTS choices that have no audio. Leave off in gameplay: choice audio is pre-generated, and choices without audio (e.g. English) should stay silent.")]
+    public bool generateMissingChoiceAudio;
 
     [Header("Question")]
     public List<MultipleChoiceQuestion> questionsSet;
@@ -315,7 +317,7 @@ public class HokkienQuizManager : MonoBehaviour
                 continue;
             }
 
-            if (!choiceNeedsText && !choiceNeedsAudio)
+            if (!generateMissingChoiceAudio || (!choiceNeedsText && !choiceNeedsAudio))
             {
                 continue;
             }
@@ -397,6 +399,9 @@ public class HokkienQuizManager : MonoBehaviour
         if (choiceAudioButtons == null || choiceAudioButtons.Length != count)
             choiceAudioButtons = new Button[count];
 
+        // Choice audio buttons copy the quiz dialog's speaker button so both look the same.
+        Button speakerTemplate = FindQuizSpeakerButton();
+
         for (int i = 0; i < count; i++)
         {
             if (choiceAudioButtons[i] != null || answerButtons[i] == null)
@@ -412,33 +417,83 @@ public class HokkienQuizManager : MonoBehaviour
             rect.anchorMax = new Vector2(1f, 0.5f);
             rect.pivot = new Vector2(0f, 0.5f);
             rect.anchoredPosition = new Vector2(8f, 0f);
-            rect.sizeDelta = new Vector2(82f, 34f);
 
             Image image = audioObject.GetComponent<Image>();
-            image.color = new Color(1f, 0.84f, 0.15f, 1f);
-
             Button button = audioObject.GetComponent<Button>();
             button.targetGraphic = image;
             int choiceIndex = i;
             button.onClick.AddListener(() => PlayChoiceAudioOnly(choiceIndex));
             choiceAudioButtons[i] = button;
 
-            GameObject labelObject = new GameObject(
-                "Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-            labelObject.transform.SetParent(audioObject.transform, false);
-            RectTransform labelRect = labelObject.GetComponent<RectTransform>();
-            labelRect.anchorMin = Vector2.zero;
-            labelRect.anchorMax = Vector2.one;
-            labelRect.offsetMin = Vector2.zero;
-            labelRect.offsetMax = Vector2.zero;
-
-            TextMeshProUGUI label = labelObject.GetComponent<TextMeshProUGUI>();
-            label.text = "AUDIO";
-            label.fontSize = 16f;
-            label.alignment = TextAlignmentOptions.Center;
-            label.color = Color.black;
-            label.raycastTarget = false;
+            if (speakerTemplate != null)
+                CopySpeakerButtonStyle(speakerTemplate, button, image, rect);
+            else
+                ApplyTextAudioButtonStyle(image, rect);
         }
+    }
+
+    private Button FindQuizSpeakerButton()
+    {
+        if (quizPanel == null)
+            return null;
+
+        foreach (Button candidate in quizPanel.GetComponentsInChildren<Button>(true))
+        {
+            if (candidate.name == "SpeakerButton")
+                return candidate;
+        }
+
+        Debug.LogWarning("[HokkienQuizManager] Could not find the quiz dialog SpeakerButton; using text audio buttons.");
+        return null;
+    }
+
+    private static void CopySpeakerButtonStyle(Button template, Button button, Image image, RectTransform rect)
+    {
+        rect.sizeDelta = ((RectTransform)template.transform).rect.size;
+        button.transition = template.transition;
+        button.colors = template.colors;
+
+        Image templateImage = template.GetComponent<Image>();
+        if (templateImage != null)
+        {
+            image.sprite = templateImage.sprite;
+            image.type = templateImage.type;
+            image.color = templateImage.color;
+            image.pixelsPerUnitMultiplier = templateImage.pixelsPerUnitMultiplier;
+        }
+
+        foreach (Image templateIcon in template.GetComponentsInChildren<Image>(true))
+        {
+            if (templateIcon == templateImage)
+                continue;
+
+            Image icon = Instantiate(templateIcon, rect, false);
+            icon.name = "Icon";
+            icon.raycastTarget = false;
+            break;
+        }
+    }
+
+    private static void ApplyTextAudioButtonStyle(Image image, RectTransform rect)
+    {
+        rect.sizeDelta = new Vector2(82f, 34f);
+        image.color = new Color(1f, 0.84f, 0.15f, 1f);
+
+        GameObject labelObject = new GameObject(
+            "Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        labelObject.transform.SetParent(rect, false);
+        RectTransform labelRect = labelObject.GetComponent<RectTransform>();
+        labelRect.anchorMin = Vector2.zero;
+        labelRect.anchorMax = Vector2.one;
+        labelRect.offsetMin = Vector2.zero;
+        labelRect.offsetMax = Vector2.zero;
+
+        TextMeshProUGUI label = labelObject.GetComponent<TextMeshProUGUI>();
+        label.text = "AUDIO";
+        label.fontSize = 16f;
+        label.alignment = TextAlignmentOptions.Center;
+        label.color = Color.black;
+        label.raycastTarget = false;
     }
 
     private void FindExitQuizButton()
