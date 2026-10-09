@@ -13,17 +13,27 @@ MonoBehaviour:
   m_Name: Level 4 Questions
   m_EditorClassIdentifier: Assembly-CSharp::HokkienQuizQuestionBank
   questions:
-  - question: Which of the following is not a desert?
+  - question: Which of the following is not a dessert?
     choices:
     - "\u51E4\u68A8\u9165 - pineapple cake"
     - "\u8C46\u82B1 - toufu, bean curd"
     - "\u51B0\u6C99\uFF08\u5249\u51B0\uFF09- shaved ice"
     - "\u9E21\u7FC5\u5305\u996D - chicken wing rice roll"
+    choiceHokkienRomanizedTexts:
+    - "\u00D4ng-l\u00E2i-so\u0358"
+    - "T\u0101u-hoe"
+    - Chhoah-peng
+    - "Ke-si\u030Dt pau-pn\u0304g"
+    choiceAudioResourcePaths:
+    - HokkienQuizAudio/level1_pineapple_cake
+    - HokkienQuizAudio/level4_bean_curd
+    - HokkienQuizAudio/level4_shaved_ice
+    - HokkienQuizAudio/level4_chicken_wing_rice
     choiceExplanations:
     - "Pineapple cake (\u51E4\u68A8\u9165) is a Taiwanese pastry, with pineapple
-      and wintermelon filling inside a pastry shell. It is a desert. "
-    - "Bean curd (\u8C46\u82B1) is a sweet tofu desert served in sugar soup."
-    - "Shaved ice (\u5249\u51B0) is a desert with shaved ice in brown sugar soup,
+      and wintermelon filling inside a pastry shell. It is a dessert. "
+    - "Bean curd (\u8C46\u82B1) is a sweet tofu dessert served in sugar soup."
+    - "Shaved ice (\u5249\u51B0) is a dessert with shaved ice in brown sugar soup,
       often served with toppings such as taro, red bean, or mung bean."
     - "Chicken wing rice roll (\u9E21\u7FC5\u5305\u996D) is a dish with sticky rice
       stuffed into chicken wings."
@@ -34,6 +44,16 @@ MonoBehaviour:
     - "\u4E09\u5206\u7CD6"
     - "\u534A\u7CD6"
     - "\u5168\u7CD6"
+    choiceHokkienRomanizedTexts:
+    - "B\u00F4-thn\u0302g"
+    - "Sa\u207F-hun thn\u0302g"
+    - "P\u00F2a\u207F-thn\u0302g"
+    - "Cho\u00E2n-thn\u0302g"
+    choiceAudioResourcePaths:
+    - HokkienQuizAudio/level4_no_sugar
+    - HokkienQuizAudio/level4_thirty_sugar
+    - HokkienQuizAudio/level4_half_sugar
+    - HokkienQuizAudio/level4_full_sugar
     choiceExplanations:
     - "This means \u201Cno sugar\u201D."
     - "This means \u201C30% sugar\u201D, \u201CX\u5206\u201D=10X%"
@@ -45,6 +65,14 @@ MonoBehaviour:
     - "\u4E0D\u8981"
     - "\u591A\u653E"
     - "\u5C11\u653E"
+    choiceHokkienRomanizedTexts:
+    - "M\u0304-\u00E0i"
+    - "Khn\u0300g khah ch\u0113"
+    - "Khn\u0300g khah chi\u00F3"
+    choiceAudioResourcePaths:
+    - HokkienQuizAudio/level3_dont_want
+    - HokkienQuizAudio/level4_put_more
+    - HokkienQuizAudio/level4_put_less
     choiceExplanations:
     - "This means \u201Cdon\u2019t want\u201D, you would say this if you would like
       none of something."

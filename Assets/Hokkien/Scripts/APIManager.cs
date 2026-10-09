@@ -10,7 +10,7 @@ public class APIManager : MonoBehaviour
     public string BaseUrl => baseUrl;
 
     [Header("Backend")]
-    [SerializeField] private string baseUrl = "https://nightmarket-9bb1.onrender.com";
+    [SerializeField] private string baseUrl = "https://localhost:8000";
     [SerializeField] private bool verboseNetworkLogs = false;
     [SerializeField] private int maxPrefetchConcurrency = 2;
 
