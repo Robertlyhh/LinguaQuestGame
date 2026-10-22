@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using DG.Tweening;
 
@@ -18,6 +19,11 @@ public class NPC : MonoBehaviour, IInteractable
     public float typingSpeed = 0.05f;
     public float notificationDuration = 2f;
     public float autoAdvanceDelay = 0.5f;
+
+    [Header("Dialogue Length Limit")]
+    [Tooltip("Max characters a backend translation may have in the dialogue box. 0 disables the check.")]
+    public int maxDialogueChars = 75;
+    public string overLimitMessage = "translation overloaded";
 
     [Header("UI References")]
     public GameObject dialoguePanel;
@@ -495,8 +501,78 @@ public class NPC : MonoBehaviour, IInteractable
 
         if (translationMode == TranslationMode.Original && wordHoverHandler != null)
             wordHoverHandler.SetupDialogue(currentNode.dialogue);
-        else
+        else if (translationMode == TranslationMode.Original)
             dialogueText.SetText(displayText);
+        else
+            dialogueText.SetText(LimitDialogueText(displayText));
+    }
+
+    private string LimitDialogueText(string text)
+    {
+        if (maxDialogueChars <= 0 || string.IsNullOrEmpty(text))
+            return text;
+
+        // Count visible characters, so POJ tone marks and rare Han characters count as one each.
+        int length = new StringInfo(text).LengthInTextElements;
+        if (length <= maxDialogueChars)
+            return text;
+
+        Debug.LogWarning($"[NPC] Translation has {length} chars, over the {maxDialogueChars} limit: {text}");
+        return overLimitMessage;
+    }
+
+    [ContextMenu("Measure Dialogue Capacity")]
+    private void MeasureDialogueCapacity()
+    {
+        if (dialogueText == null)
+        {
+            Debug.LogWarning("[NPC] Assign dialogueText before measuring.");
+            return;
+        }
+
+        Canvas.ForceUpdateCanvases();
+        Rect rect = dialogueText.rectTransform.rect;
+        Vector4 margin = dialogueText.margin;
+        float width = rect.width - margin.x - margin.z;
+        float height = rect.height - margin.y - margin.w;
+        string originalText = dialogueText.text;
+
+        var samples = new (string label, string unit)[]
+        {
+            ("Han", "漢"),
+            ("POJ", "Lí hó! Lí beh chia̍h sím-mih? "),
+            ("English", "Welcome! What toppings would you like? "),
+        };
+
+        foreach (var (label, unit) in samples)
+        {
+            int fit = CountCharsThatFit(unit, width, height);
+            Debug.Log($"[NPC] Dialogue box {width:0}x{height:0}, font {dialogueText.fontSize}: fits {fit} {label} chars");
+        }
+
+        // GetPreferredValues overwrites the text buffer, so put the real text back.
+        dialogueText.SetText(originalText);
+    }
+
+    private int CountCharsThatFit(string unit, float width, float height)
+    {
+        const int maxChars = 2000;
+        int repeats = maxChars / new StringInfo(unit).LengthInTextElements + 1;
+        var sample = new StringInfo(new System.Text.StringBuilder().Insert(0, unit, repeats).ToString());
+
+        int low = 0;
+        int high = maxChars;
+        while (low < high)
+        {
+            int mid = (low + high + 1) / 2;
+            string candidate = sample.SubstringByTextElements(0, mid);
+            if (dialogueText.GetPreferredValues(candidate, width, TMP_Math.FLOAT_MAX).y <= height)
+                low = mid;
+            else
+                high = mid - 1;
+        }
+
+        return low;
     }
 
     private IEnumerator TypeLine(string line)
