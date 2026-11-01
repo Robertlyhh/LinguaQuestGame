@@ -49,13 +49,14 @@ public class NPC : MonoBehaviour, IInteractable
     public frogMove playerMovement;
 
     private enum TranslationMode { Original, Hokkien, POJ }
+    private enum DialogueSpeaker { Npc, Player }
 
     private CanvasGroup panelCanvasGroup;
     private Button dialogueCloseButton;
     private DialogueResponseData currentNode;
     private Coroutine typingRoutine;
     private bool isTyping;
-    private bool isCurrentlyPlayerTurn = false;
+    private bool legacyPlayerTurn;
     private string currentNpcName;
     private int conversationToken;
     private bool conversationActive;
@@ -190,8 +191,8 @@ public class NPC : MonoBehaviour, IInteractable
         activeConversation = this;
         conversationToken++;
         conversationActive = true;
-        isCurrentlyPlayerTurn = false;
-        // Auto-play each line once per conversation, so reopening the dialogue plays it again.
+        legacyPlayerTurn = false;
+        // Reopening a conversation should replay its audio.
         autoPlayedNodeIds.Clear();
         SetPlayerMovementPaused(true);
         dialoguePanel.SetActive(true);
@@ -209,7 +210,8 @@ public class NPC : MonoBehaviour, IInteractable
 
         int token = conversationToken;
 
-        Debug.Log($"[NPC] Interact resolved vendorId '{vendorId}' -> {APIManager.Instance.BaseUrl}/api/v1/vendors/{vendorId}");
+        string vendorBaseUrl = APIManager.Instance.GetVendorBaseUrl(vendorId).TrimEnd('/');
+        Debug.Log($"[NPC] Interact resolved vendorId '{vendorId}' -> {vendorBaseUrl}/api/v1/vendors/{vendorId}");
 
         APIManager.Instance.GetVendorProfile(vendorId, vendor =>
         {
@@ -276,13 +278,16 @@ public class NPC : MonoBehaviour, IInteractable
         optionTextLabels.Clear();
         ClearOptions();
 
-        bool forceVendorSpeaker = response.dialogue.text == "Welcome! Our shaved ice is very refreshing! What toppings would you like?"
-            || response.dialogue.text == "Here you go! Enjoy!";
-
-        if (!forceVendorSpeaker && isCurrentlyPlayerTurn && PlayerIdentity.Instance != null)
+        DialogueSpeaker speaker = ResolveSpeaker(response);
+        if (speaker == DialogueSpeaker.Player)
         {
-            nameText.SetText(PlayerIdentity.Instance.playerName);
-            portraitImage.sprite = PlayerIdentity.Instance.playerPortrait;
+            PlayerIdentity player = PlayerIdentity.Instance;
+            nameText.SetText(player != null && !string.IsNullOrWhiteSpace(player.playerName)
+                ? player.playerName
+                : "Player");
+            portraitImage.sprite = player != null && player.playerPortrait != null
+                ? player.playerPortrait
+                : npcPortrait;
         }
         else
         {
@@ -290,16 +295,9 @@ public class NPC : MonoBehaviour, IInteractable
             portraitImage.sprite = npcPortrait;
         }
 
-        // Option/branch prompts should always be presented by the vendor.
-        if (response.options != null && response.options.Length > 0)
-        {
-            nameText.SetText(currentNpcName);
-            portraitImage.sprite = npcPortrait;
-        }
-
         // Load audio clip from URL if available
         if (!string.IsNullOrEmpty(response.dialogue.audio))
-            StartCoroutine(LoadAudioClip($"{APIManager.Instance.BaseUrl}/{response.dialogue.audio}", token, nodeId));
+            StartCoroutine(LoadAudioClip(BuildAudioUrl(response.dialogue.audio, nodeId), token, nodeId));
 
         if (response.options != null)
         {
@@ -308,7 +306,7 @@ public class NPC : MonoBehaviour, IInteractable
                 if (option != null && !string.IsNullOrWhiteSpace(option.option_id)
                     && !string.IsNullOrWhiteSpace(option.audio))
                 {
-                    StartCoroutine(LoadOptionAudioClip(option, token));
+                    StartCoroutine(LoadOptionAudioClip(option, token, nodeId));
                 }
             }
         }
@@ -372,6 +370,31 @@ public class NPC : MonoBehaviour, IInteractable
             APIManager.Instance.PrefetchDialogueNode(nextId);
     }
 
+    private DialogueSpeaker ResolveSpeaker(DialogueResponseData node)
+    {
+        DialogueContent dialogue = node?.dialogue;
+        string speakerType = dialogue?.speaker_type?.Trim();
+        if (string.Equals(speakerType, "PLAYER", System.StringComparison.OrdinalIgnoreCase))
+            return DialogueSpeaker.Player;
+
+        if (string.Equals(speakerType, "NPC", System.StringComparison.OrdinalIgnoreCase)
+            || string.Equals(speakerType, "VENDOR", System.StringComparison.OrdinalIgnoreCase))
+            return DialogueSpeaker.Npc;
+
+        bool legacyVendorOverride = dialogue?.text ==
+                "Welcome! Our shaved ice is very refreshing! What toppings would you like?"
+            || dialogue?.text == "Here you go! Enjoy!"
+            || node?.options?.Length > 0;
+
+        if (!string.IsNullOrWhiteSpace(speakerType))
+            Debug.LogWarning($"[NPC] Unknown speaker_type '{speakerType}' in '{dialogue?.dialogue_id}'.");
+
+        // Existing nodes still rely on turn order until speaker metadata is available.
+        return !legacyVendorOverride && legacyPlayerTurn
+            ? DialogueSpeaker.Player
+            : DialogueSpeaker.Npc;
+    }
+
     private IEnumerator LoadAudioClip(string url, int token, string nodeId)
     {
         using var req = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
@@ -398,9 +421,9 @@ public class NPC : MonoBehaviour, IInteractable
         }
     }
 
-    private IEnumerator LoadOptionAudioClip(DialogueOption option, int token)
+    private IEnumerator LoadOptionAudioClip(DialogueOption option, int token, string nodeId)
     {
-        string url = BuildAudioUrl(option.audio);
+        string url = BuildAudioUrl(option.audio, nodeId);
         using var req = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
         yield return req.SendWebRequest();
 
@@ -417,7 +440,7 @@ public class NPC : MonoBehaviour, IInteractable
         }
     }
 
-    private string BuildAudioUrl(string audioPath)
+    private string BuildAudioUrl(string audioPath, string nodeId)
     {
         if (audioPath.StartsWith("http://", System.StringComparison.OrdinalIgnoreCase)
             || audioPath.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
@@ -425,7 +448,8 @@ public class NPC : MonoBehaviour, IInteractable
             return audioPath;
         }
 
-        return APIManager.Instance.BaseUrl.TrimEnd('/') + "/" + audioPath.TrimStart('/');
+        return APIManager.Instance.GetDialogueBaseUrl(nodeId).TrimEnd('/')
+            + "/" + audioPath.TrimStart('/');
     }
 
     private void OnAudioButtonPressed()
@@ -658,7 +682,7 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         ClearOptions();
-        isCurrentlyPlayerTurn = false;
+        legacyPlayerTurn = false;
         ProcessEvents(option);
     }
 
@@ -673,7 +697,7 @@ public class NPC : MonoBehaviour, IInteractable
             yield break;
 
         ClearOptions();
-        isCurrentlyPlayerTurn = false;
+        legacyPlayerTurn = false;
         ProcessEvents(option);
     }
 
@@ -696,6 +720,7 @@ public class NPC : MonoBehaviour, IInteractable
         }
 
         bool hasLessonComplete = false;
+        bool launchVoucherAdventure = false;
         foreach (var evt in option.events)
         {
             if (evt.event_type == "ADD_TO_INVENTORY")
@@ -715,12 +740,31 @@ public class NPC : MonoBehaviour, IInteractable
             {
                 hasLessonComplete = true;
             }
+            else if (evt.event_type == "START_MINIGAME")
+            {
+                MinigameLaunchEventMetadata metadata =
+                    JsonUtility.FromJson<MinigameLaunchEventMetadata>(evt.metadata);
+                launchVoucherAdventure |= metadata?.minigame_id == VoucherAdventureNavigation.MinigameId;
+            }
         }
 
-        if (hasLessonComplete)
+        if (launchVoucherAdventure)
+            StartCoroutine(LaunchVoucherAdventure());
+        else if (hasLessonComplete)
             StartCoroutine(FinishLessonDialogue());
         else
             AdvanceDialogue(option.next_node);
+    }
+
+    private IEnumerator LaunchVoucherAdventure()
+    {
+        Transform player = playerMovement != null ? playerMovement.transform : null;
+        EndDialogue();
+
+        // Let the shared dialogue panel finish releasing input first.
+        yield return new WaitForSecondsRealtime(0.35f);
+        if (!VoucherAdventureNavigation.TryLaunch(player))
+            Debug.LogWarning("[NPC] Voucher Adventure could not be opened from this scene.");
     }
 
     private IEnumerator FinishLessonDialogue()
@@ -766,7 +810,7 @@ public class NPC : MonoBehaviour, IInteractable
     private void AdvanceDialogue(string nextNode)
     {
         if (string.IsNullOrEmpty(nextNode)) { EndDialogue(); return; }
-        isCurrentlyPlayerTurn = !isCurrentlyPlayerTurn;
+        legacyPlayerTurn = !legacyPlayerTurn;
         FetchNode(nextNode, conversationToken);
     }
 

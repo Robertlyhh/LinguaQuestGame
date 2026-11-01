@@ -65,6 +65,7 @@ public class DialogueContent
     public string dialogue_id;
     public KeyWordData[] key_words;
     public string npc_id;
+    public string speaker_type;
     public string text;
     public string translation_HAN;
     public string translation_POJ;
@@ -106,6 +107,12 @@ public class PurchaseEventMetadata
 {
     public string item_id;
     public string challenge_id;
+}
+
+[Serializable]
+public class MinigameLaunchEventMetadata
+{
+    public string minigame_id;
 }
 
 // ─── Root Nodes ───────────────────────────────────────────────────────────────
