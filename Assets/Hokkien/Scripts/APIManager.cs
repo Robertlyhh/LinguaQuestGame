@@ -8,11 +8,11 @@ public class APIManager : MonoBehaviour
 {
     public static APIManager Instance { get; private set; }
     // Pick Render or Localhost in Assets/Hokkien/Resources/BackendConfig.
-
+    public string BaseUrl => BackendConfig.CurrentBaseUrl;
     public string VoucherBaseUrl => voucherBaseUrl;
 
     [Header("Backend")]
-   
+    [SerializeField] private string voucherBaseUrl = "http://localhost:8000";
     [SerializeField] private bool verboseNetworkLogs = false;
     [SerializeField] private int maxPrefetchConcurrency = 2;
 
@@ -159,12 +159,12 @@ public class APIManager : MonoBehaviour
 
     public string GetVendorBaseUrl(string vendorId)
     {
-        return IsVoucherId(vendorId, "v_va_") ? voucherBaseUrl : baseUrl;
+        return IsVoucherId(vendorId, "v_va_") ? voucherBaseUrl : BaseUrl;
     }
 
     public string GetDialogueBaseUrl(string nodeId)
     {
-        return IsVoucherId(nodeId, "n_va_") ? voucherBaseUrl : baseUrl;
+        return IsVoucherId(nodeId, "n_va_") ? voucherBaseUrl : BaseUrl;
     }
 
     private static bool IsVoucherId(string value, string prefix)
