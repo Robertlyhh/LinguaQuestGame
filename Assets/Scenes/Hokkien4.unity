@@ -204950,6 +204950,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1687355368}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: overLimitMessage
+      value: translation overloaded
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: notificationDuration
       value: 7
       objectReference: {fileID: 0}
@@ -209604,6 +209608,7 @@ MonoBehaviour:
   correctSound: {fileID: 0}
   wrongSound: {fileID: 0}
   translationImporter: {fileID: 0}
+  generateMissingChoiceAudio: 0
   questionsSet: []
 --- !u!1 &896532238
 GameObject:
@@ -239618,7 +239623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca3818e299fd4d4d89f8339c46a1669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAPI
-  baseUrl: https://nightmarket-9bb1.onrender.com
   verboseNetworkLogs: 0
   maxPrefetchConcurrency: 2
 --- !u!4 &2120971664
