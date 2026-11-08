@@ -3,6 +3,10 @@ using UnityEngine;
 public class MenuController : MonoBehaviour
 {
     public GameObject menuCanvas;
+    public GameObject backpackPanel;
+    public GameObject lessonTaskPanel;
+    public GameObject helpPanel;
+    public GameObject hudButtons;
     public InventoryDisplay inventoryDisplay;
     public HokkienQuizLauncher quizLauncher;
     public frogMove playerMovement;
@@ -12,6 +16,9 @@ public class MenuController : MonoBehaviour
     // These flags track panels that may be closed directly by UI buttons.
     private bool menuStateOwned;
     private bool welcomeStateOwned;
+    private bool backpackStateOwned;
+    private bool lessonTaskStateOwned;
+    private bool helpStateOwned;
 
     private void Awake()
     {
@@ -93,6 +100,24 @@ public class MenuController : MonoBehaviour
             return;
         }
 
+        if (backpackPanel != null && backpackPanel.activeInHierarchy)
+        {
+            CloseBackpack();
+            return;
+        }
+
+        if (lessonTaskPanel != null && lessonTaskPanel.activeInHierarchy)
+        {
+            CloseLessonTask();
+            return;
+        }
+
+        if (helpPanel != null && helpPanel.activeInHierarchy)
+        {
+            CloseHelp();
+            return;
+        }
+
         if (menuCanvas != null && menuCanvas.activeInHierarchy)
         {
             CloseMenu();
@@ -103,6 +128,24 @@ public class MenuController : MonoBehaviour
     {
         SyncWelcomeState();
         SyncMenuState();
+        SyncBackpackState();
+        SyncLessonTaskState();
+        SyncHelpState();
+        SyncHudButtonsVisibility();
+    }
+
+    private void SyncHudButtonsVisibility()
+    {
+        if (hudButtons == null)
+        {
+            return;
+        }
+
+        bool shouldShow = HokkienInteractionState.CurrentMode == HokkienInteractionMode.World;
+        if (hudButtons.activeSelf != shouldShow)
+        {
+            hudButtons.SetActive(shouldShow);
+        }
     }
 
     private void SyncWelcomeState()
@@ -149,6 +192,72 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    private void SyncBackpackState()
+    {
+        if (backpackPanel == null)
+        {
+            return;
+        }
+
+        bool isVisible = backpackPanel.activeInHierarchy;
+        if (isVisible && !backpackStateOwned
+            && HokkienInteractionState.TryEnter(HokkienInteractionMode.Backpack, this))
+        {
+            backpackStateOwned = true;
+            SetPlayerMovementPaused(true);
+        }
+        else if (!isVisible && backpackStateOwned)
+        {
+            backpackStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    private void SyncLessonTaskState()
+    {
+        if (lessonTaskPanel == null)
+        {
+            return;
+        }
+
+        bool isVisible = lessonTaskPanel.activeInHierarchy;
+        if (isVisible && !lessonTaskStateOwned
+            && HokkienInteractionState.TryEnter(HokkienInteractionMode.LessonTask, this))
+        {
+            lessonTaskStateOwned = true;
+            SetPlayerMovementPaused(true);
+        }
+        else if (!isVisible && lessonTaskStateOwned)
+        {
+            lessonTaskStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    private void SyncHelpState()
+    {
+        if (helpPanel == null)
+        {
+            return;
+        }
+
+        bool isVisible = helpPanel.activeInHierarchy;
+        if (isVisible && !helpStateOwned
+            && HokkienInteractionState.TryEnter(HokkienInteractionMode.Help, this))
+        {
+            helpStateOwned = true;
+            SetPlayerMovementPaused(true);
+        }
+        else if (!isVisible && helpStateOwned)
+        {
+            helpStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
     private GameObject FindSceneObject(string objectName)
     {
         // Search inactive scene objects without adding scene references.
@@ -188,6 +297,11 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    public void OnMenuButtonPressed()
+    {
+        OpenMenu();
+    }
+
     public bool OpenMenu()
     {
         // Repeated calls should not reload the current menu.
@@ -224,6 +338,143 @@ public class MenuController : MonoBehaviour
         if (menuStateOwned)
         {
             menuStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    public bool OpenBackpack()
+    {
+        if (backpackStateOwned && backpackPanel != null && backpackPanel.activeSelf)
+        {
+            return true;
+        }
+
+        if (backpackPanel == null
+            || !HokkienInteractionState.TryEnter(HokkienInteractionMode.Backpack, this))
+        {
+            return false;
+        }
+
+        backpackStateOwned = true;
+        backpackPanel.SetActive(true);
+        SetPlayerMovementPaused(true);
+
+        if (inventoryDisplay != null)
+        {
+            inventoryDisplay.LoadInventory();
+        }
+
+        return true;
+    }
+
+    public void OnBackpackButtonPressed()
+    {
+        OpenBackpack();
+    }
+
+    public void CloseBackpack()
+    {
+        if (backpackPanel != null)
+        {
+            backpackPanel.SetActive(false);
+        }
+
+        if (backpackStateOwned)
+        {
+            backpackStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    public bool OpenLessonTask()
+    {
+        if (lessonTaskStateOwned && lessonTaskPanel != null && lessonTaskPanel.activeSelf)
+        {
+            return true;
+        }
+
+        if (lessonTaskPanel == null
+            || !HokkienInteractionState.TryEnter(HokkienInteractionMode.LessonTask, this))
+        {
+            return false;
+        }
+
+        lessonTaskStateOwned = true;
+        lessonTaskPanel.SetActive(true);
+        SetPlayerMovementPaused(true);
+
+        return true;
+    }
+
+    public void OnLessonTaskButtonPressed()
+    {
+        OpenLessonTask();
+    }
+
+    public void OnLessonQuizButtonPressed()
+    {
+        if (quizLauncher == null)
+        {
+            Debug.LogWarning("[MenuController] Quiz launcher is not assigned.");
+            return;
+        }
+
+        CloseLessonTask();
+        quizLauncher.StartQuiz();
+    }
+
+    public void CloseLessonTask()
+    {
+        if (lessonTaskPanel != null)
+        {
+            lessonTaskPanel.SetActive(false);
+        }
+
+        if (lessonTaskStateOwned)
+        {
+            lessonTaskStateOwned = false;
+            HokkienInteractionState.Exit(this);
+            SetPlayerMovementPaused(false);
+        }
+    }
+
+    public bool OpenHelp()
+    {
+        if (helpStateOwned && helpPanel != null && helpPanel.activeSelf)
+        {
+            return true;
+        }
+
+        if (helpPanel == null
+            || !HokkienInteractionState.TryEnter(HokkienInteractionMode.Help, this))
+        {
+            return false;
+        }
+
+        helpStateOwned = true;
+        helpPanel.SetActive(true);
+        SetPlayerMovementPaused(true);
+
+        return true;
+    }
+
+    public void OnHelpButtonPressed()
+    {
+        OpenHelp();
+    }
+
+    public void CloseHelp()
+    {
+        if (helpPanel != null)
+        {
+            helpPanel.SetActive(false);
+        }
+
+        if (helpStateOwned)
+        {
+            helpStateOwned = false;
             HokkienInteractionState.Exit(this);
             SetPlayerMovementPaused(false);
         }
