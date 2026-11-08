@@ -181,6 +181,7 @@ public class HokkienQuizLauncher : MonoBehaviour
             {
                 HokkienQuizChoiceData choice = source.choices[i];
                 question.choices[i] = choice?.text ?? string.Empty;
+                question.choiceHokkienRomanizedTexts[i] = choice?.poj ?? string.Empty;
                 explanations[i] = choice?.explanation ?? string.Empty;
                 string audioPath = choice?.audio ?? string.Empty;
                 question.choiceHokkienAudioUrls[i] = string.IsNullOrWhiteSpace(audioPath)

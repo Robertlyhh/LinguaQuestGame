@@ -153,10 +153,24 @@ MonoBehaviour:
   vendorId: v_001
   npcPortrait: {fileID: -7527145504033472756, guid: 9dd0d33df0530f94cabed4d020d5bf25, type: 3}
   typingSpeed: 0.03
-  fadeDuration: 0.5
+  notificationDuration: 2
+  autoAdvanceDelay: 0.5
+  maxDialogueChars: 75
+  overLimitMessage: translation overloaded
   dialoguePanel: {fileID: 0}
   nameText: {fileID: 0}
   portraitImage: {fileID: 0}
   dialogueText: {fileID: 0}
   optionsContainer: {fileID: 0}
   optionButtonPrefab: {fileID: 131311999632596786, guid: 3b35def7b4b99ba47a31effffb37fa27, type: 3}
+  continueButton: {fileID: 0}
+  wordHoverHandler: {fileID: 0}
+  audioButton: {fileID: 0}
+  audioSource: {fileID: 0}
+  translationImporter: {fileID: 0}
+  translationToggleButton: {fileID: 0}
+  translationToggleLabel: {fileID: 0}
+  itemNotificationPanel: {fileID: 0}
+  notificationItemIcon: {fileID: 0}
+  notificationItemName: {fileID: 0}
+  playerMovement: {fileID: 0}

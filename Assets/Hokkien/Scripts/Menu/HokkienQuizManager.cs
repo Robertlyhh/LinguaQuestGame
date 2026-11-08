@@ -33,8 +33,6 @@ public class HokkienQuizManager : MonoBehaviour
     public AudioClip correctSound;
     public AudioClip wrongSound;
     public AdminTranslationImporter translationImporter;
-    [Tooltip("Ask the admin backend to translate and TTS choices that have no audio. Leave off in gameplay: choice audio is pre-generated, and choices without audio (e.g. English) should stay silent.")]
-    public bool generateMissingChoiceAudio;
 
     [Header("Question")]
     public List<MultipleChoiceQuestion> questionsSet;
@@ -243,123 +241,26 @@ public class HokkienQuizManager : MonoBehaviour
             yield break;
         }
 
-        bool needsText = string.IsNullOrWhiteSpace(currentQuestion.hokkienRomanizedText);
-        bool needsAudio = currentQuestion.hokkienAudioClip == null && string.IsNullOrWhiteSpace(currentQuestion.hokkienAudioUrl);
-        if (currentQuestion.hokkienAudioClip == null && !string.IsNullOrWhiteSpace(currentQuestion.hokkienAudioUrl))
-        {
-            StartCoroutine(translationImporter.DownloadAudioClip(currentQuestion.hokkienAudioUrl, clip =>
-            {
-                currentQuestion.hokkienAudioClip = clip;
-            }, error => Debug.LogWarning($"[QuizAudio] Failed to load question audio: {error}")));
-        }
-        if (!string.IsNullOrWhiteSpace(currentQuestion.dialogueNodeId) && (needsText || needsAudio))
-        {
-            yield return StartCoroutine(translationImporter.TranslateThenTtsThenFetch(
-                currentQuestion.dialogueNodeId,
-                currentQuestion.question,
-                result =>
-                {
-                    currentQuestion.hokkienRomanizedText = result.pojTranslation;
-                    currentQuestion.hokkienAudioUrl = result.audioUrl;
-                    if (displayToken == questionDisplayToken)
-                    {
-                        questionText.text = BuildQuestionText(currentQuestion);
-                    }
-
-                    if (!string.IsNullOrEmpty(result.audioUrl))
-                    {
-                        StartCoroutine(translationImporter.DownloadAudioClip(result.audioUrl, clip =>
-                        {
-                            currentQuestion.hokkienAudioClip = clip;
-                            if (displayToken == questionDisplayToken && clip != null && audioSource != null)
-                            {
-                                audioSource.PlayOneShot(clip);
-                            }
-                        }, error => Debug.LogWarning($"[QuizAudio] Failed to load question audio: {error}")));
-                    }
-                },
-                error => Debug.LogWarning($"[QuizTranslation] Question: {error}")));
-        }
-
         EnsureChoiceArrays(currentQuestion);
-        if (currentQuestion.choices == null || currentQuestion.choiceDialogueNodeIds == null)
-        {
+        if (currentQuestion.choices == null)
             yield break;
-        }
 
-        int count = Mathf.Min(currentQuestion.choices.Length, currentQuestion.choiceDialogueNodeIds.Length);
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < currentQuestion.choices.Length; i++)
         {
             int choiceIndex = i;
-            string nodeId = currentQuestion.choiceDialogueNodeIds[choiceIndex];
-            if (string.IsNullOrWhiteSpace(nodeId))
-            {
-                nodeId = BuildStableQuizOptionId(currentQuestion.question, currentQuestion.choices[choiceIndex]);
-                currentQuestion.choiceDialogueNodeIds[choiceIndex] = nodeId;
-            }
-            bool choiceNeedsText = string.IsNullOrWhiteSpace(currentQuestion.choiceHokkienRomanizedTexts[choiceIndex]);
-            bool choiceNeedsAudio = currentQuestion.choiceHokkienAudioClips[choiceIndex] == null
-                && string.IsNullOrWhiteSpace(currentQuestion.choiceHokkienAudioUrls[choiceIndex]);
-
-            if (currentQuestion.choiceHokkienAudioClips[choiceIndex] == null
-                && !string.IsNullOrWhiteSpace(currentQuestion.choiceHokkienAudioUrls[choiceIndex]))
-            {
-                string audioUrl = currentQuestion.choiceHokkienAudioUrls[choiceIndex];
-                StartCoroutine(translationImporter.DownloadAudioClip(audioUrl, clip =>
-                {
-                    currentQuestion.choiceHokkienAudioClips[choiceIndex] = clip;
-                    if (displayToken == questionDisplayToken && choiceIndex < answerTexts.Length)
-                    {
-                        answerTexts[choiceIndex].text = BuildChoiceText(currentQuestion, choiceIndex);
-                        UpdateChoiceAudioButton(choiceIndex, currentQuestion);
-                    }
-                }, error => Debug.LogWarning($"[QuizAudio] Choice {choiceIndex + 1}: {error}")));
+            string audioUrl = currentQuestion.choiceHokkienAudioUrls[choiceIndex];
+            if (currentQuestion.choiceHokkienAudioClips[choiceIndex] != null || string.IsNullOrWhiteSpace(audioUrl))
                 continue;
-            }
 
-            if (!generateMissingChoiceAudio || (!choiceNeedsText && !choiceNeedsAudio))
+            StartCoroutine(translationImporter.DownloadAudioClip(audioUrl, clip =>
             {
-                continue;
-            }
-
-            yield return StartCoroutine(translationImporter.TranslateOptionThenTtsThenFetch(
-                nodeId,
-                currentQuestion.choices[choiceIndex],
-                result =>
+                currentQuestion.choiceHokkienAudioClips[choiceIndex] = clip;
+                if (displayToken == questionDisplayToken && choiceIndex < answerTexts.Length)
                 {
-                    currentQuestion.choiceHokkienRomanizedTexts[choiceIndex] = result.pojTranslation;
-                    currentQuestion.choiceHokkienAudioUrls[choiceIndex] = result.audioUrl;
-                    if (displayToken == questionDisplayToken && choiceIndex < answerTexts.Length)
-                    {
-                        answerTexts[choiceIndex].text = BuildChoiceText(currentQuestion, choiceIndex);
-                    }
-
-                    if (!string.IsNullOrEmpty(result.audioUrl))
-                    {
-                        StartCoroutine(translationImporter.DownloadAudioClip(result.audioUrl, clip =>
-                        {
-                            currentQuestion.choiceHokkienAudioClips[choiceIndex] = clip;
-                            if (displayToken == questionDisplayToken)
-                                UpdateChoiceAudioButton(choiceIndex, currentQuestion);
-                        }, error => Debug.LogWarning($"[QuizAudio] Choice {choiceIndex + 1}: {error}")));
-                    }
-                },
-                error => Debug.LogWarning($"[QuizTranslation] Choice {choiceIndex + 1}: {error}")));
-        }
-    }
-
-    private static string BuildStableQuizOptionId(string question, string choice)
-    {
-        unchecked
-        {
-            uint hash = 2166136261;
-            string value = (question ?? string.Empty) + "\n" + (choice ?? string.Empty);
-            foreach (char character in value)
-            {
-                hash ^= character;
-                hash *= 16777619;
-            }
-            return $"quiz_opt_{hash:x8}";
+                    answerTexts[choiceIndex].text = BuildChoiceText(currentQuestion, choiceIndex);
+                    UpdateChoiceAudioButton(choiceIndex, currentQuestion);
+                }
+            }, error => Debug.LogWarning($"[QuizAudio] Choice {choiceIndex + 1}: {error}")));
         }
     }
 
