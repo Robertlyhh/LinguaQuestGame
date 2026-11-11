@@ -203306,7 +203306,7 @@ PrefabInstance:
       objectReference: {fileID: 5512255500240179072}
     - target: {fileID: 7884663607592295780, guid: 1bc3af4bf8b1d48bda9986a77b48c104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnBackpackButtonPressed
+      value: OnHelpButtonPressed
       objectReference: {fileID: 0}
     - target: {fileID: 8310978271514893391, guid: 1bc3af4bf8b1d48bda9986a77b48c104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -212089,6 +212089,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990636269}
   m_CullTransparentMesh: 1
+--- !u!1 &992475069 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1811146605041002900, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+  m_PrefabInstance: {fileID: 1796557290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &993731560
 GameObject:
   m_ObjectHideFlags: 0
@@ -222545,6 +222550,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 715236217504913721, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5512255500240179072}
+    - target: {fileID: 715236217504913721, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseHelp
+      objectReference: {fileID: 0}
     - target: {fileID: 789488571592995278, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -222597,6 +222610,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: SweetRiceCakeTask
       objectReference: {fileID: 0}
+    - target: {fileID: 1811146605041002900, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569738140576031564, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569738140576031564, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569738140576031564, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 390
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569738140576031564, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569738140576031564, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 605
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569738140576031564, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 2987141638742532483, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
       propertyPath: m_text
       value: Interact with the Fried Sweet Rice Cake Vendor
@@ -222605,6 +222646,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: OverlayPanels
       objectReference: {fileID: 0}
+    - target: {fileID: 5002768203171032878, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002768203171032878, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002768203171032878, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 390
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002768203171032878, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002768203171032878, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1015
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002768203171032878, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 5881551919723250096, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
       propertyPath: m_text
       value: Interact with the Red Bean Pancake Vendor
@@ -222612,6 +222677,30 @@ PrefabInstance:
     - target: {fileID: 6536923863171717877, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
       propertyPath: m_text
       value: "LESSON \t1"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704004585830060235, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704004585830060235, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704004585830060235, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 390
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704004585830060235, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704004585830060235, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 195
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704004585830060235, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 6977017856058867820, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
       propertyPath: m_Name
@@ -241312,7 +241401,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 1372966207}
   backpackPanel: {fileID: 570768506}
   lessonTaskPanel: {fileID: 675491526}
-  helpPanel: {fileID: 0}
+  helpPanel: {fileID: 992475069}
   hudButtons: {fileID: 1089127543}
   inventoryDisplay: {fileID: 570768507}
   quizLauncher: {fileID: 36934368}

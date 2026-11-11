@@ -1457,6 +1457,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 715236217504913721, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5512255500240179072}
+    - target: {fileID: 715236217504913721, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseHelp
+      objectReference: {fileID: 0}
     - target: {fileID: 789488571592995278, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1729,6 +1737,11 @@ PrefabInstance:
       addedObject: {fileID: 309021139}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+--- !u!1 &74340028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1811146605041002900, guid: e4af2bd183c484ba28e91f2abcac34d5, type: 3}
+  m_PrefabInstance: {fileID: 74340027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &85527138
 GameObject:
   m_ObjectHideFlags: 0
@@ -11797,7 +11810,7 @@ PrefabInstance:
       objectReference: {fileID: 5512255500240179072}
     - target: {fileID: 7884663607592295780, guid: 1bc3af4bf8b1d48bda9986a77b48c104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnMenuButtonPressed
+      value: OnHelpButtonPressed
       objectReference: {fileID: 0}
     - target: {fileID: 8310978271514893391, guid: 1bc3af4bf8b1d48bda9986a77b48c104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -242698,7 +242711,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 1793290601}
   backpackPanel: {fileID: 1759602224}
   lessonTaskPanel: {fileID: 1469064366}
-  helpPanel: {fileID: 0}
+  helpPanel: {fileID: 74340028}
   hudButtons: {fileID: 231698350}
   inventoryDisplay: {fileID: 1759602225}
   quizLauncher: {fileID: 36934368}
