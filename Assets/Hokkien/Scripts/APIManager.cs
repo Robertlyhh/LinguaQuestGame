@@ -9,10 +9,8 @@ public class APIManager : MonoBehaviour
     public static APIManager Instance { get; private set; }
     // Pick Render or Localhost in Assets/Hokkien/Resources/BackendConfig.
     public string BaseUrl => BackendConfig.CurrentBaseUrl;
-    public string VoucherBaseUrl => voucherBaseUrl;
 
     [Header("Backend")]
-    [SerializeField] private string voucherBaseUrl = "http://localhost:8000";
     [SerializeField] private bool verboseNetworkLogs = false;
     [SerializeField] private int maxPrefetchConcurrency = 2;
 
@@ -159,18 +157,12 @@ public class APIManager : MonoBehaviour
 
     public string GetVendorBaseUrl(string vendorId)
     {
-        return IsVoucherId(vendorId, "v_va_") ? voucherBaseUrl : BaseUrl;
+        return BaseUrl;
     }
 
     public string GetDialogueBaseUrl(string nodeId)
     {
-        return IsVoucherId(nodeId, "n_va_") ? voucherBaseUrl : BaseUrl;
-    }
-
-    private static bool IsVoucherId(string value, string prefix)
-    {
-        return !string.IsNullOrWhiteSpace(value)
-            && value.StartsWith(prefix, StringComparison.OrdinalIgnoreCase);
+        return BaseUrl;
     }
 
     // ─── Vendors ──────────────────────────────────────────────────────────────
@@ -312,7 +304,7 @@ public class APIManager : MonoBehaviour
             return;
         }
 
-        string url = $"{voucherBaseUrl.TrimEnd('/')}/api/v1/dialogue/{UnityWebRequest.EscapeURL(nodeId)}" +
+        string url = $"{BaseUrl}/api/v1/dialogue/{UnityWebRequest.EscapeURL(nodeId)}" +
                      $"?session_id={UnityWebRequest.EscapeURL(sessionId)}";
         StartCoroutine(VoucherJsonRequest<DialogueNodeWrapper>(
             UnityWebRequest.kHttpVerbGET, url, null, null,
@@ -331,7 +323,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherSessionWrapper>(
             UnityWebRequest.kHttpVerbPOST,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/sessions",
+            $"{BaseUrl}/api/v1/voucher-adventure/sessions",
             request, NewIdempotencyKey(),
             wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
@@ -341,7 +333,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherOfferWrapper>(
             UnityWebRequest.kHttpVerbPOST,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}" +
+            $"{BaseUrl}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}" +
             $"/offers/{UnityWebRequest.EscapeURL(offerInstanceId)}/reveal",
             request, NewIdempotencyKey(), wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
@@ -351,7 +343,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherAttemptWrapper>(
             UnityWebRequest.kHttpVerbPOST,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/attempts",
+            $"{BaseUrl}/api/v1/voucher-adventure/attempts",
             request, NewIdempotencyKey(), wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
 
@@ -360,7 +352,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherBasketWrapper>(
             UnityWebRequest.kHttpVerbPUT,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/basket",
+            $"{BaseUrl}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/basket",
             request, NewIdempotencyKey(), wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
 
@@ -369,7 +361,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherEventWrapper>(
             UnityWebRequest.kHttpVerbPOST,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/events",
+            $"{BaseUrl}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/events",
             request, NewIdempotencyKey(), wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
 
@@ -378,7 +370,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherCompleteWrapper>(
             UnityWebRequest.kHttpVerbPOST,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/complete",
+            $"{BaseUrl}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/complete",
             new VoucherCompleteRequest { basket_revision = basketRevision }, NewIdempotencyKey(),
             wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
@@ -388,7 +380,7 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(VoucherJsonRequest<VoucherSimpleWrapper>(
             UnityWebRequest.kHttpVerbPOST,
-            $"{voucherBaseUrl.TrimEnd('/')}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/abandon",
+            $"{BaseUrl}/api/v1/voucher-adventure/sessions/{UnityWebRequest.EscapeURL(sessionId)}/abandon",
             new object(), NewIdempotencyKey(), wrapper => onSuccess?.Invoke(wrapper?.data), onError));
     }
 
