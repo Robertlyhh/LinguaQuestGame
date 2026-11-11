@@ -35,6 +35,7 @@ public class HokkienQuizQuestionData
 public class HokkienQuizChoiceData
 {
     public string text;
+    public string poj;
     public string audio;
     public string explanation;
 }

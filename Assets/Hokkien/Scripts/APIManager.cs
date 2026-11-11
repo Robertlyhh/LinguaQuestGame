@@ -7,11 +7,11 @@ using System.Collections.Generic;
 public class APIManager : MonoBehaviour
 {
     public static APIManager Instance { get; private set; }
-    public string BaseUrl => baseUrl;
+    // Pick Render or Localhost in Assets/Hokkien/Resources/BackendConfig.
+    public string BaseUrl => BackendConfig.CurrentBaseUrl;
     public string VoucherBaseUrl => voucherBaseUrl;
 
     [Header("Backend")]
-    [SerializeField] private string baseUrl = "http://localhost:8000";
     [SerializeField] private string voucherBaseUrl = "http://localhost:8000";
     [SerializeField] private bool verboseNetworkLogs = false;
     [SerializeField] private int maxPrefetchConcurrency = 2;
@@ -38,7 +38,12 @@ public class APIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            Debug.Log($"[API] Using backend {BaseUrl}");
+        }
         else { Destroy(gameObject); }
     }
 
@@ -154,12 +159,12 @@ public class APIManager : MonoBehaviour
 
     public string GetVendorBaseUrl(string vendorId)
     {
-        return IsVoucherId(vendorId, "v_va_") ? voucherBaseUrl : baseUrl;
+        return IsVoucherId(vendorId, "v_va_") ? voucherBaseUrl : BaseUrl;
     }
 
     public string GetDialogueBaseUrl(string nodeId)
     {
-        return IsVoucherId(nodeId, "n_va_") ? voucherBaseUrl : baseUrl;
+        return IsVoucherId(nodeId, "n_va_") ? voucherBaseUrl : BaseUrl;
     }
 
     private static bool IsVoucherId(string value, string prefix)
@@ -232,7 +237,7 @@ public class APIManager : MonoBehaviour
         }
 
         StartCoroutine(GetRequest(
-            $"{baseUrl.TrimEnd('/')}/api/v1/quizzes/{levelId}",
+            $"{BaseUrl}/api/v1/quizzes/{levelId}",
             json =>
             {
                 HokkienQuizResponse response = JsonUtility.FromJson<HokkienQuizResponse>(json);
@@ -477,10 +482,10 @@ public class APIManager : MonoBehaviour
     public void GetRootNodes(string npcId,
         Action<RootNodesResponse> onSuccess, Action<string> onError = null)
     {
-        Debug.Log($"[API] GET dialogue root nodes: {baseUrl}/api/v1/dialogue/root-nodes/{npcId}");
+        Debug.Log($"[API] GET dialogue root nodes: {BaseUrl}/api/v1/dialogue/root-nodes/{npcId}");
 
         StartCoroutine(GetRequest(
-            $"{baseUrl}/api/v1/dialogue/root-nodes/{npcId}",
+            $"{BaseUrl}/api/v1/dialogue/root-nodes/{npcId}",
             json =>
             {
                 var wrapper = JsonUtility.FromJson<RootNodesWrapper>(json);
@@ -498,7 +503,7 @@ public class APIManager : MonoBehaviour
         Action<ChallengesResponse> onSuccess, Action<string> onError = null)
     {
         StartCoroutine(GetRequest(
-            $"{baseUrl}/api/v1/challenges",
+            $"{BaseUrl}/api/v1/challenges",
             json =>
             {
                 var wrapper = JsonUtility.FromJson<ChallengesWrapper>(json);
@@ -514,7 +519,7 @@ public class APIManager : MonoBehaviour
         Action<ChallengeData> onSuccess, Action<string> onError = null)
     {
         StartCoroutine(GetRequest(
-            $"{baseUrl}/api/v1/challenges/{challengeId}",
+            $"{BaseUrl}/api/v1/challenges/{challengeId}",
             json =>
             {
                 var wrapper = JsonUtility.FromJson<ChallengeWrapper>(json);
@@ -534,7 +539,7 @@ public class APIManager : MonoBehaviour
             user_id = userId,
             challenge_id = challengeId
         };
-        StartCoroutine(PostRequest($"{baseUrl}/api/v1/challenges/accept", request, onSuccess, onError));
+        StartCoroutine(PostRequest($"{BaseUrl}/api/v1/challenges/accept", request, onSuccess, onError));
     }
 
     /// <summary>POST /api/v1/challenges/inventory</summary>
@@ -547,7 +552,7 @@ public class APIManager : MonoBehaviour
             item_id = itemId,
             challenge_id = string.IsNullOrEmpty(challengeId) ? null : challengeId
         };
-        StartCoroutine(PostRequest($"{baseUrl}/api/v1/challenges/inventory", request, onSuccess, onError));
+        StartCoroutine(PostRequest($"{BaseUrl}/api/v1/challenges/inventory", request, onSuccess, onError));
     }
 
     /// <summary>POST /api/v1/challenges/verify</summary>
@@ -560,7 +565,7 @@ public class APIManager : MonoBehaviour
             challenge_id = challengeId,
             answer = answer
         };
-        StartCoroutine(PostRequest($"{baseUrl}/api/v1/challenges/verify", request, onSuccess, onError));
+        StartCoroutine(PostRequest($"{BaseUrl}/api/v1/challenges/verify", request, onSuccess, onError));
     }
 
     // ─── Inventory ────────────────────────────────────────────────────────────
@@ -570,7 +575,7 @@ public class APIManager : MonoBehaviour
         Action<InventoryResponse> onSuccess, Action<string> onError = null)
     {
         StartCoroutine(GetRequest(
-            $"{baseUrl}/api/v1/user/{userId}/inventory",
+            $"{BaseUrl}/api/v1/user/{userId}/inventory",
             json =>
             {
                 var wrapper = JsonUtility.FromJson<InventoryWrapper>(json);
