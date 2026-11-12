@@ -7,7 +7,10 @@ public enum HokkienInteractionMode
     Dialogue,
     Quiz,
     Menu,
-    Welcome
+    Welcome,
+    Backpack,
+    LessonTask,
+    Help
 }
 
 public static class HokkienInteractionState
