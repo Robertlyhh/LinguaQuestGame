@@ -11,6 +11,10 @@ public class MenuController : MonoBehaviour
     public HokkienQuizLauncher quizLauncher;
     public frogMove playerMovement;
 
+    [Header("Welcome Reveal")]
+    public bool showDialoguePageAfterWelcomeClose;
+    public GameObject welcomeDialoguePanel;
+
     private bool quizActive;
     private GameObject welcomePanel;
     // These flags track panels that may be closed directly by UI buttons.
@@ -19,6 +23,7 @@ public class MenuController : MonoBehaviour
     private bool backpackStateOwned;
     private bool lessonTaskStateOwned;
     private bool helpStateOwned;
+    private bool welcomeDialoguePanelStateOwned;
 
     private void Awake()
     {
@@ -131,6 +136,7 @@ public class MenuController : MonoBehaviour
         SyncBackpackState();
         SyncLessonTaskState();
         SyncHelpState();
+        SyncWelcomeDialoguePanelState();
         SyncHudButtonsVisibility();
     }
 
@@ -164,7 +170,39 @@ public class MenuController : MonoBehaviour
         }
         else if (!isVisible && welcomeStateOwned)
         {
-            welcomeStateOwned = false;
+            HandleWelcomePanelClosed();
+        }
+    }
+
+    private void HandleWelcomePanelClosed()
+    {
+        welcomeStateOwned = false;
+        HokkienInteractionState.Exit(this);
+        SetPlayerMovementPaused(false);
+
+        if (showDialoguePageAfterWelcomeClose && welcomeDialoguePanel != null)
+        {
+            welcomeDialoguePanel.SetActive(true);
+        }
+    }
+
+    private void SyncWelcomeDialoguePanelState()
+    {
+        if (welcomeDialoguePanel == null)
+        {
+            return;
+        }
+
+        bool isVisible = welcomeDialoguePanel.activeInHierarchy;
+        if (isVisible && !welcomeDialoguePanelStateOwned
+            && HokkienInteractionState.TryEnter(HokkienInteractionMode.Help, this))
+        {
+            welcomeDialoguePanelStateOwned = true;
+            SetPlayerMovementPaused(true);
+        }
+        else if (!isVisible && welcomeDialoguePanelStateOwned)
+        {
+            welcomeDialoguePanelStateOwned = false;
             HokkienInteractionState.Exit(this);
             SetPlayerMovementPaused(false);
         }
@@ -486,9 +524,7 @@ public class MenuController : MonoBehaviour
 
         if (welcomeStateOwned)
         {
-            welcomeStateOwned = false;
-            HokkienInteractionState.Exit(this);
-            SetPlayerMovementPaused(false);
+            HandleWelcomePanelClosed();
         }
     }
 

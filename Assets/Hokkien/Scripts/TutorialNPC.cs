@@ -18,6 +18,12 @@ public class TutorialNPC : MonoBehaviour
     public string[] dialogueLines; // Array to hold your 2-3 sentences
     private int currentLine = 0;   // Keeps track of which sentence we are on
 
+    [Header("Tutorial Reveal")]
+    public bool showInterfacePageOnDialogueEnd;
+    public MenuController menuController;
+    public GameObject controlsPage;
+    public GameObject interfacePage;
+
     private bool isPlayerNearby = false;
     private bool isTalking = false; 
 
@@ -104,7 +110,14 @@ public class TutorialNPC : MonoBehaviour
         else
         {
             // If we ran out of lines, just close the dialogue automatically
-            CloseDialogue(); 
+            CloseDialogue();
+
+            if (showInterfacePageOnDialogueEnd && controlsPage != null && interfacePage != null && menuController != null)
+            {
+                controlsPage.SetActive(false);
+                interfacePage.SetActive(true);
+                menuController.OpenHelp();
+            }
         }
     }
 
@@ -145,11 +158,22 @@ public class TutorialNPC : MonoBehaviour
 
     private void RefreshInteractionPrompt()
     {
-        if (interactionPrompt != null)
+        if (interactionPrompt == null)
         {
-            bool showPrompt = isPlayerNearby && !isTalking
-                && HokkienInteractionState.CurrentMode == HokkienInteractionMode.World;
-            interactionPrompt.SetActive(showPrompt);
+            return;
         }
+
+        if (!isPlayerNearby)
+        {
+            // Not near the vendor yet — proximity triggers (not global mode
+            // changes) are responsible for this prompt's visibility right now,
+            // so a mode change elsewhere (e.g. Tutorial Panel auto-opening)
+            // should not hide it prematurely.
+            return;
+        }
+
+        bool showPrompt = !isTalking
+            && HokkienInteractionState.CurrentMode == HokkienInteractionMode.World;
+        interactionPrompt.SetActive(showPrompt);
     }
 }

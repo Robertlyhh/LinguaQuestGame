@@ -9,6 +9,10 @@ public class TutorialPageController : MonoBehaviour
     public Button rightArrowButton;
     public TextMeshProUGUI pageIndicatorText;
 
+    [Header("Close Button Gating")]
+    public bool onlyShowCloseButtonOnLastPage;
+    public GameObject closeButton;
+
     private int currentPage;
 
     private void OnEnable()
@@ -53,6 +57,11 @@ public class TutorialPageController : MonoBehaviour
         if (pageIndicatorText != null)
         {
             pageIndicatorText.text = $"{currentPage + 1}/{pages.Length}";
+        }
+
+        if (onlyShowCloseButtonOnLastPage && closeButton != null)
+        {
+            closeButton.SetActive(currentPage == pages.Length - 1);
         }
     }
 }
