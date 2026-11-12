@@ -1978,7 +1978,7 @@ public sealed class VoucherAdventureController : MonoBehaviour
             return audioPath;
         }
 
-        return APIManager.Instance.VoucherBaseUrl.TrimEnd('/') + "/" + audioPath.TrimStart('/');
+        return APIManager.Instance.BaseUrl.TrimEnd('/') + "/" + audioPath.TrimStart('/');
     }
 
     private void ReplayCurrentOfferAudio()

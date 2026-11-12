@@ -205378,6 +205378,18 @@ PrefabInstance:
       value: v_004
       objectReference: {fileID: 0}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioButton
+      value: 
+      objectReference: {fileID: 1225541644}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1519482458}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: translationToggleButton
+      value: 
+      objectReference: {fileID: 2073625388}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: npcPortrait
       value: 
       objectReference: {fileID: -3459020559606611098, guid: 3678786490a9a4034b6d172737fce416, type: 3}
@@ -207396,6 +207408,18 @@ PrefabInstance:
       propertyPath: vendorId
       value: v_003
       objectReference: {fileID: 0}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioButton
+      value: 
+      objectReference: {fileID: 1225541644}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1519482458}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: translationToggleButton
+      value: 
+      objectReference: {fileID: 2073625388}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: npcPortrait
       value: 
@@ -213919,6 +213943,18 @@ PrefabInstance:
       propertyPath: vendorId
       value: v_002
       objectReference: {fileID: 0}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioButton
+      value: 
+      objectReference: {fileID: 1225541644}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1519482458}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: translationToggleButton
+      value: 
+      objectReference: {fileID: 2073625388}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: npcPortrait
       value: 
@@ -241998,8 +242034,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca3818e299fd4d4d89f8339c46a1669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAPI
-  baseUrl: https://nightmarket-9bb1.onrender.com
-  voucherBaseUrl: http://localhost:8000
   verboseNetworkLogs: 0
   maxPrefetchConcurrency: 2
 --- !u!4 &2120971664
@@ -243110,6 +243144,18 @@ PrefabInstance:
       propertyPath: nameText
       value: 
       objectReference: {fileID: 602330515778267458}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioButton
+      value: 
+      objectReference: {fileID: 1225541644}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1519482458}
+    - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
+      propertyPath: translationToggleButton
+      value: 
+      objectReference: {fileID: 2073625388}
     - target: {fileID: 4446009607458034815, guid: 9e9034920df1049f9894bcd8dde93e53, type: 3}
       propertyPath: typingSpeed
       value: 0.05

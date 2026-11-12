@@ -6,7 +6,7 @@ public class BackendConfig : ScriptableObject
 {
     public enum BackendTarget { Render, Localhost }
 
-    private const string DefaultRenderUrl = "https://nightmarket-9bb1.onrender.com";
+    private const string DefaultRenderUrl = "https://nightmarket-1.onrender.com";
 
     public BackendTarget target = BackendTarget.Render;
     public string renderUrl = DefaultRenderUrl;
