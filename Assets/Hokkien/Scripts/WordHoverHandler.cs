@@ -43,6 +43,8 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
         if (verboseWordLogs)
             Debug.Log($"[WordHoverHandler] Processing text: {formattedText}");
 
+        // English phrase -> key word, e.g. "Minced Pork Rice" from "Minced Pork Rice (ló-bah-pn̄g)"
+        var targets = new Dictionary<string, KeyWordData>(System.StringComparer.OrdinalIgnoreCase);
         foreach (var kw in dialogueData.key_words)
         {
             if (kw == null || string.IsNullOrEmpty(kw.word) || string.IsNullOrEmpty(kw.translation))
@@ -50,22 +52,31 @@ public class WordHoverHandler : MonoBehaviour, IPointerClickHandler
 
             keywordDatabase[kw.word] = kw;
 
-            // Extract "Minced Pork Rice" from "Minced Pork Rice (ló-bah-pn̄g)"
-            string englishTarget = kw.translation.Split('(')[0].Trim();
-            if (string.IsNullOrEmpty(englishTarget))
-                continue;
+            // "Excuse me / May I ask" lists alternatives; whichever the sentence uses gets the link.
+            foreach (string alternative in kw.translation.Split('(')[0].Split('/'))
+            {
+                string englishTarget = alternative.Trim();
+                if (!string.IsNullOrEmpty(englishTarget) && !targets.ContainsKey(englishTarget))
+                    targets[englishTarget] = kw;
+            }
+        }
 
-            if (formattedText.IndexOf(englishTarget, System.StringComparison.OrdinalIgnoreCase) < 0)
-                continue;
-            
-            // This creates the link, underline, and yellow color
-            string replacement = $"<link=\"{kw.word}\"><u><color=#FFD700>{englishTarget}</color></u></link>";
+        if (targets.Count > 0)
+        {
+            // One pass, longest phrase first: "I am allergic to beef" and "beef" may overlap,
+            // and TMP cannot click a link nested inside another link.
+            var alternatives = new List<string>(targets.Keys);
+            alternatives.Sort((a, b) => b.Length.CompareTo(a.Length));
+            string pattern = string.Join("|", alternatives.ConvertAll(Regex.Escape));
 
-            // USE Regex.Escape() HERE:
-            formattedText = Regex.Replace(formattedText, Regex.Escape(englishTarget), replacement, RegexOptions.IgnoreCase);
-            
-            if (verboseWordLogs)
-                Debug.Log($"[WordHoverHandler] Injected link for: {englishTarget}");
+            formattedText = Regex.Replace(formattedText, pattern, match =>
+            {
+                KeyWordData kw = targets[match.Value];
+                if (verboseWordLogs)
+                    Debug.Log($"[WordHoverHandler] Injected link for: {match.Value}");
+                // Keep the sentence's own casing; underline + yellow marks it clickable.
+                return $"<link=\"{kw.word}\"><u><color=#FFD700>{match.Value}</color></u></link>";
+            }, RegexOptions.IgnoreCase);
         }
 
         textMesh.text = formattedText;

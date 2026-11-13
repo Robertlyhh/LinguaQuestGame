@@ -458,9 +458,11 @@ public class NPC : MonoBehaviour, IInteractable
             + "/" + audioPath.TrimStart('/');
     }
 
+    private bool IsOnScreen() => conversationActive && activeConversation == this;
+
     private void OnAudioButtonPressed()
     {
-        if (audioSource == null || currentClip == null) return;
+        if (!IsOnScreen() || audioSource == null || currentClip == null) return;
 
         if (audioSource.isPlaying)
         {
@@ -480,7 +482,8 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void OnTranslationTogglePressed()
     {
-        if (currentNode?.dialogue == null) return;
+        // Every vendor listens to the shared button; only the one on screen may redraw the text.
+        if (!IsOnScreen() || currentNode?.dialogue == null) return;
 
         // Cycle: Original → Hokkien → POJ → Original
         translationMode = translationMode switch
@@ -722,14 +725,9 @@ public class NPC : MonoBehaviour, IInteractable
 
     private static string BuildOptionText(DialogueOption option)
     {
-        if (option == null)
-            return string.Empty;
-
-        if (string.IsNullOrWhiteSpace(option.translation_POJ))
-            return option.text;
-
-        string audioIndicator = string.IsNullOrWhiteSpace(option.audio) ? string.Empty : "  <size=75%>🔊</size>";
-        return $"{option.text}\n<size=80%><color=#FFD966>{option.translation_POJ}</color>{audioIndicator}</size>";
+        // Dialogue option buttons show only their text; the Hokkien still plays on click.
+        // (Quiz choices keep their POJ; that is HokkienQuizManager, not this.)
+        return option?.text ?? string.Empty;
     }
 
     private void ClearOptions()

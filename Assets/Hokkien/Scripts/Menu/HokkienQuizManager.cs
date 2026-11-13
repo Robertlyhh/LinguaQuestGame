@@ -91,6 +91,7 @@ public class HokkienQuizManager : MonoBehaviour
 
         EnsureChoiceAudioButtons();
         FindExitQuizButton();
+        FitExplanationTextToCard();
 
         if (translationImporter == null)
         {
@@ -580,6 +581,18 @@ public class HokkienQuizManager : MonoBehaviour
         {
             explanationBodyText.text = BuildExplanationBody(selectedAnswer, correctAnswer, isCorrect, specificExplanation);
         }
+    }
+
+    private void FitExplanationTextToCard()
+    {
+        // Culture explanations run to several hundred characters; at the scene's fixed
+        // size they spill past the card. Shrink long ones, keep short ones as designed.
+        if (explanationBodyText == null || explanationBodyText.enableAutoSizing)
+            return;
+
+        explanationBodyText.fontSizeMax = explanationBodyText.fontSize;
+        explanationBodyText.fontSizeMin = Mathf.Min(22f, explanationBodyText.fontSize);
+        explanationBodyText.enableAutoSizing = true;
     }
 
     private string BuildExplanationBody(string selectedAnswer, string correctAnswer, bool isCorrect, string specificExplanation)
