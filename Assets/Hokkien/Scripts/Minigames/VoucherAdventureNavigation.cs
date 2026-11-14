@@ -92,6 +92,11 @@ public static class VoucherAdventureNavigation
         PlayerPrefs.Save();
     }
 
+    public static void ClearSavedNavigationState()
+    {
+        ClearOrigin();
+    }
+
     private static bool IsAllowedOrigin(string sceneName)
     {
         return sceneName == "Hokkien3" || sceneName == "Hokkien4";

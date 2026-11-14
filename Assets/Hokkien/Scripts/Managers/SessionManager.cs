@@ -6,6 +6,8 @@ using NUnit.Framework;
 using DG.Tweening;
 public class SessionManager : MonoBehaviour   
 {
+    private static bool suppressSaveOnQuit;
+
     // TODO - Implement ISessionData interface into classes 
     // with the load and save functions
     [Header("File Storage Config")]
@@ -21,6 +23,8 @@ public class SessionManager : MonoBehaviour
 
     public void Awake()
     {
+        suppressSaveOnQuit = false;
+
         if (Instance != null)
         {
             Debug.LogError("Found more than one instance" +
@@ -87,7 +91,21 @@ public class SessionManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        SaveGame();
+        if (!suppressSaveOnQuit)
+        {
+            SaveGame();
+        }
+    }
+
+    public static void PreventSavingDeletedProgress()
+    {
+        suppressSaveOnQuit = true;
+
+        if (Instance != null)
+        {
+            Instance.gameDataLoaded = false;
+            Instance.gameData = null;
+        }
     }
 
     private List<ISessionData> FindAllSessionDataObjects()

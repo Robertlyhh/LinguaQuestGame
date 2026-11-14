@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4608dbf51522f394384bb5f5a24e0d98, type: 3}
+  m_Name: Ending Config
+  m_EditorClassIdentifier: Assembly-CSharp::ExperienceEndingConfig
+  mode: 0
+  surveyUrl: 
+  restartSceneName: Hokkien_Tutorial_Scene
+  saveFileName: hokkien_save.json
+  title: Journey Complete!
+  message: 'You''ve reached the end of the current Hokkien experience.
+
+
+    Thank
+    you for exploring the night market and practicing Taiwanese Hokkien with us.'
+  finishButtonLabel: Finish
+  surveyButtonLabel: Continue to Survey
+  restartButtonLabel: Restart Experience
+  finishedTitle: Thanks for Playing!
+  finishedMessage: You may now close this page.
+  surveyOpenedTitle: Thank You!
+  surveyOpenedMessage: The survey has been opened in your browser. Thank you for
+    participating.
+  invalidSurveyMessage: The survey is not available right now. You may now close
+    this page.
+  restartConfirmationTitle: Restart the Experience?
+  restartConfirmationMessage: All local game progress will be cleared. This cannot
+    be undone.
+  restartConfirmLabel: Restart
+  restartCancelLabel: Cancel
