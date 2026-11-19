@@ -9,8 +9,15 @@ using UnityEngine.UI;
 public sealed class ExperienceCompleteController : MonoBehaviour
 {
     private const float FadeDuration = 0.35f;
+    private static readonly Color32 ButtonColor = new(248, 220, 177, 255);
+    private static readonly Color32 ButtonHoverColor = new(255, 235, 204, 255);
+    private static readonly Color32 ButtonPressedColor = new(235, 174, 65, 255);
+    private static readonly Color32 ButtonOutlineColor = new(177, 83, 43, 255);
+    private static readonly Color32 ButtonTextColor = new(73, 53, 61, 255);
 
     [SerializeField] private ExperienceEndingConfig config;
+    [Header("Hokkien menu visual assets")]
+    [SerializeField] private Sprite dialogueBoxSprite;
 
     private CanvasGroup screenCanvasGroup;
     private RectTransform cardRect;
@@ -28,6 +35,7 @@ public sealed class ExperienceCompleteController : MonoBehaviour
     private bool actionInProgress;
 
     public ExperienceEndingConfig Config => config;
+    public Sprite DialogueBoxSprite => dialogueBoxSprite;
 
     private void Awake()
     {
@@ -222,28 +230,25 @@ public sealed class ExperienceCompleteController : MonoBehaviour
         cardRect.sizeDelta = new Vector2(920f, 560f);
 
         Image cardImage = card.AddComponent<Image>();
-        cardImage.color = new Color32(244, 237, 243, 255);
-        Outline outline = card.AddComponent<Outline>();
-        outline.effectColor = new Color32(239, 153, 81, 255);
-        outline.effectDistance = new Vector2(7f, -7f);
+        ApplyDialogueBoxStyle(cardImage);
 
         titleText = CreateText("Title", card.transform, 52f, FontStyles.Bold);
         SetTopRect(titleText.rectTransform, 55f, 55f, 145f);
         titleText.alignment = TextAlignmentOptions.Center;
-        titleText.color = new Color32(177, 83, 43, 255);
+        titleText.color = Color.black;
 
         messageText = CreateText("Message", card.transform, 29f, FontStyles.Normal);
         SetTopRect(messageText.rectTransform, 90f, 165f, 350f);
         messageText.alignment = TextAlignmentOptions.Center;
-        messageText.color = new Color32(73, 53, 61, 255);
+        messageText.color = Color.black;
 
         primaryButton = CreateButton(
             "PrimaryButton", card.transform, string.Empty, new Vector2(205f, 76f),
-            new Vector2(330f, 68f), HandlePrimaryAction, out primaryButtonText);
+            new Vector2(360f, 68f), HandlePrimaryAction, out primaryButtonText);
 
         restartButton = CreateButton(
             "RestartButton", card.transform, "Restart Experience", new Vector2(-205f, 76f),
-            new Vector2(330f, 68f), ShowRestartConfirmation, out _);
+            new Vector2(360f, 68f), ShowRestartConfirmation, out _);
 
         BuildConfirmation(overlay.transform);
     }
@@ -258,20 +263,17 @@ public sealed class ExperienceCompleteController : MonoBehaviour
         RectTransform modalRect = modal.GetComponent<RectTransform>();
         modalRect.anchorMin = modalRect.anchorMax = modalRect.pivot = new Vector2(0.5f, 0.5f);
         modalRect.sizeDelta = new Vector2(720f, 420f);
-        modal.AddComponent<Image>().color = new Color32(244, 237, 243, 255);
-        Outline modalOutline = modal.AddComponent<Outline>();
-        modalOutline.effectColor = new Color32(239, 153, 81, 255);
-        modalOutline.effectDistance = new Vector2(6f, -6f);
+        ApplyDialogueBoxStyle(modal.AddComponent<Image>());
 
         confirmationTitleText = CreateText("Title", modal.transform, 40f, FontStyles.Bold);
         SetTopRect(confirmationTitleText.rectTransform, 45f, 45f, 105f);
         confirmationTitleText.alignment = TextAlignmentOptions.Center;
-        confirmationTitleText.color = new Color32(164, 62, 62, 255);
+        confirmationTitleText.color = Color.black;
 
         confirmationMessageText = CreateText("Message", modal.transform, 27f, FontStyles.Normal);
         SetTopRect(confirmationMessageText.rectTransform, 65f, 125f, 225f);
         confirmationMessageText.alignment = TextAlignmentOptions.Center;
-        confirmationMessageText.color = new Color32(73, 53, 61, 255);
+        confirmationMessageText.color = Color.black;
 
         confirmationErrorText = CreateText("Error", modal.transform, 19f, FontStyles.Normal);
         SetTopRect(confirmationErrorText.rectTransform, 65f, 225f, 285f);
@@ -289,7 +291,7 @@ public sealed class ExperienceCompleteController : MonoBehaviour
         confirmationRoot.SetActive(false);
     }
 
-    private static Button CreateButton(
+    private Button CreateButton(
         string name,
         Transform parent,
         string label,
@@ -306,27 +308,32 @@ public sealed class ExperienceCompleteController : MonoBehaviour
         rect.sizeDelta = size;
 
         Image image = buttonObject.AddComponent<Image>();
-        image.color = new Color32(235, 174, 65, 255);
+        image.color = ButtonColor;
 
         Button button = buttonObject.AddComponent<Button>();
         button.targetGraphic = image;
         ColorBlock colors = button.colors;
-        colors.normalColor = Color.white;
-        colors.highlightedColor = new Color32(255, 236, 178, 255);
-        colors.pressedColor = new Color32(207, 142, 45, 255);
-        colors.disabledColor = new Color32(120, 105, 84, 255);
+        colors.normalColor = ButtonColor;
+        colors.highlightedColor = ButtonHoverColor;
+        colors.pressedColor = ButtonPressedColor;
+        colors.selectedColor = ButtonColor;
+        colors.disabledColor = new Color32(205, 190, 175, 255);
         button.colors = colors;
         button.onClick.AddListener(onClick);
+
+        Outline outline = buttonObject.AddComponent<Outline>();
+        outline.effectColor = ButtonOutlineColor;
+        outline.effectDistance = new Vector2(2f, -2f);
 
         labelText = CreateText("Label", buttonObject.transform, 25f, FontStyles.Bold);
         StretchToParent(labelText.rectTransform);
         labelText.text = label;
         labelText.alignment = TextAlignmentOptions.Center;
-        labelText.color = new Color32(73, 53, 61, 255);
+        labelText.color = ButtonTextColor;
         return button;
     }
 
-    private static TMP_Text CreateText(string name, Transform parent, float size, FontStyles style)
+    private TMP_Text CreateText(string name, Transform parent, float size, FontStyles style)
     {
         GameObject textObject = CreateUiObject(name, parent);
         TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
@@ -336,6 +343,13 @@ public sealed class ExperienceCompleteController : MonoBehaviour
         text.overflowMode = TextOverflowModes.Overflow;
         text.raycastTarget = false;
         return text;
+    }
+
+    private void ApplyDialogueBoxStyle(Image image)
+    {
+        image.sprite = dialogueBoxSprite;
+        image.type = Image.Type.Simple;
+        image.color = dialogueBoxSprite != null ? Color.white : new Color32(244, 237, 243, 255);
     }
 
     private static GameObject CreateUiObject(string name, Transform parent)
