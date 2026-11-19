@@ -36,6 +36,8 @@ public class HokkienQuizManager : MonoBehaviour
 
     [Header("Question")]
     public List<MultipleChoiceQuestion> questionsSet;
+    [Tooltip("Show each question's choices in a random order every time a quiz starts.")]
+    public bool shuffleChoices = true;
 
     private Action<bool> onQuizComplete;
     private Action onRecapClosed;
@@ -124,7 +126,7 @@ public class HokkienQuizManager : MonoBehaviour
 
     public void LaunchQuestion(List<MultipleChoiceQuestion> questions, Action<bool> onComplete)
     {
-        questionsSet = questions;
+        questionsSet = shuffleChoices ? QuizChoiceShuffler.ShuffleAll(questions) : questions;
         currentQuestionIndex = 0;
         answeredIncorrect = false;
         waitingForCardDismiss = false;
@@ -280,16 +282,20 @@ public class HokkienQuizManager : MonoBehaviour
 
     private static string BuildChoiceText(MultipleChoiceQuestion question, int choiceIndex)
     {
-        string original = question.choices[choiceIndex];
-        bool hasSeparateRomanization = question.choiceHokkienRomanizedTexts != null
-            && choiceIndex < question.choiceHokkienRomanizedTexts.Length
-            && !string.IsNullOrWhiteSpace(question.choiceHokkienRomanizedTexts[choiceIndex])
-            && !string.Equals(original, question.choiceHokkienRomanizedTexts[choiceIndex], StringComparison.Ordinal);
+        return ChoiceLabel(question, choiceIndex);
+    }
 
-        if (!hasSeparateRomanization)
-            return original;
+    // Choices show only their POJ; the Chinese characters are not shown.
+    // A choice with no POJ (e.g. an English choice) shows its original text.
+    private static string ChoiceLabel(MultipleChoiceQuestion question, int choiceIndex)
+    {
+        if (question.choices == null || choiceIndex < 0 || choiceIndex >= question.choices.Length)
+            return string.Empty;
 
-        return $"{original}\n<color=#FFD966>{question.choiceHokkienRomanizedTexts[choiceIndex]}</color>";
+        string poj = question.choiceHokkienRomanizedTexts != null && choiceIndex < question.choiceHokkienRomanizedTexts.Length
+            ? question.choiceHokkienRomanizedTexts[choiceIndex]
+            : null;
+        return string.IsNullOrWhiteSpace(poj) ? question.choices[choiceIndex] : poj;
     }
 
     private void EnsureChoiceAudioButtons()
@@ -506,12 +512,8 @@ public class HokkienQuizManager : MonoBehaviour
 
         MultipleChoiceQuestion currentQuestion = questionsSet[currentQuestionIndex];
         bool isCorrect = selectedIndex == currentQuestion.correctAnswerIndex;
-        string selectedAnswer = selectedIndex >= 0 && selectedIndex < currentQuestion.choices.Length
-            ? currentQuestion.choices[selectedIndex]
-            : string.Empty;
-        string correctAnswer = currentQuestion.correctAnswerIndex >= 0 && currentQuestion.correctAnswerIndex < currentQuestion.choices.Length
-            ? currentQuestion.choices[currentQuestion.correctAnswerIndex]
-            : string.Empty;
+        string selectedAnswer = ChoiceLabel(currentQuestion, selectedIndex);
+        string correctAnswer = ChoiceLabel(currentQuestion, currentQuestion.correctAnswerIndex);
 
         // UNPACK the string to get the specific explanation for the clicked option
         string specificExplanation = "";
