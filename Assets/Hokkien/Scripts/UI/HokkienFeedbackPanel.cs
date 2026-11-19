@@ -12,6 +12,12 @@ using UnityEngine.UI;
 public sealed class HokkienFeedbackPanel : MonoBehaviour
 {
     private const float FadeDuration = 0.2f;
+    private static readonly Color32 ButtonColor = new(248, 220, 177, 255);
+    private static readonly Color32 ButtonHoverColor = new(255, 235, 204, 255);
+    private static readonly Color32 ButtonPressedColor = new(235, 174, 65, 255);
+    private static readonly Color32 ButtonDisabledColor = new(205, 190, 175, 255);
+    private static readonly Color32 ButtonOutlineColor = new(177, 83, 43, 255);
+    private static readonly Color32 ButtonTextColor = new(73, 53, 61, 255);
 
     private enum EscapeBehavior
     {
@@ -416,9 +422,6 @@ public sealed class HokkienFeedbackPanel : MonoBehaviour
             card.transform,
             string.Empty,
             28f,
-            new Color32(235, 174, 65, 255),
-            new Color32(207, 142, 45, 255),
-            new Color32(120, 105, 84, 255),
             HandlePrimaryButton,
             out primaryButtonRect,
             out primaryButtonText);
@@ -428,9 +431,6 @@ public sealed class HokkienFeedbackPanel : MonoBehaviour
             card.transform,
             "Review Answers",
             24f,
-            new Color32(244, 192, 113, 255),
-            new Color32(220, 165, 92, 255),
-            new Color32(150, 135, 120, 255),
             HandleReviewButton,
             out reviewButtonRect,
             out _);
@@ -441,9 +441,6 @@ public sealed class HokkienFeedbackPanel : MonoBehaviour
             card.transform,
             string.Empty,
             28f,
-            new Color32(235, 174, 65, 255),
-            new Color32(207, 142, 45, 255),
-            new Color32(120, 105, 84, 255),
             HandleSecondaryButton,
             out secondaryButtonRect,
             out secondaryButtonText);
@@ -457,9 +454,6 @@ public sealed class HokkienFeedbackPanel : MonoBehaviour
         Transform parent,
         string label,
         float fontSize,
-        Color32 backgroundColor,
-        Color32 pressedColor,
-        Color32 disabledColor,
         UnityEngine.Events.UnityAction onClick,
         out RectTransform buttonRect,
         out TMP_Text buttonText)
@@ -471,23 +465,28 @@ public sealed class HokkienFeedbackPanel : MonoBehaviour
         buttonRect.pivot = new Vector2(0.5f, 0f);
 
         Image buttonImage = buttonObject.AddComponent<Image>();
-        buttonImage.color = backgroundColor;
+        buttonImage.color = ButtonColor;
 
         Button button = buttonObject.AddComponent<Button>();
         button.targetGraphic = buttonImage;
         ColorBlock colors = button.colors;
-        colors.normalColor = Color.white;
-        colors.highlightedColor = new Color32(255, 236, 178, 255);
-        colors.pressedColor = pressedColor;
-        colors.disabledColor = disabledColor;
+        colors.normalColor = ButtonColor;
+        colors.highlightedColor = ButtonHoverColor;
+        colors.pressedColor = ButtonPressedColor;
+        colors.selectedColor = ButtonColor;
+        colors.disabledColor = ButtonDisabledColor;
         button.colors = colors;
         button.onClick.AddListener(onClick);
+
+        Outline outline = buttonObject.AddComponent<Outline>();
+        outline.effectColor = ButtonOutlineColor;
+        outline.effectDistance = new Vector2(2f, -2f);
 
         buttonText = CreateText("Label", buttonObject.transform, fontSize, FontStyles.Bold);
         buttonText.text = label;
         StretchToParent(buttonText.rectTransform);
         buttonText.alignment = TextAlignmentOptions.Center;
-        buttonText.color = new Color32(73, 53, 61, 255);
+        buttonText.color = ButtonTextColor;
         buttonText.raycastTarget = false;
         return button;
     }

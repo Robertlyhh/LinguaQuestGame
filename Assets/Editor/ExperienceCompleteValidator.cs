@@ -52,6 +52,8 @@ public static class ExperienceCompleteValidator
         Require(controller != null, "ExperienceCompleteController is missing.");
         Require(controller.Config == endingConfig,
             "The ending scene is not using Ending Config.");
+        Require(controller.DialogueBoxSprite != null,
+            "The ending scene is missing the Hokkien menu dialogue-box sprite.");
         Require(UnityEngine.Object.FindObjectsByType<Camera>(
                     FindObjectsInactive.Include, FindObjectsSortMode.None).Length == 1,
             "The ending scene must contain exactly one camera.");
@@ -76,6 +78,17 @@ public static class ExperienceCompleteValidator
             "The restart action was not created.");
         Require(restartConfirmation != null,
             "The restart confirmation was not created.");
+        Transform endingCard = FindDescendant(controller.transform, "EndingCard");
+        Require(endingCard.GetComponent<UnityEngine.UI.Image>().sprite == controller.DialogueBoxSprite,
+            "The ending card is not using the Hokkien minigame dialogue-box sprite.");
+        Require(primaryButton.GetComponent<UnityEngine.UI.Image>().color ==
+                new Color32(248, 220, 177, 255),
+            "The primary action is not using the minigame panel button fill.");
+        UnityEngine.UI.Outline primaryOutline =
+            primaryButton.GetComponent<UnityEngine.UI.Outline>();
+        Require(primaryOutline != null && primaryOutline.effectColor ==
+                new Color32(177, 83, 43, 255),
+            "The primary action is not using the minigame panel button outline.");
         string expectedPrimaryLabel = endingConfig.mode == ExperienceEndingMode.Survey
             ? endingConfig.surveyButtonLabel
             : endingConfig.finishButtonLabel;

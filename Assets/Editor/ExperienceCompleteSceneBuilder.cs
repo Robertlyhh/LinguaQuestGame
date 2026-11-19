@@ -11,6 +11,7 @@ public static class ExperienceCompleteSceneBuilder
     private const string OutputScenePath = "Assets/Scenes/ExperienceComplete.unity";
     private const string ConfigFolder = "Assets/Hokkien/EndingConfigs";
     private const string ConfigPath = ConfigFolder + "/Ending Config.asset";
+    private const string DialogueBoxPath = "Assets/Hokkien/Art/Menu/DialogueBoxSimple.png";
 
     [MenuItem("LinguaQuest/Build Experience Complete Scene")]
     public static void Build()
@@ -68,6 +69,8 @@ public static class ExperienceCompleteSceneBuilder
             controllerObject.AddComponent<ExperienceCompleteController>();
         SerializedObject serializedController = new SerializedObject(controller);
         serializedController.FindProperty("config").objectReferenceValue = endingConfig;
+        serializedController.FindProperty("dialogueBoxSprite").objectReferenceValue =
+            LoadSprite(DialogueBoxPath);
         serializedController.ApplyModifiedPropertiesWithoutUndo();
 
         EditorSceneManager.CloseScene(sourceScene, true);
@@ -79,6 +82,17 @@ public static class ExperienceCompleteSceneBuilder
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log($"[ExperienceCompleteSceneBuilder] Built {OutputScenePath}");
+    }
+
+    private static Sprite LoadSprite(string path)
+    {
+        Sprite sprite = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault();
+        if (sprite == null)
+        {
+            throw new MissingReferenceException($"Could not load UI sprite at '{path}'.");
+        }
+
+        return sprite;
     }
 
     private static void RemoveGameplayBehavior(GameObject root)
