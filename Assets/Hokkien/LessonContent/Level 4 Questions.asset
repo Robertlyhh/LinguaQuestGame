@@ -16,8 +16,8 @@ MonoBehaviour:
   - question: Which of the following is not a dessert?
     choices:
     - "\u51E4\u68A8\u9165 - pineapple cake"
-    - "\u8C46\u82B1 - toufu, bean curd"
-    - "\u51B0\u6C99\uFF08\u5249\u51B0\uFF09- shaved ice"
+    - "\u8C46\u82B1 - tofu pudding"
+    - "\u5249\u51B0 - shaved ice"
     - "\u9E21\u7FC5\u5305\u996D - chicken wing rice roll"
     choiceHokkienRomanizedTexts:
     - "\u00D4ng-l\u00E2i-so\u0358"
@@ -30,13 +30,10 @@ MonoBehaviour:
     - HokkienQuizAudio/level4_shaved_ice
     - HokkienQuizAudio/level4_chicken_wing_rice
     choiceExplanations:
-    - "Pineapple cake (\u51E4\u68A8\u9165) is a Taiwanese pastry, with pineapple
-      and wintermelon filling inside a pastry shell. It is a dessert. "
-    - "Bean curd (\u8C46\u82B1) is a sweet tofu dessert served in sugar soup."
-    - "Shaved ice (\u5249\u51B0) is a dessert with shaved ice in brown sugar soup,
-      often served with toppings such as taro, red bean, or mung bean."
-    - "Chicken wing rice roll (\u9E21\u7FC5\u5305\u996D) is a dish with sticky rice
-      stuffed into chicken wings."
+    - "Pineapple cake (\u51E4\u68A8\u9165) is a Taiwanese pastry with pineapple and winter melon filling inside a pastry shell. It is a dessert."
+    - "Tofu pudding (\u8C46\u82B1) is a soft, sweet tofu dessert served in syrup."
+    - "Shaved ice (\u5249\u51B0) is a dessert of finely shaved ice with brown sugar syrup, often topped with taro, red bean or mung bean."
+    - "Chicken wing rice roll (\u9E21\u7FC5\u5305\u996D) is a savory dish of sticky rice stuffed into chicken wings, not a dessert."
     correctAnswerIndex: 3
   - question: What should you say if you want full sugar in your bubble tea?
     choices:
